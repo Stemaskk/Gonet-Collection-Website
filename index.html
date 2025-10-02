@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Brand — Modern & Simple</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Libre+Bodoni:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+<!-- Header -->
+<nav class="nav" aria-label="Primary">
+  <div class="nav-inner">
+    <a class="brand" href="/">YOUR BRAND</a>
+    <div class="nav-links" role="menubar">
+      <a href="#about" role="menuitem">About</a>
+      <a href="#products" role="menuitem">Products</a>
+      <a href="#contact" role="menuitem">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn" id="openCart" aria-haspopup="dialog" aria-controls="cartDrawer" aria-expanded="false">Cart (0)</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero" id="about">
+  <div>
+    <h1>Timeless, functional, and clean.</h1>
+    <p>We design products that do their job quietly and beautifully—no gimmicks, just the good stuff you reach for every day.</p>
+    <div class="cta">
+      <a class="btn" href="#products">Shop now</a>
+      <a class="btn" href="#contact" aria-label="Learn more about us">Learn more</a>
+    </div>
+  </div>
+  <div class="hero-card" aria-hidden="true">
+    <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?q=80&w=1200&auto=format&fit=crop" alt="">
+  </div>
+</header>
+
+<!-- Products -->
+<section class="section" id="products" aria-labelledby="products-title">
+  <h2 id="products-title">Products</h2>
+  <div class="rule"></div>
+  <div class="grid" id="grid">
+    <article class="card">
+      <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1200&auto=format&fit=crop" alt="Classic Watch">
+      <div class="card-body">
+        <div class="title">Classic Watch</div>
+        <div class="price">$149</div>
+        <div class="row">
+          <button class="btn add" data-name="Classic Watch" data-price="149">Add to cart</button>
+          <a class="btn buy" href="#" aria-label="Buy Classic Watch now">Buy now</a>
+        </div>
+      </div>
+    </article>
+    <article class="card">
+      <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1200&auto=format&fit=crop" alt="Studio Headphones">
+      <div class="card-body">
+        <div class="title">Studio Headphones</div>
+        <div class="price">$199</div>
+        <div class="row">
+          <button class="btn add" data-name="Studio Headphones" data-price="199">Add to cart</button>
+          <a class="btn buy" href="#">Buy now</a>
+        </div>
+      </div>
+    </article>
+    <article class="card">
+      <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?q=80&w=1200&auto=format&fit=crop" alt="Minimal Camera">
+      <div class="card-body">
+        <div class="title">Minimal Camera</div>
+        <div class="price">$329</div>
+        <div class="row">
+          <button class="btn add" data-name="Minimal Camera" data-price="329">Add to cart</button>
+          <a class="btn buy" href="#">Buy now</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact" id="contact" aria-labelledby="contact-title">
+  <h2 id="contact-title" class="section-label">Contact</h2>
+  <div class="rule"></div>
+  <p>Questions about sizing, shipping, or custom orders? Email <a href="mailto:hello@yourbrand.com">hello@yourbrand.com</a>.</p>
+  <p>Prefer a call? +1 (555) 000-0000 · Mon–Fri, 9–5.</p>
+</section>
+
+<!-- Footer -->
+<footer class="section" aria-label="Footer">
+  <div class="rule"></div>
+  <div class="footer-grid">
+    <div><strong>Online</strong><br><a href="#">Payment methods</a><br><a href="#">Shipping</a><br><a href="#">Returns</a></div>
+    <div><strong>Support</strong><br><a href="#contact">Contact</a><br><a href="#">FAQ</a></div>
+    <div><strong>Company</strong><br><a href="#about">About</a><br><a href="#">Careers</a></div>
+    <div><strong>Newsletter</strong>
+      <form class="newsletter">
+        <input aria-label="Email" placeholder="Email">
+        <button class="btn" type="submit">OK</button>
+      </form>
+    </div>
+  </div>
+  <p class="copyright">© <span id="year"></span> Your Brand.</p>
+</footer>
+
+<!-- Overlay -->
+<div id="overlay" class="overlay" hidden></div>
+
+<!-- Cart Drawer -->
+<aside class="drawer" id="cartDrawer" role="dialog" aria-label="Shopping cart" aria-modal="true" aria-hidden="true">
+  <header class="drawer-bar">
+    <strong>Cart</strong>
+    <button class="btn" id="closeCart">Close</button>
+  </header>
+  <div class="items" id="cartItems" aria-live="polite"></div>
+  <footer class="drawer-bar">
+    <div class="drawer-total">
+      <span>Total</span><strong id="cartTotal">$0.00</strong>
+    </div>
+    <button class="btn drawer-checkout">Checkout</button>
+    <p class="drawer-note">Secure checkout powered by your provider.</p>
+  </footer>
+</aside>
+</body>
+</html>
