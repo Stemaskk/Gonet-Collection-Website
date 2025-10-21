@@ -1,128 +1,273 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Your Brand — Modern & Simple</title>
+  <title>GONET — The Art of a Good Table</title>
+  <meta name="description" content="자연을 테이블 위에 담다. GONET(고네뜨)의 세계: Our Story, Collection, Film & Visuals, Consulting, Shop, Contact." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Libre+Bodoni:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="app.js"></script>
 </head>
-<body>
+<body data-lang="kr">
 <!-- Header -->
 <nav class="nav" aria-label="Primary">
   <div class="nav-inner">
-    <a class="brand" href="/">YOUR BRAND</a>
+    <a class="brand" href="#home" aria-label="GONET Home">
+      <img class="logo logo-light" src="assets/gonet-logo-black.png" alt="gonet — good one table" height="28">
+      <img class="logo logo-dark"  src="assets/gonet-logo-white.png" alt="" height="28" aria-hidden="true">
+    </a>
     <div class="nav-links" role="menubar">
-      <a href="#about" role="menuitem">About</a>
-      <a href="#products" role="menuitem">Products</a>
+      <a href="#home" role="menuitem">Home</a>
+      <a href="#story" role="menuitem">Our Story</a>
+      <a href="#collection" role="menuitem">Collection</a>
+      <a href="#film" role="menuitem">Film & Visuals</a>
+      <a href="#consulting" role="menuitem">Consulting</a>
+      <a href="#shop" role="menuitem">Shop</a>
       <a href="#contact" role="menuitem">Contact</a>
     </div>
     <div class="nav-actions">
-      <button class="btn" id="openCart" aria-haspopup="dialog" aria-controls="cartDrawer" aria-expanded="false">Cart (0)</button>
+      <button class="btn lang-toggle" id="langToggle" aria-pressed="false" aria-label="Toggle language">KR / EN</button>
     </div>
   </div>
 </nav>
 
-<!-- Hero -->
-<header class="hero" id="about">
+<!-- Home -->
+<header id="home" class="hero">
   <div>
-    <h1>Timeless, functional, and clean.</h1>
-    <p>We design products that do their job quietly and beautifully—no gimmicks, just the good stuff you reach for every day.</p>
+    <h1 class="lang lang-kr">자연을 테이블 위에 담다.</h1>
+    <h1 class="lang lang-en">Bringing nature to the table.</h1>
+    <p class="lang lang-kr">
+      자연의 형태와 색을 본뜬 디자인으로, 식탁 위에 고요하고 우아한 감각을 전합니다.
+    </p>
+    <p class="lang lang-en">
+      With forms and colors inspired by nature, we bring a quiet, graceful sensibility to the table.
+    </p>
     <div class="cta">
-      <a class="btn" href="#products">Shop now</a>
-      <a class="btn" href="#contact" aria-label="Learn more about us">Learn more</a>
+      <a class="btn" href="#collection">Collection 보기</a>
+      <a class="btn" href="#film">Film 보기</a>
     </div>
   </div>
   <div class="hero-card" aria-hidden="true">
-    <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?q=80&w=1200&auto=format&fit=crop" alt="">
+    <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=1400&auto=format&fit=crop" alt="" />
   </div>
 </header>
 
-<!-- Products -->
-<section class="section" id="products" aria-labelledby="products-title">
-  <h2 id="products-title">Products</h2>
+<!-- Our Story -->
+<section id="story" class="section">
+  <h2>Our Story</h2>
   <div class="rule"></div>
-  <div class="grid" id="grid">
+  <div class="about-grid">
+    <div>
+      <h3 class="lang lang-kr">ABOUT GONET</h3>
+      <h3 class="lang lang-en">ABOUT GONET</h3>
+
+      <p class="lang lang-kr">
+        GONET = GOOD ONE TABLE<br/>
+        좋은 한 상, 좋은 재료와 좋은 손길, 그리고 좋은 마음이 머무는 자리를 만들고자 합니다.
+        그 자리에 아름다움을 더하기 위해 고네뜨는 음식을 디자인하고, 눈에 담는 순간을 만들며,
+        음식과 함께 머무는 공간을 디자인합니다. 우리는 테이블 위의 순간을 바라봅니다.
+        음식과 함께 사람들이 모이고, 나누고, 기억하는 시간을, 그 안에 깃든 온기와 아름다움을 고요하게 담아냅니다.
+        하나의 오브제에서 한 끼의 이야기까지, 고네뜨는 좋은 한 상의 예술을 완성합니다.
+        테이블 너머의 여정에서 고네뜨를 만나보세요.
+      </p>
+
+      <p class="lang lang-en">
+        GONET = GOOD ONE TABLE<br/>
+        A good table — a place shaped by good ingredients, skillful hands, and sincere hearts.
+        To bring beauty to that moment, GONET designs the food itself, the visuals that capture it,
+        and the tableware that lives alongside it. We look to the warmth and rhythm that unfold around the table —
+        the quiet beauty of people gathering, sharing, and remembering — and we turn those moments into form.
+        From an object to a meal, GONET creates the art of a good table. Follow our journey beyond the table.
+      </p>
+
+      <div class="links">
+        <a class="btn" target="_blank" rel="noopener" href="https://www.instagram.com/g.one_t/">Instagram</a>
+        <a class="btn" target="_blank" rel="noopener" href="https://www.youtube.com/c/GONETable">YouTube</a>
+      </div>
+    </div>
+
+    <aside class="story-aside">
+      <div class="timeline">
+        <h4>Timeline</h4>
+        <ul>
+          <li><strong>2023</strong> Leaf Dish concept sketches & prototypes</li>
+          <li><strong>2024</strong> First production & community debut</li>
+          <li><strong>2025</strong> Little Leaf & Seasonal Color study</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- Collection -->
+<section id="collection" class="section">
+  <h2>Collection</h2>
+  <div class="rule"></div>
+
+  <article class="feature">
+    <img class="feature-img" src="https://images.unsplash.com/photo-1551218808-94e220e084d2?q=80&w=1400&auto=format&fit=crop" alt="Leaf Dish concept image" />
+    <div class="feature-body">
+      <h3>Leaf Dish (잎담접시)</h3>
+      <p class="lang lang-kr">
+        “잎담접시는 하나로도 고요하지만, 함께일 때 가장 아름답습니다.” 잎의 곡선과 색이 이어질 때
+        테이블 위에 자연의 리듬이 만들어집니다. 그래서 잎담접시는 ‘세트’로 사용할 때 비로소 완성되는 디자인입니다.
+      </p>
+      <p class="lang lang-en">
+        “A Leaf Dish is quiet on its own, but most beautiful together.” As curves and colors connect,
+        a natural rhythm appears on the table — the design is complete when used in a set.
+      </p>
+      <ul class="bullets">
+        <li>Minimal silhouette inspired by leaf forms</li>
+        <li>One-plate meals or shared sides</li>
+        <li>Completes as a 4-piece set</li>
+      </ul>
+      <div class="row">
+        <a class="btn" href="#shop">Shop / 재입고 알림</a>
+      </div>
+    </div>
+  </article>
+
+  <div class="grid cards">
+    <!-- Little Leaf -->
     <article class="card">
-      <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1200&auto=format&fit=crop" alt="Classic Watch">
+      <div class="card-media">
+        <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=1200&auto=format&fit=crop" alt="Little Leaf bowl/plate" />
+      </div>
       <div class="card-body">
-        <div class="title">Classic Watch</div>
-        <div class="price">$149</div>
-        <div class="row">
-          <button class="btn add" data-name="Classic Watch" data-price="149">Add to cart</button>
-          <a class="btn buy" href="#" aria-label="Buy Classic Watch now">Buy now</a>
-        </div>
+        <div class="title">Little Leaf</div>
+        <p class="muted">Condiments, small sides, plating accents</p>
+        <a class="btn" href="#shop">View</a>
       </div>
     </article>
+    <!-- Seasonal Color -->
     <article class="card">
-      <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1200&auto=format&fit=crop" alt="Studio Headphones">
-      <div class="card-body">
-        <div class="title">Studio Headphones</div>
-        <div class="price">$199</div>
-        <div class="row">
-          <button class="btn add" data-name="Studio Headphones" data-price="199">Add to cart</button>
-          <a class="btn buy" href="#">Buy now</a>
-        </div>
+      <div class="card-media">
+        <img src="https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=1200&auto=format&fit=crop" alt="Seasonal Color glaze" />
       </div>
-    </article>
-    <article class="card">
-      <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?q=80&w=1200&auto=format&fit=crop" alt="Minimal Camera">
       <div class="card-body">
-        <div class="title">Minimal Camera</div>
-        <div class="price">$329</div>
-        <div class="row">
-          <button class="btn add" data-name="Minimal Camera" data-price="329">Add to cart</button>
-          <a class="btn buy" href="#">Buy now</a>
-        </div>
+        <div class="title">Seasonal Color</div>
+        <p class="muted">Glazes echoing seasonal greens & earth</p>
+        <a class="btn" href="#shop">View</a>
       </div>
     </article>
   </div>
 </section>
 
-<!-- Contact -->
-<section class="contact" id="contact" aria-labelledby="contact-title">
-  <h2 id="contact-title" class="section-label">Contact</h2>
+<!-- Film & Visuals -->
+<section id="film" class="section">
+  <h2>Film & Visuals</h2>
   <div class="rule"></div>
-  <p>Questions about sizing, shipping, or custom orders? Email <a href="mailto:hello@yourbrand.com">hello@yourbrand.com</a>.</p>
-  <p>Prefer a call? +1 (555) 000-0000 · Mon–Fri, 9–5.</p>
+  <div class="video-wrap">
+    <iframe
+            class="video"
+            src="https://www.youtube.com/embed/p4g1BhKS01k"
+            title="GONET Film"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+  </div>
+
+  <div class="film-copy">
+    <p class="lang lang-kr">
+      요리는 시간이 지나면 사라지지만, 그 순간의 빛과 소리, 공기까지는 기억되고 싶습니다.
+      고네뜨는 그 찰나의 아름다움을 영상으로 기록합니다. 조리의 움직임, 재료의 질감, 손끝의 섬세한 감정이
+      하나의 프레임 안에서 이야기로 피어납니다. ‘좋은 한 상’이란 무엇일까 — 우리는 그 답을 매 순간의 장면 속에서 찾습니다.
+      영화처럼 흘러가는 요리의 시간, 그 안에서 고네뜨는 테이블 위의 예술을 기록합니다.
+    </p>
+    <p class="lang lang-en">
+      Food fades with time, but the light, sound, and air of that moment remain. GONET captures this
+      fleeting beauty through film — the motion of cooking, the texture of ingredients, and the emotion
+      at the fingertips. We search for what makes a good table in each quiet scene. Like a film unfolding
+      in stillness, GONET records the art that happens on the table.
+    </p>
+    <p class="hint">영상은 ‘기술’이 아닌 ‘예술적 기록’으로 다룹니다.</p>
+  </div>
+</section>
+
+<!-- Consulting -->
+<section id="consulting" class="section">
+  <h2>Consulting</h2>
+  <div class="rule"></div>
+  <div class="feature reverse">
+    <img class="feature-img" src="https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=1400&auto=format&fit=crop" alt="Consulting visuals" />
+    <div class="feature-body">
+      <p class="lang lang-kr">
+        고네뜨의 컨설팅은 음식의 아름다움을 시각적으로 구현하는 일입니다. 우리는 요리의 본질에서 출발해,
+        그 음식이 가장 아름답게 빛나는 장면과 테이블의 형태를 디자인합니다. 플레이팅, 색, 빛, 질감, 그리고 감정 —
+        그 모든 요소가 하나로 이어질 때, 비로소 테이블은 완성됩니다. 고네뜨는 브랜드, 레스토랑, 그리고 크리에이터와 함께
+        보여지는 아름다움 너머의 감각을 만들어갑니다. ‘보이는 음식의 미학’을 완성합니다.
+      </p>
+      <p class="lang lang-en">
+        GONET’s consulting brings the beauty of food to life through visuals. We begin with the essence
+        of a dish, designing the scene and the table where it shines most. Plating, color, light, texture,
+        and emotion — when these flow together, the table becomes whole. With brands, restaurants, and
+        creators, GONET shapes a sensibility beyond what is seen, completing the visual art of food.
+      </p>
+      <div class="row">
+        <a class="btn" href="#contact">Project inquiry</a>
+        <a class="btn" target="_blank" rel="noopener" href="https://www.youtube.com/c/GONETable">View works</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Shop -->
+<section id="shop" class="section">
+  <h2>Shop</h2>
+  <div class="rule"></div>
+  <div class="shop-grid">
+    <div class="shop-card">
+      <h3>Smart Store</h3>
+      <p class="muted">스마트스토어 연동 (준비 중) · Restock alerts</p>
+      <a class="btn" target="_blank" rel="noopener" href="#">Go to Store</a>
+    </div>
+    <div class="shop-card">
+      <h3>Leaf Dish Set</h3>
+      <p class="muted">4-piece set · Seasonal color options</p>
+      <a class="btn" href="#contact">Stock & 문의</a>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="section">
+  <h2>Contact</h2>
+  <div class="rule"></div>
+  <form class="contact-form" id="contactForm" action="#" method="post">
+    <div class="two">
+      <label>이름 / Name
+        <input required name="name" placeholder="Your name" />
+      </label>
+      <label>이메일 / Email
+        <input required type="email" name="email" placeholder="you@example.com" />
+      </label>
+    </div>
+    <label>메시지 / Message
+      <textarea required name="message" rows="5" placeholder="프로젝트/협업/문의 내용을 적어주세요."></textarea>
+    </label>
+    <button class="btn" type="submit">Send</button>
+  </form>
+  <div class="links" style="margin-top:14px">
+    <a class="btn" target="_blank" rel="noopener" href="mailto:hello@gonet.example">Email</a>
+    <a class="btn" target="_blank" rel="noopener" href="https://www.instagram.com/g.one_t/">Instagram</a>
+    <a class="btn" target="_blank" rel="noopener" href="https://www.youtube.com/c/GONETable">YouTube</a>
+  </div>
 </section>
 
 <!-- Footer -->
 <footer class="section" aria-label="Footer">
   <div class="rule"></div>
   <div class="footer-grid">
-    <div><strong>Online</strong><br><a href="#">Payment methods</a><br><a href="#">Shipping</a><br><a href="#">Returns</a></div>
-    <div><strong>Support</strong><br><a href="#contact">Contact</a><br><a href="#">FAQ</a></div>
-    <div><strong>Company</strong><br><a href="#about">About</a><br><a href="#">Careers</a></div>
-    <div><strong>Newsletter</strong>
-      <form class="newsletter">
-        <input aria-label="Email" placeholder="Email">
-        <button class="btn" type="submit">OK</button>
-      </form>
-    </div>
+    <p>© GONET — The Art of a Good Table</p>
+    <nav class="footer-links">
+      <a href="https://www.instagram.com/g.one_t/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.youtube.com/c/GONETable" target="_blank" rel="noopener">YouTube</a>
+      <a href="mailto:hello@gonet.example">Email</a>
+      <a href="#">Terms</a>
+    </nav>
   </div>
-  <p class="copyright">© <span id="year"></span> Your Brand.</p>
 </footer>
-
-<!-- Overlay -->
-<div id="overlay" class="overlay" hidden></div>
-
-<!-- Cart Drawer -->
-<aside class="drawer" id="cartDrawer" role="dialog" aria-label="Shopping cart" aria-modal="true" aria-hidden="true">
-  <header class="drawer-bar">
-    <strong>Cart</strong>
-    <button class="btn" id="closeCart">Close</button>
-  </header>
-  <div class="items" id="cartItems" aria-live="polite"></div>
-  <footer class="drawer-bar">
-    <div class="drawer-total">
-      <span>Total</span><strong id="cartTotal">$0.00</strong>
-    </div>
-    <button class="btn drawer-checkout">Checkout</button>
-    <p class="drawer-note">Secure checkout powered by your provider.</p>
-  </footer>
-</aside>
 </body>
 </html>
