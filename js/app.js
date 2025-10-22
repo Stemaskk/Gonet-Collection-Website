@@ -1,6 +1,4 @@
-// ===== Shared across all pages =====
-
-// Language toggle
+// Language toggle (KR default)
 const root = document.body;
 const toggle = document.getElementById('langToggle');
 
@@ -18,17 +16,31 @@ toggle?.addEventListener('click', () => {
     setLang(current === 'kr' ? 'en' : 'kr');
 });
 
-// Active nav state
+// Active nav state (works for "/", "/page", "/page/", "/page.html")
 (function highlightNav(){
-    const path = location.pathname.split('/').pop() || 'index.html';
+    const norm = p => {
+        let s = p.toLowerCase();
+        s = s.replace(/index\.html$/,'').replace(/\.html$/,'').replace(/\/+$/,'');
+        return s === '' ? '/' : s;
+    };
+    const current = norm(location.pathname);
     document.querySelectorAll('.nav-links a').forEach(a => {
-        const href = a.getAttribute('href');
-        if (!href) return;
-        const file = href.split('/').pop();
-        if ((path === '' && file === 'index.html') || path === file) a.classList.add('active');
-        if (path === '' && file === './') a.classList.add('active');
+        try {
+            const href = norm(new URL(a.getAttribute('href'), location.origin).pathname);
+            if (href === current) a.classList.add('active');
+        } catch {}
     });
 })();
 
-// (Optional) YouTube privacy-enhanced embeds:
-// Use https://www.youtube-nocookie.com/embed/... in your <iframe src>.
+// Optional: click-to-play YouTube (if you use .yt-lazy)
+document.querySelectorAll('.yt-lazy').forEach(box => {
+    box.addEventListener('click', () => {
+        const src = box.getAttribute('data-src');
+        const iframe = document.createElement('iframe');
+        iframe.className = 'video';
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.setAttribute('allow','accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+        iframe.src = src;
+        box.replaceWith(iframe);
+    }, { once: true });
+});

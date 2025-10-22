@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/:path((?!assets|css|js|images|fonts|favicon\\.ico|.*\\.).+)",
+      "destination": "/:path.html"
+    }
+  ]
+}

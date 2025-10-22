@@ -42,14 +42,13 @@ body[data-lang="en"] .lang-en{display:block}
     body:not([data-theme="light"]) .logo-light{display:none}
     body:not([data-theme="light"]) .logo-dark{display:block}
 }
-/* Manual override if you ever add a theme toggle */
 body[data-theme="dark"] .logo-light{display:none}
 body[data-theme="dark"] .logo-dark{display:block}
 
 /* Layout */
 .container{max-width:1200px; margin:0 auto; padding:0 var(--pad)}
 .section{margin:72px auto}
-.section h1,.section h2{text-transform:uppercase; letter-spacing:.16em; font-size:14px; margin:0 0 16px}
+.section h2{text-transform:uppercase; letter-spacing:.16em; font-size:14px; margin:0 0 16px}
 .rule{height:1px; background:var(--muted); margin:0 0 28px}
 
 /* Hero */

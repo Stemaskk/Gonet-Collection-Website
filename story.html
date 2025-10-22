@@ -1,25 +1,3 @@
-<!-- Header -->
-<nav class="nav" aria-label="Primary">
-    <div class="nav-inner container">
-        <a class="brand" href="index.html" aria-label="GONET Home">
-            <img class="logo logo-light" src="assets/gonet-logo-black.png" alt="gonet — good one table">
-            <img class="logo logo-dark"  src="assets/gonet-logo-white.png" alt="" aria-hidden="true">
-        </a>
-        <div class="nav-links" role="menubar">
-            <a href="index.html" role="menuitem">Home</a>
-            <a href="story.html" role="menuitem">Our Story</a>
-            <a href="collection.html" role="menuitem">Collection</a>
-            <a href="film.html" role="menuitem">Film & Visuals</a>
-            <a href="consulting.html" role="menuitem">Consulting</a>
-            <a href="shop.html" role="menuitem">Shop</a>
-            <a href="contact.html" role="menuitem">Contact</a>
-        </div>
-        <div class="nav-actions">
-            <button class="btn lang-toggle" id="langToggle" aria-pressed="false" aria-label="Toggle language">KR / EN</button>
-        </div>
-    </div>
-</nav>
-
 <!doctype html>
 <html lang="ko">
 <head>
@@ -27,19 +5,19 @@
     <title>GONET — Our Story</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Libre+Bodoni:wght@500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css" /><script defer src="js/app.js"></script>
+    <link rel="stylesheet" href="/css/styles.css" /><script defer src="/js/app.js"></script>
 </head>
 <body data-lang="kr">
-<!-- HEADER (shared) -->
+<!-- header -->
 <nav class="nav" aria-label="Primary">
     <div class="nav-inner container">
-        <a class="brand" href="index.html" aria-label="GONET Home">
-            <img class="logo logo-light" src="assets/gonet-logo-black.png" alt="gonet — good one table">
-            <img class="logo logo-dark"  src="assets/gonet-logo-white.png" alt="" aria-hidden="true">
+        <a class="brand" href="/" aria-label="GONET Home">
+            <img class="logo logo-light" src="/assets/gonet-logo-black.png" alt="gonet — good one table">
+            <img class="logo logo-dark"  src="/assets/gonet-logo-white.png" alt="" aria-hidden="true">
         </a>
         <div class="nav-links" role="menubar">
-            <a href="index.html">Home</a><a href="story.html">Our Story</a><a href="collection.html">Collection</a>
-            <a href="film.html">Film & Visuals</a><a href="consulting.html">Consulting</a><a href="shop.html">Shop</a><a href="contact.html">Contact</a>
+            <a href="/">Home</a><a href="/story">Our Story</a><a href="/collection">Collection</a>
+            <a href="/film">Film & Visuals</a><a href="/consulting">Consulting</a><a href="/product">Product</a><a href="/contact">Contact</a>
         </div>
         <div class="nav-actions"><button class="btn" id="langToggle" aria-pressed="false">KR / EN</button></div>
     </div>
@@ -50,17 +28,32 @@
     <div class="grid-2">
         <div>
             <h3>ABOUT GONET</h3>
-            <p class="lang lang-kr">GONET = GOOD ONE TABLE … 좋은 한 상의 예술을 완성합니다. 테이블 너머의 여정에서 고네뜨를 만나보세요.</p>
-            <p class="lang lang-en">GONET = GOOD ONE TABLE … From an object to a meal, GONET creates the art of a good table.</p>
+            <p class="lang lang-kr">
+                GONET = GOOD ONE TABLE<br/>
+                좋은 한 상, 좋은 재료와 좋은 손길, 그리고 좋은 마음이 머무는 자리를 만들고자 합니다.
+                그 자리에 아름다움을 더하기 위해 고네뜨는 음식을 디자인하고, 눈에 담는 순간을 만들며,
+                음식과 함께 머무는 공간을 디자인합니다. 우리는 테이블 위의 순간을 바라봅니다.
+                음식과 함께 사람들이 모이고, 나누고, 기억하는 시간을, 그 안에 깃든 온기와 아름다움을 고요하게 담아냅니다.
+                하나의 오브제에서 한 끼의 이야기까지, 고네뜨는 좋은 한 상의 예술을 완성합니다.
+                테이블 너머의 여정에서 고네뜨를 만나보세요.
+            </p>
+            <p class="lang lang-en">
+                GONET = GOOD ONE TABLE<br/>
+                A good table — a place shaped by good ingredients, skillful hands, and sincere hearts.
+                To bring beauty to that moment, GONET designs the food itself, the visuals that capture it,
+                and the tableware that lives alongside it. We look to the warmth and rhythm that unfold around the table —
+                the quiet beauty of people gathering, sharing, and remembering — and we turn those moments into form.
+                From an object to a meal, GONET creates the art of a good table. Follow our journey beyond the table.
+            </p>
             <div class="row">
                 <a class="btn" href="https://www.instagram.com/g.one_t/" target="_blank" rel="noopener">Instagram</a>
                 <a class="btn" href="https://www.youtube.com/c/GONETable" target="_blank" rel="noopener">YouTube</a>
             </div>
         </div>
-        <aside class="story-aside">
+        <aside class="story-aside" style="border:1px solid var(--muted);border-radius:var(--radius);padding:16px;background:#fff">
             <div class="timeline">
                 <h4>Timeline</h4>
-                <ul>
+                <ul style="margin:0;padding-left:16px">
                     <li><strong>2023</strong> Leaf Dish concept sketches & prototypes</li>
                     <li><strong>2024</strong> First production & community debut</li>
                     <li><strong>2025</strong> Little Leaf & Seasonal Color study</li>
@@ -70,7 +63,7 @@
     </div>
 </main>
 
-<!-- FOOTER (shared) -->
+<!-- footer -->
 <footer class="container footer" aria-label="Footer">
     <div>© GONET — The Art of a Good Table</div>
     <nav class="footer-links">
@@ -82,14 +75,3 @@
 </footer>
 </body>
 </html>
-
-<!-- Footer -->
-<footer class="container footer" aria-label="Footer">
-    <div>© GONET — The Art of a Good Table</div>
-    <nav class="footer-links">
-        <a href="https://www.instagram.com/g.one_t/" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://www.youtube.com/c/GONETable" target="_blank" rel="noopener">YouTube</a>
-        <a href="mailto:hello@gonet.example">Email</a>
-        <a href="#">Terms</a>
-    </nav>
-</footer>
