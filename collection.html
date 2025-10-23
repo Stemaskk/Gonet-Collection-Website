@@ -9,17 +9,31 @@
 </head>
 <body data-lang="kr">
 <!-- header -->
-<nav class="nav" aria-label="Primary"><div class="nav-inner container">
+<nav class="nav is-top" aria-label="Primary"><div class="nav-inner container">
   <a class="brand" href="/" aria-label="GONET Home">
-    <img class="logo logo-light" src="/assets/gonet-logo-black.png" alt="gonet — good one table">
-    <img class="logo logo-dark"  src="/assets/gonet-logo-white.png" alt="" aria-hidden="true">
+    <img class="logo logo-black" src="/assets/gonet-logo-black.png" alt="gonet — good one table">
+    <img class="logo logo-white" src="/assets/gonet-logo-white.png" alt="" aria-hidden="true">
   </a>
   <div class="nav-links" role="menubar">
     <a href="/">Home</a><a href="/story">Our Story</a><a href="/collection">Collection</a>
     <a href="/film">Film & Visuals</a><a href="/consulting">Consulting</a><a href="/product">Product</a><a href="/contact">Contact</a>
   </div>
-  <div class="nav-actions"><button class="btn" id="langToggle" aria-pressed="false">KR / EN</button></div>
+  <div class="nav-actions">
+    <button class="btn" id="langToggle" aria-pressed="false">KR / EN</button>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel"><span class="menu-icon" aria-hidden="true"></span></button>
+  </div>
 </div></nav>
+<div id="menuPanel" class="menu-panel" hidden>
+  <button class="menu-backdrop" data-close aria-label="Close menu (backdrop)"></button>
+  <aside class="menu-sheet" role="dialog" aria-modal="true" aria-label="Site menu">
+    <header class="menu-sheet-head"><span>Menu</span><button class="menu-close" id="menuClose" aria-label="Close menu"><span class="menu-icon" aria-hidden="true"></span></button></header>
+    <nav class="menu-sheet-body">
+      <a href="/">Home</a><a href="/story">Our Story</a><a href="/collection">Collection</a>
+      <a href="/film">Film & Visuals</a><a href="/consulting">Consulting</a><a href="/product">Product</a><a href="/contact">Contact</a>
+      <hr><a href="https://www.instagram.com/g.one_t/" target="_blank" rel="noopener">Instagram</a><a href="https://www.youtube.com/c/GONETable" target="_blank" rel="noopener">YouTube</a>
+    </nav>
+  </aside>
+</div>
 
 <main class="container section">
   <h2>Collection</h2><div class="rule"></div>
@@ -47,7 +61,6 @@
   </div>
 </main>
 
-<!-- footer -->
 <footer class="container footer" aria-label="Footer">
   <div>© GONET — The Art of a Good Table</div>
   <nav class="footer-links">

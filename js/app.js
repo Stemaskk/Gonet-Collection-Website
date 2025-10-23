@@ -4,13 +4,15 @@ const toggle = document.getElementById('langToggle');
 
 function setLang(next){
     root.setAttribute('data-lang', next);
-    localStorage.setItem('gonet-lang', next);
+    try { localStorage.setItem('gonet-lang', next); } catch {}
     if (toggle){
         toggle.setAttribute('aria-pressed', String(next === 'en'));
         toggle.textContent = next === 'en' ? 'EN / KR' : 'KR / EN';
     }
 }
-setLang(localStorage.getItem('gonet-lang') === 'en' ? 'en' : 'kr');
+setLang((() => {
+    try { return localStorage.getItem('gonet-lang') === 'en' ? 'en' : 'kr'; } catch { return 'kr'; }
+})());
 toggle?.addEventListener('click', () => {
     const current = root.getAttribute('data-lang') || 'kr';
     setLang(current === 'kr' ? 'en' : 'kr');
@@ -32,7 +34,45 @@ toggle?.addEventListener('click', () => {
     });
 })();
 
-// Optional: click-to-play YouTube (if you use .yt-lazy)
+// Condense header on scroll
+const header = document.querySelector('.nav');
+const SCROLL_Y = 16;
+function updateHeader(){
+    if (!header) return;
+    if (window.scrollY > SCROLL_Y) header.classList.add('is-compact');
+    else header.classList.remove('is-compact');
+}
+updateHeader();
+window.addEventListener('scroll', updateHeader, { passive: true });
+
+// Slide-over menu toggles
+const menuBtn = document.getElementById('menuBtn');
+const menuPanel = document.getElementById('menuPanel');
+const menuClose = document.getElementById('menuClose');
+const backdrop = menuPanel?.querySelector('[data-close]');
+
+function openMenu(){
+    if (!menuPanel) return;
+    menuPanel.hidden = false;
+    requestAnimationFrame(() => menuPanel.classList.add('is-open'));
+    document.body.classList.add('no-scroll');
+    menuBtn?.setAttribute('aria-expanded','true');
+}
+function closeMenu(){
+    if (!menuPanel) return;
+    menuPanel.classList.remove('is-open');
+    document.body.classList.remove('no-scroll');
+    menuBtn?.setAttribute('aria-expanded','false');
+    setTimeout(() => (menuPanel.hidden = true), 280);
+}
+menuBtn?.addEventListener('click', openMenu);
+menuClose?.addEventListener('click', closeMenu);
+backdrop?.addEventListener('click', closeMenu);
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !menuPanel?.hidden) closeMenu();
+});
+
+// Optional: click-to-play YouTube if you use .yt-lazy boxes
 document.querySelectorAll('.yt-lazy').forEach(box => {
     box.addEventListener('click', () => {
         const src = box.getAttribute('data-src');
