@@ -34,22 +34,94 @@ toggle?.addEventListener('click', () => {
     });
 })();
 
-// ===== Legacy-style continuous fade + compact shrink =====
+// ===== Legacy-style continuous fade + "follow-through" snap =====
 const header = document.querySelector('.nav');
-const FADE_RANGE = 40;  // px to fully fade contents
-const COMPACT_Y  = 40;  // when to trigger compact layout
+const FADE_RANGE = 40;   // px to fully fade contents
+const COMPACT_Y  = 40;   // compact threshold (used for initial mapping)
+const IDLE_MS    = 120;  // how long after scroll to "finish" the motion
+let idleTimer = null;
+
+let lastY = window.scrollY || 0;
+let lastDir = 0;         // -1 up, +1 down, 0 unknown
+let isSnapping = false;
+let lastFade = 0;
+
+function clamp(n,min,max){ return Math.min(Math.max(n,min),max); }
+function setFade(v){
+    lastFade = v;
+    header?.style.setProperty('--fade', v.toFixed(3));
+}
+
+function animateFadeTo(target, duration = 220, onDone){
+    const start = performance.now();
+    const from  = lastFade || 0;
+    const delta = target - from;
+    isSnapping = true;
+
+    function step(now){
+        // allow scroll to interrupt
+        if (!isSnapping) return;
+        const t = clamp((now - start) / duration, 0, 1);
+        // easeInOutQuad
+        const eased = t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2)/2;
+        setFade(from + delta * eased);
+        if (t < 1) {
+            requestAnimationFrame(step);
+        } else {
+            isSnapping = false;
+            onDone && onDone();
+        }
+    }
+    requestAnimationFrame(step);
+}
+
+function onScrollIdle(){
+    if (!header) return;
+    if (isSnapping) return;
+
+    const y = window.scrollY || 0;
+
+    // Decide target by last scroll direction; if unknown, snap by midpoint.
+    let targetFade, makeCompact;
+    if (y <= 0) {
+        targetFade = 0; makeCompact = false;
+    } else if (lastDir > 0) {           // scrolling down → finish collapsing
+        targetFade = 1; makeCompact = true;
+    } else if (lastDir < 0) {           // scrolling up → finish expanding
+        targetFade = 0; makeCompact = false;
+    } else {
+        targetFade = (lastFade >= 0.5) ? 1 : 0;
+        makeCompact = targetFade === 1;
+    }
+
+    animateFadeTo(targetFade, 220, () => {
+        if (makeCompact) header.classList.add('is-compact');
+        else header.classList.remove('is-compact');
+    });
+}
 
 function updateHeader(){
     if (!header) return;
+
+    // Interrupt any snap if the user actively scrolls again
+    isSnapping = false;
+
     const y = window.scrollY || 0;
+    const dir = Math.sign(y - lastY);
+    if (dir !== 0) lastDir = dir;
+    lastY = y;
 
-    // 0 → 1 across FADE_RANGE pixels of scroll
-    const fade = Math.min(Math.max(y / FADE_RANGE, 0), 1);
-    header.style.setProperty('--fade', fade.toFixed(3));
+    // Live mapping during scroll (content fade follows scroll position)
+    const fade = clamp(y / FADE_RANGE, 0, 1);
+    setFade(fade);
 
-    // Compact height once past threshold
+    // Maintain compact class by scroll threshold while actively scrolling
     if (y > COMPACT_Y) header.classList.add('is-compact');
     else header.classList.remove('is-compact');
+
+    // Restart idle timer to "finish" the motion shortly after scroll stops
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(onScrollIdle, IDLE_MS);
 }
 updateHeader();
 window.addEventListener('scroll', updateHeader, { passive: true });
@@ -66,7 +138,6 @@ window.addEventListener('scroll', updateHeader, { passive: true });
     if (!nav || !inner || !brand || !links || !actions) return;
 
     function measureAndToggle(){
-        // Temporarily unhide links to measure real width
         const wasOverflow = nav.classList.contains('is-overflow');
         if (wasOverflow) nav.classList.remove('is-overflow');
         inner.offsetWidth; // reflow

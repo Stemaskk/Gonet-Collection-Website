@@ -278,3 +278,16 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
     opacity: .9;
     text-shadow: 0 1px 1px rgba(0,0,0,.25);
 }
+
+:root{
+    /* …your existing vars… */
+    --fade: 0; /* default for JS-driven fade */
+}
+
+.nav .brand,
+.nav .nav-links,
+.nav .lang-toggle,
+.nav .nav-social{
+    opacity: calc(1 - (var(--fade, 0)));
+    transform: translateY(calc(-8px * (var(--fade, 0))));
+}
