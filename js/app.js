@@ -7,7 +7,7 @@ function setLang(next){
     try { localStorage.setItem('gonet-lang', next); } catch {}
     if (toggle){
         toggle.setAttribute('aria-pressed', String(next === 'en'));
-        toggle.textContent = next === 'en' ? 'EN' : 'KR';   // single label
+        toggle.textContent = next === 'en' ? 'EN' : 'KR';
     }
 }
 setLang((() => {
@@ -34,11 +34,10 @@ toggle?.addEventListener('click', () => {
     });
 })();
 
-// ===== Legacy-style continuous fade + "follow-through" snap =====
+// ===== Legacy-style fade + "follow-through", BUT expand only at top =====
 const header = document.querySelector('.nav');
 const FADE_RANGE = 40;   // px to fully fade contents
-const COMPACT_Y  = 40;   // compact threshold (used for initial mapping)
-const IDLE_MS    = 120;  // how long after scroll to "finish" the motion
+const IDLE_MS    = 120;  // how long after scroll to finish motion
 let idleTimer = null;
 
 let lastY = window.scrollY || 0;
@@ -59,40 +58,23 @@ function animateFadeTo(target, duration = 220, onDone){
     isSnapping = true;
 
     function step(now){
-        // allow scroll to interrupt
-        if (!isSnapping) return;
+        if (!isSnapping) return; // interrupted by user scroll
         const t = clamp((now - start) / duration, 0, 1);
-        // easeInOutQuad
         const eased = t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2)/2;
         setFade(from + delta * eased);
-        if (t < 1) {
-            requestAnimationFrame(step);
-        } else {
-            isSnapping = false;
-            onDone && onDone();
-        }
+        if (t < 1) requestAnimationFrame(step);
+        else { isSnapping = false; onDone && onDone(); }
     }
     requestAnimationFrame(step);
 }
 
 function onScrollIdle(){
-    if (!header) return;
-    if (isSnapping) return;
-
+    if (!header || isSnapping) return;
     const y = window.scrollY || 0;
 
-    // Decide target by last scroll direction; if unknown, snap by midpoint.
-    let targetFade, makeCompact;
-    if (y <= 0) {
-        targetFade = 0; makeCompact = false;
-    } else if (lastDir > 0) {           // scrolling down → finish collapsing
-        targetFade = 1; makeCompact = true;
-    } else if (lastDir < 0) {           // scrolling up → finish expanding
-        targetFade = 0; makeCompact = false;
-    } else {
-        targetFade = (lastFade >= 0.5) ? 1 : 0;
-        makeCompact = targetFade === 1;
-    }
+    // NEW RULE: expand only at the very top (y === 0)
+    const targetFade = (y === 0) ? 0 : 1;
+    const makeCompact = (y !== 0);
 
     animateFadeTo(targetFade, 220, () => {
         if (makeCompact) header.classList.add('is-compact');
@@ -103,7 +85,7 @@ function onScrollIdle(){
 function updateHeader(){
     if (!header) return;
 
-    // Interrupt any snap if the user actively scrolls again
+    // Interrupt any snap if user is actively scrolling
     isSnapping = false;
 
     const y = window.scrollY || 0;
@@ -111,29 +93,29 @@ function updateHeader(){
     if (dir !== 0) lastDir = dir;
     lastY = y;
 
-    // Live mapping during scroll (content fade follows scroll position)
+    // Live fade mapping while scrolling
     const fade = clamp(y / FADE_RANGE, 0, 1);
     setFade(fade);
 
-    // Maintain compact class by scroll threshold while actively scrolling
-    if (y > COMPACT_Y) header.classList.add('is-compact');
+    // NEW RULE: compact whenever not at top
+    if (y > 0) header.classList.add('is-compact');
     else header.classList.remove('is-compact');
 
-    // Restart idle timer to "finish" the motion shortly after scroll stops
+    // After short idle, snap to full state (top=expanded, else=collapsed)
     clearTimeout(idleTimer);
     idleTimer = setTimeout(onScrollIdle, IDLE_MS);
 }
 updateHeader();
 window.addEventListener('scroll', updateHeader, { passive: true });
 
-// ===== Auto-collapse when nav would overflow (prevents "mushing") =====
+// ===== Keep header spacing fixed; switch to hamburger when overflow =====
 (function autoCollapseWhenOverflow(){
     const nav = document.querySelector('.nav');
     const inner = nav?.querySelector('.nav-inner');
     const brand = inner?.querySelector('.brand');
     const links = inner?.querySelector('.nav-links');
     const actions = inner?.querySelector('.nav-actions');
-    const SAFE = 24; // px buffer so we don't get jitter
+    const SAFE = 24;
 
     if (!nav || !inner || !brand || !links || !actions) return;
 

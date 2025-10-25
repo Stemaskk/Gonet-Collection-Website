@@ -5,6 +5,9 @@
     /* Header sizing */
     --navH: 88px;          /* height at top */
     --navH-compact: 56px;  /* height when scrolled */
+
+    /* Legacy fade variable (driven by JS) */
+    --fade: 0;
 }
 
 /* Base */
@@ -40,7 +43,7 @@ body[data-lang="en"] .lang-en{display:block}
 /* Typography */
 .hero-title{
     font-family:"Libre Bodoni",serif;
-    font-size:56px; /* fixed size per request */
+    font-size:56px;
     line-height:1.05; letter-spacing:.02em; margin:0 0 16px;
 }
 
@@ -94,23 +97,30 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
     grid-template-columns: 1fr; /* single column when compact */
 }
 
-/* Logo equals header height. Prevent auto-shrink on narrow widths. */
+/* Logo equals header height; scales smoothly */
 .logo{ height:var(--navH); width:auto; max-width:none; transition:height .28s ease; }
 .nav.is-compact .logo{ height:var(--navH-compact); max-width:none; }
 .logo-white, .logo-black { display:none; }
 .nav .logo-black { display:block; }
 
-/* Keep brand from squeezing; overflow triggers hamburger instead */
-.brand{display:flex; align-items:center; gap:10px; min-width:max-content}
+/* Keep header spacing fixed; never squish groups */
+.brand,
+.nav-links,
+.nav-actions,
+.nav-social{
+    flex: 0 0 auto;
+    min-width: max-content;
+}
 
 /* Links + actions */
 .nav-links{display:flex; gap:22px; justify-content:center; flex-wrap:nowrap;}
 .nav-links a{
     text-transform:uppercase; letter-spacing:.08em; font-size:14px; padding:6px 0;
-    white-space:nowrap; /* prevent multi-line labels */
+    white-space:nowrap;
 }
 .nav-links a.active{border-bottom:1px solid var(--fg)}
 .nav-actions{display:flex; align-items:center; justify-content:flex-end; gap:12px}
+.nav-actions > *, .nav-social > *{ flex:0 0 auto; }
 .lang-toggle{min-width:auto}
 
 /* Header social icons next to language */
@@ -119,13 +129,12 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
 .nav .icon-btn{ padding:6px; }
 
 /* ===== Legacy-style continuous fade of header contents ===== */
-/* Opacity/translate driven by --fade (0 → 1 as you scroll first ~40px) */
 .nav .brand,
 .nav .nav-links,
 .nav .lang-toggle,
 .nav .nav-social{
-    opacity: calc(1 - var(--fade, 0));
-    transform: translateY(calc(-8px * var(--fade, 0)));
+    opacity: calc(1 - (var(--fade, 0)));
+    transform: translateY(calc(-8px * (var(--fade, 0))));
     transition: opacity .18s linear, transform .24s ease, visibility .2s ease;
 }
 
@@ -164,13 +173,11 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
 .menu-btn.is-open .menu-icon::before{ transform: translateY(7px) rotate(45deg); }
 .menu-btn.is-open .menu-icon::after{  transform: translateY(-7px) rotate(-45deg); }
 
-/* Show hamburger:
-   - when links overflow (narrow widths)
-   - when scrolled (compact) — and center it */
+/* Show hamburger (overflow or compact) */
 .nav.is-overflow .menu-btn{ display:inline-flex; }
 .nav.is-compact .menu-btn{
     display:inline-flex;
-    margin:0 auto; /* center horizontally in single-column grid */
+    margin:0 auto; /* center in single-column grid */
 }
 .nav.is-overflow .nav-links{ display:none; }
 
@@ -185,15 +192,15 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
     opacity:1; visibility:visible; transform:none;
 }
 
-/* Dimmed white surface with slight blur (a big header) */
+/* Dimmed white surface with slight blur */
 .menu-overlay{
     position:absolute; inset:0;
     background:rgba(255,255,255,0.98);
     backdrop-filter: blur(10px);
-    display:grid; grid-template-rows:auto 1fr;
+    display:grid; grid-template-rows:auto auto 1fr;
 }
 
-/* Top bar inside the overlay (brand left, close right) */
+/* Top bar inside the overlay */
 .menu-bar{
     display:grid;
     grid-template-columns:1fr auto;
@@ -203,7 +210,7 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
     padding:0 var(--pad);
 }
 
-/* Close button: plain icon (like hamburger family) */
+/* Close button */
 .menu-close{
     border:0; background:transparent; cursor:pointer; padding:12px 6px;
 }
@@ -217,15 +224,25 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
 .menu-close .menu-icon::before{ position:absolute; top:0; transform:rotate(90deg); }
 .menu-close .menu-icon::after{ display:none; }
 
-/* Link area: like your header nav; row on desktop, stacked on mobile */
+/* Link area */
 .menu-links{
     display:flex; flex-wrap:wrap; gap:22px;
     align-content:start; align-items:center;
-    padding:24px var(--pad);
+    padding:20px var(--pad) 12px;
     max-width:1200px;
 }
 .menu-links a{ text-transform:uppercase; letter-spacing:.08em; font-size:14px; padding:6px 0 }
 .menu-links hr{ width:100%; border:0; border-top:1px solid var(--muted); margin:8px 0 4px; }
+
+/* Icons inside overlay */
+.menu-social{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    padding: 0 var(--pad) 24px;
+}
+.menu-social .icon{ width:20px; height:20px; }
+.menu-social .icon-btn{ padding:6px; }
 
 @media (max-width:820px){
     .menu-links{ flex-direction:column; align-items:flex-start; gap:10px; }
@@ -257,37 +274,27 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
     .form .two{grid-template-columns:1fr}
 }
 
-/* Tiny screens: a bit less side padding so logo fits before overflow */
+/* Tiny screens */
 @media (max-width:420px){ .container{ padding: 0 16px; } }
 
-/* ========== Tiny bottom-left credit (no divider) ========== */
-.mini-foot{
-    position: fixed;
-    left: 16px;
-    bottom: max(16px, calc(env(safe-area-inset-bottom,0px) + 8px));
-    z-index: 40;                 /* below overlay menu, above content */
+/* ========== Sticky bottom-of-site footer ========== */
+html, body { height: 100%; }
+body{
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+}
+main{ flex: 1 0 auto; }
+
+.site-foot{
+    flex-shrink: 0;
+    padding: 16px 0 calc(16px + env(safe-area-inset-bottom,0px));
     font-size: 12px;
-    line-height: 1;
-    color: #555;
-    opacity: .75;
-    pointer-events: none;
-    white-space: nowrap;
+    color: #555; opacity: .8;
 }
-.mini-foot.is-invert{
-    color: #fff;
-    opacity: .9;
-    text-shadow: 0 1px 1px rgba(0,0,0,.25);
-}
-
-:root{
-    /* …your existing vars… */
-    --fade: 0; /* default for JS-driven fade */
-}
-
-.nav .brand,
-.nav .nav-links,
-.nav .lang-toggle,
-.nav .nav-social{
-    opacity: calc(1 - (var(--fade, 0)));
-    transform: translateY(calc(-8px * (var(--fade, 0))));
+.site-foot .container{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: left;
 }
