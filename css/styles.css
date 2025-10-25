@@ -361,3 +361,41 @@ main{ flex: 1 0 auto; }
         display:none !important;
     }
 }
+
+/* ---- Edge nudges (tweakable) ---- */
+:root{ --edge-nudge: 12px; }  /* adjust 8–16px to taste */
+
+/* 1) Move the top-left logo a bit further left (expanded header only) */
+.nav:not(.is-compact) .brand{
+    margin-left: calc(-1 * var(--edge-nudge));
+}
+
+/* Also nudge the brand in the overlay's top bar, for visual consistency */
+.menu-bar .brand{
+    margin-left: calc(-1 * var(--edge-nudge));
+}
+
+/* 2) Line up the X button to the right edge in the overlay */
+.menu-bar{
+    /* keep container padding, but we’ll offset the button slightly */
+    padding-right: var(--pad); /* already present; restating is fine */
+}
+.menu-close{
+    justify-self: end !important;
+    display: flex;                /* let the icon hug the right */
+    align-items: center;
+    justify-content: flex-end;
+    padding: 12px 0 12px 6px !important;   /* no right padding */
+    margin-right: calc(-1 * var(--edge-nudge)) !important; /* pull to edge */
+    color:#111 !important;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Make sure the three bars use the same right “edge” on mobile */
+@media (orientation: portrait), (max-width: 820px){
+    .nav .nav-actions{
+        justify-content: flex-end !important;
+        justify-self: end !important;
+        margin-right: calc(-1 * var(--edge-nudge)); /* same visual edge as the X */
+    }
+}
