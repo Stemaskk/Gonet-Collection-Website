@@ -280,25 +280,25 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
     text-align:center;
 }
 
-/* === Header bar fade (background + border) === */
-/* Use a variable-driven alpha so we can fade smoothly before shrinking */
+/* --- Force header bar fade to apply --- */
 .nav{
-    --navAlpha: .85;                 /* default opacity at top */
-    background: rgba(255,255,255, var(--navAlpha));
+    --navAlpha: .85;
+    background: rgba(255,255,255,var(--navAlpha)) !important;
+    border-bottom-color: rgba(0,0,0,.08) !important;
     transition: background .24s ease, border-color .24s ease;
-    border-bottom-color: rgba(0,0,0,.08); /* soft border */
 }
-
-/* When we enter the "fading" phase (JS adds .is-fading at small scroll),
-   dim the bar itself a bit before compacting */
 .nav.is-fading{
-    --navAlpha: .68;                 /* fade the bar */
-    border-bottom-color: rgba(0,0,0,.04);
+    --navAlpha: .68;
+    border-bottom-color: rgba(0,0,0,.04) !important;
 }
-
-/* Once compact, bring it back to solid white */
 .nav.is-compact{
     --navAlpha: 1;
-    background: rgba(255,255,255, var(--navAlpha));
-    border-bottom-color: rgba(0,0,0,.10);
+    background: rgba(255,255,255,var(--navAlpha)) !important;
+    border-bottom-color: rgba(0,0,0,.10) !important;
+}
+
+/* --- Mini footer spacing tweak --- */
+.mini-foot{
+    left: 16px;  /* a touch off the left edge */
+    bottom: max(16px, calc(env(safe-area-inset-bottom,0px) + 8px)); /* up from the bottom */
 }
