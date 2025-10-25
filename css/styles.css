@@ -15,6 +15,7 @@ img{max-width:100%;display:block}
 :focus-visible{outline:2px solid #000;outline-offset:2px}
 .muted{color:#555}
 .hint{color:#444;font-size:14px}
+body.no-scroll{overflow:hidden}
 
 /* Language visibility */
 .lang{display:none}
@@ -117,22 +118,15 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
 .nav .icon{ width:20px; height:20px; }
 .nav .icon-btn{ padding:6px; }
 
-/* ===== Fade (applies BEFORE shrink) ===== */
-.brand, .nav-links, .lang-toggle, .nav-social{
-    transition: opacity .24s ease, transform .24s ease, visibility .24s ease;
-}
-.nav:not(.is-fading) .brand,
-.nav:not(.is-fading) .nav-links,
-.nav:not(.is-fading) .lang-toggle,
-.nav:not(.is-fading) .nav-social{
-    opacity:1; transform:none; visibility:visible; pointer-events:auto;
-}
-.nav.is-fading .brand,
-.nav.is-fading .nav-links,
-.nav.is-fading .lang-toggle,
-.nav.is-fading .nav-social{
-    opacity:0; transform: translateY(-8px);
-    visibility:hidden; pointer-events:none;
+/* ===== Legacy-style continuous fade of header contents ===== */
+/* Opacity/translate driven by --fade (0 → 1 as you scroll first ~40px) */
+.nav .brand,
+.nav .nav-links,
+.nav .lang-toggle,
+.nav .nav-social{
+    opacity: calc(1 - var(--fade, 0));
+    transform: translateY(calc(-8px * var(--fade, 0)));
+    transition: opacity .18s linear, transform .24s ease, visibility .2s ease;
 }
 
 /* Compact layout (after fade) — center hamburger only */
@@ -266,39 +260,21 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
 /* Tiny screens: a bit less side padding so logo fits before overflow */
 @media (max-width:420px){ .container{ padding: 0 16px; } }
 
-/* ========== Mini footer (text-only) ========== */
-.footer{
-    border-top:1px solid var(--muted);
-    padding:18px 0;
-    font-size:14px;
-    color:#444;
-}
-.footer .container{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-}
-
-/* --- Force header bar fade to apply --- */
-.nav{
-    --navAlpha: .85;
-    background: rgba(255,255,255,var(--navAlpha)) !important;
-    border-bottom-color: rgba(0,0,0,.08) !important;
-    transition: background .24s ease, border-color .24s ease;
-}
-.nav.is-fading{
-    --navAlpha: .68;
-    border-bottom-color: rgba(0,0,0,.04) !important;
-}
-.nav.is-compact{
-    --navAlpha: 1;
-    background: rgba(255,255,255,var(--navAlpha)) !important;
-    border-bottom-color: rgba(0,0,0,.10) !important;
-}
-
-/* --- Mini footer spacing tweak --- */
+/* ========== Tiny bottom-left credit (no divider) ========== */
 .mini-foot{
-    left: 16px;  /* a touch off the left edge */
-    bottom: max(16px, calc(env(safe-area-inset-bottom,0px) + 8px)); /* up from the bottom */
+    position: fixed;
+    left: 16px;
+    bottom: max(16px, calc(env(safe-area-inset-bottom,0px) + 8px));
+    z-index: 40;                 /* below overlay menu, above content */
+    font-size: 12px;
+    line-height: 1;
+    color: #555;
+    opacity: .75;
+    pointer-events: none;
+    white-space: nowrap;
+}
+.mini-foot.is-invert{
+    color: #fff;
+    opacity: .9;
+    text-shadow: 0 1px 1px rgba(0,0,0,.25);
 }

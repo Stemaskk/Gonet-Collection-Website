@@ -34,18 +34,27 @@ toggle?.addEventListener('click', () => {
     });
 })();
 
-// Condense header on scroll
+// ===== Legacy-style continuous fade + compact shrink =====
 const header = document.querySelector('.nav');
-const SCROLL_Y = 40; // stays full until you scroll a bit
+const FADE_RANGE = 40;  // px to fully fade contents
+const COMPACT_Y  = 40;  // when to trigger compact layout
+
 function updateHeader(){
     if (!header) return;
-    if (window.scrollY > SCROLL_Y) header.classList.add('is-compact');
+    const y = window.scrollY || 0;
+
+    // 0 → 1 across FADE_RANGE pixels of scroll
+    const fade = Math.min(Math.max(y / FADE_RANGE, 0), 1);
+    header.style.setProperty('--fade', fade.toFixed(3));
+
+    // Compact height once past threshold
+    if (y > COMPACT_Y) header.classList.add('is-compact');
     else header.classList.remove('is-compact');
 }
 updateHeader();
 window.addEventListener('scroll', updateHeader, { passive: true });
 
-// Auto-collapse when nav would overflow (prevents "mushing")
+// ===== Auto-collapse when nav would overflow (prevents "mushing") =====
 (function autoCollapseWhenOverflow(){
     const nav = document.querySelector('.nav');
     const inner = nav?.querySelector('.nav-inner');
@@ -82,7 +91,7 @@ window.addEventListener('scroll', updateHeader, { passive: true });
     }
 })();
 
-// Full-width overlay menu toggles + animated hamburger
+// ===== Full-width overlay menu toggles + animated hamburger =====
 const menuBtn = document.getElementById('menuBtn');
 const menuPanel = document.getElementById('menuPanel');
 const menuClose = document.getElementById('menuClose');
