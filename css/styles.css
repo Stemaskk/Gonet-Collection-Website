@@ -86,9 +86,9 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
 .nav.is-compact .nav-inner{ min-height: var(--navH-compact); }
 .nav.is-compact{ background:#fff }
 
-/* Logo: bigger at top, shrinks when compact. Always black. */
-.logo{ height:56px; width:auto; transition:height .2s ease; }
-.nav.is-compact .logo{ height:40px; }
+/* Logo exactly equals header height (normal & compact). Always black. */
+.logo{ height:var(--navH); width:auto; }
+.nav.is-compact .logo{ height:var(--navH-compact); }
 .logo-white, .logo-black { display:none; }
 .nav .logo-black { display:block; }
 
@@ -104,22 +104,26 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
 .nav.is-compact .lang-toggle,
 .nav.is-overflow .lang-toggle{ display:none; }
 
-/* Hamburger (clean 3 bars → X, no circle) */
-.menu-btn{ display:none; padding:12px 6px; border:0; background:transparent; cursor:pointer; }
+/* HAY-style hamburger (circle button, three lines; no morph) */
+.menu-btn{
+    display:none; /* shown by .is-compact or .is-overflow */
+    align-items:center; justify-content:center;
+    width:42px; height:42px;
+    border:1px solid var(--fg);
+    border-radius:999px;
+    background:transparent;
+    cursor:pointer;
+    transition:transform .18s ease, background .18s ease, color .18s ease;
+}
+.menu-btn:hover{ transform:translateY(-2px); background:var(--fg); color:#fff; }
 .menu-icon,
 .menu-icon::before,
 .menu-icon::after{
-    content:""; display:block; width:26px; height:2px; background:currentColor;
+    content:""; display:block; height:2px; width:18px; background:currentColor;
     border-radius:2px; position:relative;
-    transition: transform .22s ease, opacity .22s ease, background .22s ease, width .22s ease;
 }
-.menu-icon::before{ position:absolute; top:-7px; left:0; }
-.menu-icon::after{  position:absolute; top: 7px; left:0; }
-@media (hover:hover){
-    .menu-btn:hover .menu-icon,
-    .menu-btn:hover .menu-icon::before,
-    .menu-btn:hover .menu-icon::after{ width:28px; }
-}
+.menu-icon::before{ position:absolute; top:-6px; left:0; }
+.menu-icon::after{  position:absolute; top: 6px; left:0; }
 
 /* Show hamburger when scrolled (compact) OR when links would overflow */
 .nav.is-compact .menu-btn,
@@ -127,11 +131,6 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
 
 /* When overflow, hide link row so nothing gets mushed */
 .nav.is-overflow .nav-links{ display:none; }
-
-/* Morph to X when open */
-.menu-btn.is-open .menu-icon{ background:transparent; }
-.menu-btn.is-open .menu-icon::before{ transform: translateY(7px) rotate(45deg); }
-.menu-btn.is-open .menu-icon::after{  transform: translateY(-7px) rotate(-45deg); }
 
 /* Slide-over menu panel */
 .menu-panel[hidden]{display:none}
@@ -146,20 +145,28 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
     .menu-sheet{ background:#111; color:#eee; border-color:#333; }
 }
 .menu-panel.is-open .menu-sheet{ transform:translateX(0); }
+
+/* Slide-over close button: circular X (HAY vibe) */
 .menu-sheet-head{
     display:flex; align-items:center; justify-content:space-between;
     padding:14px var(--pad); border-bottom:1px solid var(--muted);
 }
-.menu-close{ border:0; background:transparent; cursor:pointer; }
-.menu-sheet-body{ display:grid; gap:8px; padding:16px var(--pad); align-content:start; }
-.menu-sheet-body a{ padding:8px 0; border-bottom:1px solid rgba(0,0,0,.06); }
-@media (prefers-color-scheme: dark){ .menu-sheet-body a{ border-bottom-color: rgba(255,255,255,.08); } }
+.menu-close{
+    width:42px; height:42px;
+    border:1px solid currentColor;
+    border-radius:999px;
+    background:transparent;
+    cursor:pointer;
+}
+.menu-close .menu-icon{ transform:rotate(45deg); }
+.menu-close .menu-icon::before{ transform:rotate(90deg); top:0; }
+.menu-close .menu-icon::after{ display:none; }
 
-/* Lock body scroll when menu open */
+/* Body scroll lock when menu open */
 body.no-scroll{overflow:hidden}
 
 /* ========== Home: full-bleed, flexible background hero ========== */
-/* fills the entire viewport, adapts to any browser size */
+/* fills the entire viewport; header floats on top */
 .hero-bg{
     position: relative;
     display: grid;
@@ -196,3 +203,5 @@ body.no-scroll{overflow:hidden}
     .icon{ width:28px; height:28px; }
     .footer-icons{ gap:16px; }
 }
+
+/* NOTE: No width-based media rule hides .nav-links; overflow is handled by JS via .is-overflow */
