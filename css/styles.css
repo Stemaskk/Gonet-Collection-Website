@@ -362,3 +362,33 @@ main{ flex: 1 0 auto; }
         margin: 0;                           /* override the "margin:0 auto" center */
     }
 }
+
+/* Mobile: hide KR/EN and header icons even when expanded */
+@media (orientation: portrait), (max-width: 820px){
+    .nav .lang-toggle,
+    .nav .nav-social{
+        display: none !important;
+    }
+}
+
+/* Mobile (portrait / narrow): right-align the opened menu */
+@media (orientation: portrait), (max-width: 820px){
+    /* Keep the close "X" exactly where the hamburger was (top-right)
+       — already handled by .menu-bar grid + container padding */
+
+    /* Right-align the menu links block */
+    .menu-links{
+        flex-direction: column !important; /* stack */
+        align-items: flex-end !important;  /* right edge */
+        text-align: right !important;
+        gap: 10px;
+    }
+    .menu-links a{ text-align: right; }
+
+    /* Put the icons directly under the links, aligned right */
+    .menu-social{
+        align-self: start;                 /* sits below the links */
+        justify-content: flex-end;         /* push icons to the right */
+        width: 100%;
+    }
+}
