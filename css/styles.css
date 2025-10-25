@@ -1,6 +1,10 @@
 :root{
     --bg:#fff; --fg:#111; --muted:#e9e9e9; --muted-2:#f6f6f6;
     --pad:28px; --radius:16px; --trans:180ms ease;
+
+    /* header sizing */
+    --navH: 88px;          /* header height at top */
+    --navH-compact: 56px;  /* header height when scrolled */
 }
 
 /* Base */
@@ -65,54 +69,63 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
 .footer-links{display:flex; gap:14px; font-size:14px}
 
 /* === Condensing header (HAY-like) === */
-.nav{position:sticky; top:0; z-index:60; background:rgba(255,255,255,.85); backdrop-filter:blur(8px); border-bottom:1px solid var(--muted); transition:background .25s ease, padding .25s ease}
-.nav-inner{max-width:1200px; margin:0 auto; padding:12px var(--pad); display:grid; grid-template-columns:1fr auto 1fr; align-items:center}
-.nav.is-compact .nav-inner{padding:8px var(--pad)}
-.nav.is-compact{background:#fff}
+.nav{
+    position:sticky; top:0; z-index:60;
+    background:rgba(255,255,255,.85); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--muted);
+    transition:background .25s ease, padding .25s ease
+}
+.nav-inner{
+    max-width:1200px; margin:0 auto; padding:0 var(--pad);
+    min-height: var(--navH);
+    display:grid; grid-template-columns:1fr auto 1fr; align-items:center
+}
+.nav.is-compact .nav-inner{ min-height: var(--navH-compact); }
+.nav.is-compact{ background:#fff }
 
-/* Logo state: default black; invert at top over dark hero; black when compact */
-.logo{height:28px; width:auto}
+/* Logo state and sizing */
+.logo{ height:56px; width:auto; transition:height .2s ease; }
+.nav.is-compact .logo{ height:40px; }
 .logo-white, .logo-black { display:none; }
-.nav .logo-black { display:block; }
-.nav.is-invert:not(.is-compact) .logo-black { display:none; }
-.nav.is-invert:not(.is-compact) .logo-white { display:block; }
+.nav .logo-black { display:block; } /* always black now */
 
+/* Brand + nav links */
 .brand{display:flex; align-items:center; gap:10px}
 .nav-links{display:flex; gap:22px; justify-content:center}
 .nav-links a{text-transform:uppercase; letter-spacing:.08em; font-size:14px; padding:6px 0}
 .nav-links a.active{border-bottom:1px solid var(--fg)}
 .nav-actions{display:flex; align-items:center; justify-content:flex-end; gap:10px}
+
+/* Hide KR/EN when compact */
 .lang-toggle{min-width:96px}
+.nav.is-compact .lang-toggle{ display:none; }
 
-/* Hamburger button */
+/* Hamburger (clean lines, no circle, animates to X) */
 .menu-btn{
-    display:none; align-items:center; justify-content:center;
-    width:42px; height:42px; border:1px solid var(--fg);
-    border-radius:999px; background:transparent; cursor:pointer;
-    transition:transform .18s ease, background .18s ease;
+    display:none; padding:12px 6px;
+    border:0; background:transparent; cursor:pointer;
 }
-.menu-btn:hover{transform:translateY(-2px); background:var(--fg); color:#fff}
-.menu-btn:hover .menu-icon, .menu-btn:hover .menu-icon::before, .menu-btn:hover .menu-icon::after{background:#fff}
-
-/* The three lines */
 .menu-icon,
 .menu-icon::before,
 .menu-icon::after{
-    content:""; display:block; height:2px; width:18px; background:currentColor;
+    content:""; display:block; width:26px; height:2px; background:currentColor;
     border-radius:2px; position:relative;
+    transition: transform .22s ease, opacity .22s ease, background .22s ease, width .22s ease;
 }
-.menu-icon::before{top:-6px; position:relative}
-.menu-icon::after{top:4px; position:relative}
-
-/* Compact state logic: hide link row, show hamburger on scroll */
-.nav.is-compact .nav-links{display:none}
-.nav.is-compact .menu-btn{display:inline-flex}
-
-/* Mobile: always use hamburger */
-@media (max-width:960px){
-    .nav-links{display:none}
-    .menu-btn{display:inline-flex}
+.menu-icon::before{ position:absolute; top:-7px; left:0; }
+.menu-icon::after{  position:absolute; top: 7px; left:0; }
+@media (hover:hover){
+    .menu-btn:hover .menu-icon,
+    .menu-btn:hover .menu-icon::before,
+    .menu-btn:hover .menu-icon::after{ width:28px; }
 }
+/* show hamburger on compact (desktop) and always on mobile */
+.nav.is-compact .menu-btn{ display:inline-flex; }
+@media (max-width:960px){ .menu-btn{ display:inline-flex; } }
+/* morph to X when open */
+.menu-btn.is-open .menu-icon{ background:transparent; }
+.menu-btn.is-open .menu-icon::before{ transform: translateY(7px) rotate(45deg); }
+.menu-btn.is-open .menu-icon::after{  transform: translateY(-7px) rotate(-45deg); }
 
 /* === Slide-over menu panel === */
 .menu-panel[hidden]{display:none}
@@ -127,17 +140,16 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
     .menu-sheet{ background:#111; color:#eee; border-color:#333; }
 }
 .menu-panel.is-open .menu-sheet{ transform:translateX(0); }
-
 .menu-sheet-head{
     display:flex; align-items:center; justify-content:space-between;
     padding:14px var(--pad); border-bottom:1px solid var(--muted);
 }
 .menu-close{
-    width:42px; height:42px; border:1px solid currentColor; border-radius:999px; background:transparent; cursor:pointer;
+    width:auto; height:auto; border:0; background:transparent; cursor:pointer;
 }
-.menu-close .menu-icon{ transform:rotate(45deg); }
-.menu-close .menu-icon::before{ transform:rotate(90deg); top:0; }
-.menu-close .menu-icon::after{ display:none; }
+.menu-close .menu-icon{ }
+.menu-close .menu-icon::before{ }
+.menu-close .menu-icon::after{ }
 
 .menu-sheet-body{ display:grid; gap:8px; padding:16px var(--pad); align-content:start; }
 .menu-sheet-body a{ padding:8px 0; border-bottom:1px solid rgba(0,0,0,.06); }
@@ -174,7 +186,4 @@ body.no-scroll{overflow:hidden}
     .feature,.feature.reverse{grid-template-columns:1fr}
     .cards{grid-template-columns:1fr}
     .form .two{grid-template-columns:1fr}
-}
-@media (max-width:640px){
-    /* nav-links already hidden; menu shows */
 }

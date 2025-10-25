@@ -45,7 +45,7 @@ function updateHeader(){
 updateHeader();
 window.addEventListener('scroll', updateHeader, { passive: true });
 
-// Slide-over menu toggles
+// Slide-over menu toggles + animated hamburger
 const menuBtn = document.getElementById('menuBtn');
 const menuPanel = document.getElementById('menuPanel');
 const menuClose = document.getElementById('menuClose');
@@ -57,15 +57,19 @@ function openMenu(){
     requestAnimationFrame(() => menuPanel.classList.add('is-open'));
     document.body.classList.add('no-scroll');
     menuBtn?.setAttribute('aria-expanded','true');
+    menuBtn?.classList.add('is-open');              // animate to X
 }
 function closeMenu(){
     if (!menuPanel) return;
     menuPanel.classList.remove('is-open');
     document.body.classList.remove('no-scroll');
     menuBtn?.setAttribute('aria-expanded','false');
+    menuBtn?.classList.remove('is-open');           // back to hamburger
     setTimeout(() => (menuPanel.hidden = true), 280);
 }
-menuBtn?.addEventListener('click', openMenu);
+menuBtn?.addEventListener('click', () => {
+    if (menuPanel?.hidden) openMenu(); else closeMenu();
+});
 menuClose?.addEventListener('click', closeMenu);
 backdrop?.addEventListener('click', closeMenu);
 document.addEventListener('keydown', (e) => {
