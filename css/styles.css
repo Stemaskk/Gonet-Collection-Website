@@ -98,8 +98,11 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
 .brand{display:flex; align-items:center; gap:10px; min-width:max-content}
 
 /* Links + actions */
-.nav-links{display:flex; gap:22px; justify-content:center}
-.nav-links a{ text-transform:uppercase; letter-spacing:.08em; font-size:14px; padding:6px 0 } /* fixed size */
+.nav-links{display:flex; gap:22px; justify-content:center; flex-wrap:nowrap;}
+.nav-links a{
+    text-transform:uppercase; letter-spacing:.08em; font-size:14px; padding:6px 0;
+    white-space:nowrap; /* prevent 2-line labels like “Film & Visuals” */
+}
 .nav-links a.active{border-bottom:1px solid var(--fg)}
 .nav-actions{display:flex; align-items:center; justify-content:flex-end; gap:12px}
 .lang-toggle{min-width:auto}
@@ -109,23 +112,29 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
 .nav .icon{ width:20px; height:20px; }
 .nav .icon-btn{ padding:6px; }
 
-/* ===== Fade-out on scroll for header pieces ===== */
+/* ===== Fade (applies BEFORE shrink) ===== */
 .brand, .nav-links, .lang-toggle, .nav-social{
     transition: opacity .22s ease, transform .22s ease, visibility .22s ease;
 }
-.nav:not(.is-compact) .brand,
-.nav:not(.is-compact) .nav-links,
-.nav:not(.is-compact) .lang-toggle,
-.nav:not(.is-compact) .nav-social{
+.nav:not(.is-fading) .brand,
+.nav:not(.is-fading) .nav-links,
+.nav:not(.is-fading) .lang-toggle,
+.nav:not(.is-fading) .nav-social{
     opacity:1; transform:none; visibility:visible; pointer-events:auto;
 }
-.nav.is-compact .brand,
-.nav.is-compact .nav-links{
-    opacity:0; transform: translateY(-6px);
+.nav.is-fading .brand,
+.nav.is-fading .nav-links,
+.nav.is-fading .lang-toggle,
+.nav.is-fading .nav-social{
+    opacity:0; transform: translateY(-8px);
     visibility:hidden; pointer-events:none;
 }
-/* Center the actions row (hamburger) in compact header */
+
+/* Compact layout (after fade) — center hamburger only */
+.nav.is-compact .nav-inner{ grid-template-columns:1fr; }
 .nav.is-compact .nav-actions{ justify-content:center; }
+.nav.is-compact .brand,
+.nav.is-compact .nav-links{ display:none; }
 
 /* Hide KR/EN + socials when compact or overflowing */
 .nav.is-compact .lang-toggle,
