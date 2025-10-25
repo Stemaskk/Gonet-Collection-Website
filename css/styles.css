@@ -2,9 +2,9 @@
     --bg:#fff; --fg:#111; --muted:#e9e9e9; --muted-2:#f6f6f6;
     --pad:28px; --radius:16px; --trans:180ms ease;
 
-    /* header sizing */
-    --navH: 88px;          /* header height at top */
-    --navH-compact: 56px;  /* header height when scrolled */
+    /* Header sizing */
+    --navH: 88px;          /* height at top */
+    --navH-compact: 56px;  /* height when scrolled */
 }
 
 /* Base */
@@ -37,7 +37,11 @@ body[data-lang="en"] .lang-en{display:block}
 .rule{height:1px; background:var(--muted); margin:0 0 28px}
 
 /* Typography */
-.hero-title{font-family:"Libre Bodoni",serif; font-size:clamp(40px,6vw,64px); line-height:1.05; letter-spacing:.02em; margin:0 0 16px}
+.hero-title{
+    font-family:"Libre Bodoni",serif;
+    font-size:56px; /* fixed size per request */
+    line-height:1.05; letter-spacing:.02em; margin:0 0 16px;
+}
 
 /* Grids / Feature */
 .grid-2{display:grid; grid-template-columns:1.1fr .9fr; gap:24px; align-items:start}
@@ -64,11 +68,10 @@ body[data-lang="en"] .lang-en{display:block}
 label{display:grid; gap:6px; font-size:14px}
 input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inherit}
 
-/* Footer */
+/* Footer base */
 .footer{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; padding:24px 0}
-.footer-links{display:flex; gap:14px; font-size:14px}
 
-/* === Condensing header (HAY-like) === */
+/* ========== Condensing Header (HAY-like) ========== */
 .nav{
     position:sticky; top:0; z-index:60;
     background:rgba(255,255,255,.85); backdrop-filter:blur(8px);
@@ -83,28 +86,26 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
 .nav.is-compact .nav-inner{ min-height: var(--navH-compact); }
 .nav.is-compact{ background:#fff }
 
-/* Logo state and sizing */
+/* Logo: bigger at top, shrinks when compact. Always black. */
 .logo{ height:56px; width:auto; transition:height .2s ease; }
 .nav.is-compact .logo{ height:40px; }
 .logo-white, .logo-black { display:none; }
-.nav .logo-black { display:block; } /* always black now */
+.nav .logo-black { display:block; }
 
-/* Brand + nav links */
+/* Links + actions */
 .brand{display:flex; align-items:center; gap:10px}
 .nav-links{display:flex; gap:22px; justify-content:center}
-.nav-links a{text-transform:uppercase; letter-spacing:.08em; font-size:14px; padding:6px 0}
+.nav-links a{ text-transform:uppercase; letter-spacing:.08em; font-size:14px; padding:6px 0 } /* fixed size */
 .nav-links a.active{border-bottom:1px solid var(--fg)}
 .nav-actions{display:flex; align-items:center; justify-content:flex-end; gap:10px}
-
-/* Hide KR/EN when compact */
 .lang-toggle{min-width:96px}
-.nav.is-compact .lang-toggle{ display:none; }
 
-/* Hamburger (clean lines, no circle, animates to X) */
-.menu-btn{
-    display:none; padding:12px 6px;
-    border:0; background:transparent; cursor:pointer;
-}
+/* Hide KR/EN when compact OR when overflow forces hamburger */
+.nav.is-compact .lang-toggle,
+.nav.is-overflow .lang-toggle{ display:none; }
+
+/* Hamburger (clean 3 bars → X, no circle) */
+.menu-btn{ display:none; padding:12px 6px; border:0; background:transparent; cursor:pointer; }
 .menu-icon,
 .menu-icon::before,
 .menu-icon::after{
@@ -119,15 +120,20 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
     .menu-btn:hover .menu-icon::before,
     .menu-btn:hover .menu-icon::after{ width:28px; }
 }
-/* show hamburger on compact (desktop) and always on mobile */
-.nav.is-compact .menu-btn{ display:inline-flex; }
-@media (max-width:960px){ .menu-btn{ display:inline-flex; } }
-/* morph to X when open */
+
+/* Show hamburger when scrolled (compact) OR when links would overflow */
+.nav.is-compact .menu-btn,
+.nav.is-overflow .menu-btn{ display:inline-flex; }
+
+/* When overflow, hide link row so nothing gets mushed */
+.nav.is-overflow .nav-links{ display:none; }
+
+/* Morph to X when open */
 .menu-btn.is-open .menu-icon{ background:transparent; }
 .menu-btn.is-open .menu-icon::before{ transform: translateY(7px) rotate(45deg); }
 .menu-btn.is-open .menu-icon::after{  transform: translateY(-7px) rotate(-45deg); }
 
-/* === Slide-over menu panel === */
+/* Slide-over menu panel */
 .menu-panel[hidden]{display:none}
 .menu-panel{position:fixed; inset:0; z-index:70}
 .menu-backdrop{position:absolute; inset:0; background:rgba(0,0,0,.35); border:0; padding:0; margin:0}
@@ -144,32 +150,25 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
     display:flex; align-items:center; justify-content:space-between;
     padding:14px var(--pad); border-bottom:1px solid var(--muted);
 }
-.menu-close{
-    width:auto; height:auto; border:0; background:transparent; cursor:pointer;
-}
-.menu-close .menu-icon{ }
-.menu-close .menu-icon::before{ }
-.menu-close .menu-icon::after{ }
-
+.menu-close{ border:0; background:transparent; cursor:pointer; }
 .menu-sheet-body{ display:grid; gap:8px; padding:16px var(--pad); align-content:start; }
 .menu-sheet-body a{ padding:8px 0; border-bottom:1px solid rgba(0,0,0,.06); }
-@media (prefers-color-scheme: dark){
-    .menu-sheet-body a{ border-bottom-color: rgba(255,255,255,.08); }
-}
+@media (prefers-color-scheme: dark){ .menu-sheet-body a{ border-bottom-color: rgba(255,255,255,.08); } }
 
-/* Body scroll lock when menu open */
+/* Lock body scroll when menu open */
 body.no-scroll{overflow:hidden}
 
-/* === Home: full-bleed background hero === */
+/* ========== Home: full-bleed, flexible background hero ========== */
+/* fills the entire viewport, adapts to any browser size */
 .hero-bg{
     position: relative;
     display: grid;
     align-items: center;
-    min-height: min(92vh, 900px);
+
+    min-height: 100svh; /* modern viewport unit that respects mobile UI */
     padding: clamp(48px, 8vh, 96px) 0;
-    border-radius: 0;
-    overflow: hidden;
     color: #fff;
+
     --hero-overlay: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.45) 100%);
     background:
             var(--hero-overlay),
@@ -180,10 +179,20 @@ body.no-scroll{overflow:hidden}
 .hero-bg .row .btn{ border-color:#fff; color:#fff; }
 .hero-bg .row .btn:hover{ background:#fff; color:#000; }
 
-/* Responsive */
+/* Responsive (content) */
 @media (max-width:960px){
     .grid-2{grid-template-columns:1fr}
     .feature,.feature.reverse{grid-template-columns:1fr}
     .cards{grid-template-columns:1fr}
     .form .two{grid-template-columns:1fr}
+}
+
+/* ========== Footer icons ========== */
+.footer-icons{ display:flex; align-items:center; gap:14px; }
+.icon-btn{ display:inline-flex; align-items:center; justify-content:center; padding:8px; }
+.icon{ width:24px; height:24px; transition: transform .15s ease, opacity .15s ease; }
+.icon-btn:hover .icon{ transform:translateY(-2px); opacity:.85; }
+@media (max-width:640px){
+    .icon{ width:28px; height:28px; }
+    .footer-icons{ gap:16px; }
 }

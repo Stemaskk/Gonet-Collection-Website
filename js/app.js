@@ -36,7 +36,7 @@ toggle?.addEventListener('click', () => {
 
 // Condense header on scroll
 const header = document.querySelector('.nav');
-const SCROLL_Y = 16;
+const SCROLL_Y = 40; // stays full until you scroll a bit
 function updateHeader(){
     if (!header) return;
     if (window.scrollY > SCROLL_Y) header.classList.add('is-compact');
@@ -44,6 +44,53 @@ function updateHeader(){
 }
 updateHeader();
 window.addEventListener('scroll', updateHeader, { passive: true });
+
+// Auto-collapse when nav would overflow (prevents "mushing")
+(function autoCollapseWhenOverflow(){
+    const nav = document.querySelector('.nav');
+    const inner = nav?.querySelector('.nav-inner');
+    const brand = inner?.querySelector('.brand');
+    const links = inner?.querySelector('.nav-links');
+    const actions = inner?.querySelector('.nav-actions');
+    const SAFE = 24; // px buffer so we don't get jitter
+
+    if (!nav || !inner || !brand || !links || !actions) return;
+
+    function measureAndToggle(){
+        // Temporarily unhide links to measure real width
+        const wasOverflow = nav.classList.contains('is-overflow');
+        if (wasOverflow) nav.classList.remove('is-overflow');
+
+        // Force a reflow to get accurate sizes
+        // eslint-disable-next-line no-unused-expressions
+        inner.offsetWidth;
+
+        const need = brand.offsetWidth + links.scrollWidth + actions.offsetWidth + SAFE;
+        const have = inner.clientWidth;
+
+        // Restore overflow state if we changed it before measuring
+        if (wasOverflow) nav.classList.add('is-overflow');
+
+        if (need > have) nav.classList.add('is-overflow');
+        else nav.classList.remove('is-overflow');
+    }
+
+    // Initial + on resize + when fonts finish loading
+    measureAndToggle();
+    window.addEventListener('resize', measureAndToggle, { passive: true });
+    window.addEventListener('pageshow', measureAndToggle, { passive: true });
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(measureAndToggle).catch(()=>{});
+    }
+
+    // ResizeObserver keeps it stable if anything inside changes width
+    if ('ResizeObserver' in window){
+        const ro = new ResizeObserver(measureAndToggle);
+        ro.observe(inner);
+        ro.observe(links);
+        ro.observe(actions);
+    }
+})();
 
 // Slide-over menu toggles + animated hamburger
 const menuBtn = document.getElementById('menuBtn');
@@ -57,14 +104,14 @@ function openMenu(){
     requestAnimationFrame(() => menuPanel.classList.add('is-open'));
     document.body.classList.add('no-scroll');
     menuBtn?.setAttribute('aria-expanded','true');
-    menuBtn?.classList.add('is-open');              // animate to X
+    menuBtn?.classList.add('is-open');     // morph bars → X
 }
 function closeMenu(){
     if (!menuPanel) return;
     menuPanel.classList.remove('is-open');
     document.body.classList.remove('no-scroll');
     menuBtn?.setAttribute('aria-expanded','false');
-    menuBtn?.classList.remove('is-open');           // back to hamburger
+    menuBtn?.classList.remove('is-open');  // back to bars
     setTimeout(() => (menuPanel.hidden = true), 280);
 }
 menuBtn?.addEventListener('click', () => {
@@ -74,17 +121,4 @@ menuClose?.addEventListener('click', closeMenu);
 backdrop?.addEventListener('click', closeMenu);
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !menuPanel?.hidden) closeMenu();
-});
-
-// Optional: click-to-play YouTube if you use .yt-lazy boxes
-document.querySelectorAll('.yt-lazy').forEach(box => {
-    box.addEventListener('click', () => {
-        const src = box.getAttribute('data-src');
-        const iframe = document.createElement('iframe');
-        iframe.className = 'video';
-        iframe.setAttribute('allowfullscreen', '');
-        iframe.setAttribute('allow','accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-        iframe.src = src;
-        box.replaceWith(iframe);
-    }, { once: true });
 });
