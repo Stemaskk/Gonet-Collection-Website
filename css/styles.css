@@ -192,12 +192,12 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
     opacity:1; visibility:visible; transform:none;
 }
 
+/* Dimmed white surface with slight blur */
 .menu-overlay{
     position:absolute; inset:0;
     background:rgba(255,255,255,0.98);
     backdrop-filter: blur(10px);
-    display:grid;
-    grid-template-rows:auto auto auto;  /* header, links, icons stacked */
+    display:grid; grid-template-rows:auto auto 1fr;
 }
 
 /* Top bar inside the overlay */
