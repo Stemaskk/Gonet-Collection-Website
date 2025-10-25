@@ -1,4 +1,4 @@
-// Language toggle (KR default)
+// Language toggle (KR default, button shows "KR" or "EN")
 const root = document.body;
 const toggle = document.getElementById('langToggle');
 
@@ -7,7 +7,7 @@ function setLang(next){
     try { localStorage.setItem('gonet-lang', next); } catch {}
     if (toggle){
         toggle.setAttribute('aria-pressed', String(next === 'en'));
-        toggle.textContent = next === 'en' ? 'EN / KR' : 'KR / EN';
+        toggle.textContent = next === 'en' ? 'EN' : 'KR';   // single label
     }
 }
 setLang((() => {
@@ -60,43 +60,32 @@ window.addEventListener('scroll', updateHeader, { passive: true });
         // Temporarily unhide links to measure real width
         const wasOverflow = nav.classList.contains('is-overflow');
         if (wasOverflow) nav.classList.remove('is-overflow');
-
-        // Force a reflow to get accurate sizes
-        // eslint-disable-next-line no-unused-expressions
-        inner.offsetWidth;
+        inner.offsetWidth; // reflow
 
         const need = brand.offsetWidth + links.scrollWidth + actions.offsetWidth + SAFE;
         const have = inner.clientWidth;
 
-        // Restore overflow state if we changed it before measuring
         if (wasOverflow) nav.classList.add('is-overflow');
-
         if (need > have) nav.classList.add('is-overflow');
         else nav.classList.remove('is-overflow');
     }
 
-    // Initial + on resize + when fonts finish loading
     measureAndToggle();
     window.addEventListener('resize', measureAndToggle, { passive: true });
     window.addEventListener('pageshow', measureAndToggle, { passive: true });
     if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(measureAndToggle).catch(()=>{});
     }
-
-    // ResizeObserver keeps it stable if anything inside changes width
     if ('ResizeObserver' in window){
         const ro = new ResizeObserver(measureAndToggle);
-        ro.observe(inner);
-        ro.observe(links);
-        ro.observe(actions);
+        ro.observe(inner); ro.observe(links); ro.observe(actions);
     }
 })();
 
-// Slide-over menu toggles + animated hamburger
+// Full-width overlay menu toggles + animated hamburger
 const menuBtn = document.getElementById('menuBtn');
 const menuPanel = document.getElementById('menuPanel');
 const menuClose = document.getElementById('menuClose');
-const backdrop = menuPanel?.querySelector('[data-close]');
 
 function openMenu(){
     if (!menuPanel) return;
@@ -112,13 +101,12 @@ function closeMenu(){
     document.body.classList.remove('no-scroll');
     menuBtn?.setAttribute('aria-expanded','false');
     menuBtn?.classList.remove('is-open');  // back to bars
-    setTimeout(() => (menuPanel.hidden = true), 280);
+    setTimeout(() => (menuPanel.hidden = true), 250);
 }
 menuBtn?.addEventListener('click', () => {
     if (menuPanel?.hidden) openMenu(); else closeMenu();
 });
 menuClose?.addEventListener('click', closeMenu);
-backdrop?.addEventListener('click', closeMenu);
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !menuPanel?.hidden) closeMenu();
 });

@@ -68,9 +68,6 @@ body[data-lang="en"] .lang-en{display:block}
 label{display:grid; gap:6px; font-size:14px}
 input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inherit}
 
-/* Footer base */
-.footer{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; padding:24px 0}
-
 /* ========== Condensing Header (HAY-like) ========== */
 .nav{
     position:sticky; top:0; z-index:60;
@@ -92,22 +89,49 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
 }
 
 /* Logo exactly equals header height (normal & compact). Always black. */
-.logo{ height:var(--navH); width:auto; }
-.nav.is-compact .logo{ height:var(--navH-compact); }
+.logo{ height:var(--navH); width:auto; max-width:none; }
+.nav.is-compact .logo{ height:var(--navH-compact); max-width:none; }
 .logo-white, .logo-black { display:none; }
 .nav .logo-black { display:block; }
 
+/* Keep brand from shrinking; overflow triggers hamburger instead */
+.brand{display:flex; align-items:center; gap:10px; min-width:max-content}
+
 /* Links + actions */
-.brand{display:flex; align-items:center; gap:10px}
 .nav-links{display:flex; gap:22px; justify-content:center}
 .nav-links a{ text-transform:uppercase; letter-spacing:.08em; font-size:14px; padding:6px 0 } /* fixed size */
 .nav-links a.active{border-bottom:1px solid var(--fg)}
-.nav-actions{display:flex; align-items:center; justify-content:flex-end; gap:10px}
-.lang-toggle{min-width:96px}
+.nav-actions{display:flex; align-items:center; justify-content:flex-end; gap:12px}
+.lang-toggle{min-width:auto}
 
-/* Hide KR/EN when compact OR when overflow forces hamburger */
+/* Header social icons next to language */
+.nav-social{ display:flex; align-items:center; gap:12px; }
+.nav .icon{ width:20px; height:20px; }
+.nav .icon-btn{ padding:6px; }
+
+/* ===== Fade-out on scroll for header pieces ===== */
+.brand, .nav-links, .lang-toggle, .nav-social{
+    transition: opacity .22s ease, transform .22s ease, visibility .22s ease;
+}
+.nav:not(.is-compact) .brand,
+.nav:not(.is-compact) .nav-links,
+.nav:not(.is-compact) .lang-toggle,
+.nav:not(.is-compact) .nav-social{
+    opacity:1; transform:none; visibility:visible; pointer-events:auto;
+}
+.nav.is-compact .brand,
+.nav.is-compact .nav-links{
+    opacity:0; transform: translateY(-6px);
+    visibility:hidden; pointer-events:none;
+}
+/* Center the actions row (hamburger) in compact header */
+.nav.is-compact .nav-actions{ justify-content:center; }
+
+/* Hide KR/EN + socials when compact or overflowing */
 .nav.is-compact .lang-toggle,
-.nav.is-overflow .lang-toggle{ display:none; }
+.nav.is-overflow .lang-toggle{ display:none !important; }
+.nav.is-compact .nav-social,
+.nav.is-overflow .nav-social{ display:none !important; }
 
 /* ====== Plain three-bar hamburger (no circle), morphs to X on open ====== */
 .menu-btn{
@@ -143,48 +167,71 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
 }
 .nav.is-overflow .nav-links{ display:none; }
 
-/* In compact state, hide logo + links so only the centered hamburger remains */
-.nav.is-compact .brand,
-.nav.is-compact .nav-links{ display:none; }
-/* Center the hamburger in the compact header */
-.nav.is-compact .nav-actions{ justify-content:center; }
+/* ========== Full-width header-style menu overlay (HAY-like) ========== */
+.menu-panel[hidden]{ display:none; }
+.menu-panel{
+    position:fixed; inset:0; z-index:70;
+    opacity:0; visibility:hidden; transform:translateY(-8px);
+    transition: opacity .25s ease, transform .25s ease, visibility .25s ease;
+}
+.menu-panel.is-open{
+    opacity:1; visibility:visible; transform:none;
+}
 
-/* Slide-over menu panel */
-.menu-panel[hidden]{display:none}
-.menu-panel{position:fixed; inset:0; z-index:70}
-.menu-backdrop{position:absolute; inset:0; background:rgba(0,0,0,.35); border:0; padding:0; margin:0}
-.menu-sheet{
-    position:absolute; top:0; right:0; height:100%; width:min(92vw, 420px);
-    background:#fff; border-left:1px solid var(--muted); display:flex; flex-direction:column;
-    transform:translateX(100%); transition:transform .28s ease;
+/* Dimmed white surface with slight blur (a big header) */
+.menu-overlay{
+    position:absolute; inset:0;
+    background:rgba(255,255,255,0.98);
+    backdrop-filter: blur(10px);
+    display:grid; grid-template-rows:auto 1fr;
 }
-@media (prefers-color-scheme: dark){
-    .menu-sheet{ background:#111; color:#eee; border-color:#333; }
-}
-.menu-panel.is-open .menu-sheet{ transform:translateX(0); }
-.menu-sheet-head{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:14px var(--pad); border-bottom:1px solid var(--muted);
-}
-.menu-close{ border:0; background:transparent; cursor:pointer; }
-.menu-sheet-body{ display:grid; gap:8px; padding:16px var(--pad); align-content:start; }
-.menu-sheet-body a{ padding:8px 0; border-bottom:1px solid rgba(0,0,0,.06); }
-@media (prefers-color-scheme: dark){ .menu-sheet-body a{ border-bottom-color: rgba(255,255,255,.08); } }
 
-/* Lock body scroll when menu open */
-body.no-scroll{overflow:hidden}
+/* Top bar inside the overlay (brand left, close right) */
+.menu-bar{
+    display:grid;
+    grid-template-columns:1fr auto;
+    align-items:center;
+    min-height: var(--navH);
+    border-bottom:1px solid var(--muted);
+    padding:0 var(--pad);
+}
+
+/* Close button: plain icon (like hamburger family) */
+.menu-close{
+    border:0; background:transparent; cursor:pointer; padding:12px 6px;
+}
+.menu-close .menu-icon,
+.menu-close .menu-icon::before,
+.menu-close .menu-icon::after{
+    content:""; display:block; width:26px; height:2px; background:currentColor;
+    border-radius:2px; position:relative;
+}
+.menu-close .menu-icon{ transform:rotate(45deg); }
+.menu-close .menu-icon::before{ position:absolute; top:0; transform:rotate(90deg); }
+.menu-close .menu-icon::after{ display:none; }
+
+/* Link area: like your header nav; row on desktop, stacked on mobile */
+.menu-links{
+    display:flex; flex-wrap:wrap; gap:22px;
+    align-content:start; align-items:center;
+    padding:24px var(--pad);
+    max-width:1200px;
+}
+.menu-links a{ text-transform:uppercase; letter-spacing:.08em; font-size:14px; padding:6px 0 }
+.menu-links hr{ width:100%; border:0; border-top:1px solid var(--muted); margin:8px 0 4px; }
+
+@media (max-width:820px){
+    .menu-links{ flex-direction:column; align-items:flex-start; gap:10px; }
+}
 
 /* ========== Home: full-bleed, flexible background hero ========== */
-/* fills the entire viewport; header floats on top */
 .hero-bg{
     position: relative;
     display: grid;
     align-items: center;
-
-    min-height: 100svh; /* modern viewport unit that respects mobile UI */
+    min-height: 100svh;
     padding: clamp(48px, 8vh, 96px) 0;
     color: #fff;
-
     --hero-overlay: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.45) 100%);
     background:
             var(--hero-overlay),
@@ -195,7 +242,7 @@ body.no-scroll{overflow:hidden}
 .hero-bg .row .btn{ border-color:#fff; color:#fff; }
 .hero-bg .row .btn:hover{ background:#fff; color:#000; }
 
-/* Responsive (content) */
+/* Content responsiveness */
 @media (max-width:960px){
     .grid-2{grid-template-columns:1fr}
     .feature,.feature.reverse{grid-template-columns:1fr}
@@ -203,14 +250,5 @@ body.no-scroll{overflow:hidden}
     .form .two{grid-template-columns:1fr}
 }
 
-/* ========== Footer icons ========== */
-.footer-icons{ display:flex; align-items:center; gap:14px; }
-.icon-btn{ display:inline-flex; align-items:center; justify-content:center; padding:8px; }
-.icon{ width:24px; height:24px; transition: transform .15s ease, opacity .15s ease; }
-.icon-btn:hover .icon{ transform:translateY(-2px); opacity:.85; }
-@media (max-width:640px){
-    .icon{ width:28px; height:28px; }
-    .footer-icons{ gap:16px; }
-}
-
-/* NOTE: Width-based hiding of links is not used; overflow is handled by JS via .is-overflow */
+/* Tiny screens: a bit less side padding so logo fits before overflow */
+@media (max-width:420px){ .container{ padding: 0 16px; } }
