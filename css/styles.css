@@ -299,3 +299,14 @@ main{ flex: 1 0 auto; }
     align-items: center;
     text-align: left;
 }
+
+/* Keep a constant gap between nav links and the right-side icons */
+.nav-inner{
+    column-gap: 28px;            /* fixed space between center & right columns */
+}
+
+/* Ensure the actions block never shrinks */
+.nav-actions{ flex: 0 0 auto; }
+
+/* Double-check: links never wrap into two lines */
+.nav-links{ flex-wrap: nowrap; }

@@ -115,7 +115,7 @@ window.addEventListener('scroll', updateHeader, { passive: true });
     const brand = inner?.querySelector('.brand');
     const links = inner?.querySelector('.nav-links');
     const actions = inner?.querySelector('.nav-actions');
-    const SAFE = 24;
+    const SAFE = 64;
 
     if (!nav || !inner || !brand || !links || !actions) return;
 
