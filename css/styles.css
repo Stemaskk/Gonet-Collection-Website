@@ -309,11 +309,22 @@ main{ flex: 1 0 auto; }
         display: none !important;
     }
 
-    /* Overlay: keep close X black & top-right (already via grid) */
-    .menu-close{ color:#111 !important; }
+    /* Overlay: keep close X black & top-right; align everything to the same right edge */
+    .menu-bar{
+        grid-template-columns: 1fr auto !important;
+        padding-right: var(--pad) !important;
+    }
+    .menu-close{
+        justify-self:end !important;
+        padding:12px 0 12px 6px !important;
+        margin-right:0 !important;
+        color:#111 !important;
+        -webkit-tap-highlight-color: transparent;
+    }
 
     /* Right-align opened menu options + icons */
     .menu-links{
+        width:100% !important;
         display:flex !important;
         flex-direction:column !important;
         align-items:flex-end !important;
@@ -328,5 +339,25 @@ main{ flex: 1 0 auto; }
         justify-content:flex-end !important;
         align-self:start !important;       /* sits directly below links */
         padding-right: var(--pad) !important;
+    }
+}
+
+/* When viewport is truly portrait (horizontal < vertical), ensure expanded header shows the hamburger on the RIGHT and hides extras */
+@media (max-aspect-ratio: 1/1){
+    .nav:not(.is-compact) .menu-btn{
+        display:inline-flex !important;
+        margin:0 !important;
+        color:#111 !important;
+        -webkit-tap-highlight-color:transparent;
+    }
+    .nav:not(.is-compact) .nav-actions{
+        grid-column: 3 / 4 !important;   /* right-most column in 3-col grid */
+        justify-self: end !important;
+        justify-content: flex-end !important;
+    }
+    .nav:not(.is-compact) .nav-links,
+    .nav:not(.is-compact) .lang-toggle,
+    .nav:not(.is-compact) .nav-social{
+        display:none !important;
     }
 }
