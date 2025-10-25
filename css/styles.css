@@ -68,40 +68,45 @@ body[data-lang="en"] .lang-en{display:block}
 label{display:grid; gap:6px; font-size:14px}
 input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inherit}
 
-/* ========== Condensing Header (HAY-like) ========== */
+/* ========== Header (HAY-like) ========== */
 .nav{
     position:sticky; top:0; z-index:60;
     background:rgba(255,255,255,.85); backdrop-filter:blur(8px);
     border-bottom:1px solid var(--muted);
-    transition:background .25s ease
+    transition: background .25s ease, border-color .25s ease, transform .25s ease;
 }
 .nav-inner{
     max-width:1200px; margin:0 auto; padding:0 var(--pad);
     min-height: var(--navH);
-    display:grid; grid-template-columns:1fr auto 1fr; align-items:center
+    display:grid; grid-template-columns:1fr auto 1fr; align-items:center;
+
+    /* Smooth shrink */
+    block-size: var(--navH);
+    transition: block-size .28s ease, min-height .28s ease;
 }
 .nav.is-compact{
     background:#fff;
 }
 .nav.is-compact .nav-inner{
     min-height: var(--navH-compact);
+    block-size: var(--navH-compact);
     grid-template-columns: 1fr; /* single column when compact */
 }
 
-/* Logo exactly equals header height (normal & compact). Always black. */
-.logo{ height:var(--navH); width:auto; max-width:none; }
+/* Logo equals header height. Prevent auto-shrink on narrow widths. */
+.logo{ height:var(--navH); width:auto; max-width:none; transition:height .28s ease; }
 .nav.is-compact .logo{ height:var(--navH-compact); max-width:none; }
 .logo-white, .logo-black { display:none; }
 .nav .logo-black { display:block; }
 
-/* Keep brand from shrinking; overflow triggers hamburger instead */
+/* Keep brand from squeezing; overflow triggers hamburger instead */
 .brand{display:flex; align-items:center; gap:10px; min-width:max-content}
 
 /* Links + actions */
 .nav-links{display:flex; gap:22px; justify-content:center; flex-wrap:nowrap;}
 .nav-links a{
     text-transform:uppercase; letter-spacing:.08em; font-size:14px; padding:6px 0;
-    white-space:nowrap; /* prevent 2-line labels like “Film & Visuals” */
+    white-space:nowrap; /* prevent multi-line labels */
 }
 .nav-links a.active{border-bottom:1px solid var(--fg)}
 .nav-actions{display:flex; align-items:center; justify-content:flex-end; gap:12px}
@@ -114,7 +119,7 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
 
 /* ===== Fade (applies BEFORE shrink) ===== */
 .brand, .nav-links, .lang-toggle, .nav-social{
-    transition: opacity .22s ease, transform .22s ease, visibility .22s ease;
+    transition: opacity .24s ease, transform .24s ease, visibility .24s ease;
 }
 .nav:not(.is-fading) .brand,
 .nav:not(.is-fading) .nav-links,
@@ -133,8 +138,7 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
 /* Compact layout (after fade) — center hamburger only */
 .nav.is-compact .nav-inner{ grid-template-columns:1fr; }
 .nav.is-compact .nav-actions{ justify-content:center; }
-.nav.is-compact .brand,
-.nav.is-compact .nav-links{ display:none; }
+.nav.is-compact .brand, .nav.is-compact .nav-links{ display:none; }
 
 /* Hide KR/EN + socials when compact or overflowing */
 .nav.is-compact .lang-toggle,
@@ -261,3 +265,17 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
 
 /* Tiny screens: a bit less side padding so logo fits before overflow */
 @media (max-width:420px){ .container{ padding: 0 16px; } }
+
+/* ========== Mini footer (text-only) ========== */
+.footer{
+    border-top:1px solid var(--muted);
+    padding:18px 0;
+    font-size:14px;
+    color:#444;
+}
+.footer .container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}

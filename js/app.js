@@ -34,17 +34,12 @@ toggle?.addEventListener('click', () => {
     });
 })();
 
-// Condense header on scroll (two-phase: fade first, then shrink)
+// Condense header on scroll
 const header = document.querySelector('.nav');
-const FADE_Y = 10;     // start fading early
-const COMPACT_Y = 40;  // then shrink header after this
-
+const SCROLL_Y = 40; // stays full until you scroll a bit
 function updateHeader(){
     if (!header) return;
-    if (window.scrollY > FADE_Y) header.classList.add('is-fading');
-    else header.classList.remove('is-fading');
-
-    if (window.scrollY > COMPACT_Y) header.classList.add('is-compact');
+    if (window.scrollY > SCROLL_Y) header.classList.add('is-compact');
     else header.classList.remove('is-compact');
 }
 updateHeader();
