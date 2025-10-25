@@ -322,6 +322,34 @@ main{ flex: 1 0 auto; }
     outline-offset: 3px;
 }
 
+/* Keep hamburger & X black; kill iOS blue tap flash */
+.menu-btn,
+.menu-close{
+    color: #111 !important;                 /* bars/X use currentColor */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+.menu-btn:focus-visible,
+.menu-close:focus-visible{
+    outline: 2px solid #111;
+    outline-offset: 3px;
+}
+
+/* Mobile rule: in portrait (or narrow), show hamburger on the RIGHT even when expanded */
+@media (orientation: portrait), (max-width: 820px){
+    /* Always show hamburger in mobile header */
+    .nav .menu-btn{ display:inline-flex !important; margin:0 !important; }
+
+    /* Hide the center link row to avoid crowding; use the overlay menu */
+    .nav .nav-links{ display:none !important; }
+
+    /* Keep the actions block (hamburger, KR/EN, icons) on the RIGHT */
+    .nav .nav-actions{
+        justify-content:flex-end !important;
+        justify-self:end !important;
+    }
+}
+
 /* 2) On phones (portrait), place the hamburger on the RIGHT when compact */
 @media (orientation: portrait), (max-width: 820px){
     /* when the header is compact, don't center the actions; push to right */
