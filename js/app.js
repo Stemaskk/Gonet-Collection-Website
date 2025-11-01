@@ -1,7 +1,6 @@
-// Language toggle (KR default, button shows "KR" or "EN")
+// Language toggle (KR default)
 const root = document.body;
 const toggle = document.getElementById('langToggle');
-
 function setLang(next){
     root.setAttribute('data-lang', next);
     try { localStorage.setItem('gonet-lang', next); } catch {}
@@ -10,15 +9,10 @@ function setLang(next){
         toggle.textContent = next === 'en' ? 'EN' : 'KR';
     }
 }
-setLang((() => {
-    try { return localStorage.getItem('gonet-lang') === 'en' ? 'en' : 'kr'; } catch { return 'kr'; }
-})());
-toggle?.addEventListener('click', () => {
-    const current = root.getAttribute('data-lang') || 'kr';
-    setLang(current === 'kr' ? 'en' : 'kr');
-});
+setLang((() => { try { return localStorage.getItem('gonet-lang') === 'en' ? 'en' : 'kr'; } catch { return 'kr'; } })());
+toggle?.addEventListener('click', () => setLang(root.getAttribute('data-lang') === 'kr' ? 'en' : 'kr'));
 
-// Highlight current link (supports /page or /page.html)
+// Highlight current link
 (function highlightNav(){
     const norm = p => {
         let s = p.toLowerCase();
@@ -27,163 +21,136 @@ toggle?.addEventListener('click', () => {
     };
     const current = norm(location.pathname);
     document.querySelectorAll('.nav-links a').forEach(a => {
-        try {
+        try{
             const href = norm(new URL(a.getAttribute('href'), location.origin).pathname);
             if (href === current) a.classList.add('active');
-        } catch {}
+        }catch{}
     });
 })();
 
-// ===== Fade + snap header (expand only at top) =====
+// Header fade + snap (expand only at top)
 const header = document.querySelector('.nav');
-const FADE_RANGE = 40;
-const IDLE_MS    = 120;
-let idleTimer = null;
-let isSnapping = false;
-let lastFade = 0;
-
-function clamp(n,min,max){ return Math.min(Math.max(n,min),max); }
-function setFade(v){
-    lastFade = v;
-    header?.style.setProperty('--fade', v.toFixed(3));
-}
-
-function animateFadeTo(target, duration = 220, onDone){
-    const start = performance.now();
-    const from  = lastFade || 0;
-    const delta = target - from;
-    isSnapping = true;
-
+const FADE_RANGE = 40, IDLE_MS = 120;
+let idleTimer = null, isSnapping = false, lastFade = 0;
+const clamp=(n,min,max)=>Math.min(Math.max(n,min),max);
+function setFade(v){ lastFade=v; header?.style.setProperty('--fade', v.toFixed(3)); }
+function animateFadeTo(target, dur=220, done){
+    const start=performance.now(), from=lastFade||0, delta=target-from; isSnapping=true;
     function step(now){
-        if (!isSnapping) return;
-        const t = clamp((now - start) / duration, 0, 1);
-        const eased = t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2)/2;
-        setFade(from + delta * eased);
-        if (t < 1) requestAnimationFrame(step);
-        else { isSnapping = false; onDone && onDone(); }
+        if(!isSnapping) return;
+        const t=clamp((now-start)/dur,0,1);
+        const eased=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+        setFade(from+delta*eased);
+        if(t<1) requestAnimationFrame(step); else { isSnapping=false; done&&done(); }
     }
     requestAnimationFrame(step);
 }
-
 function onScrollIdle(){
-    if (!header || isSnapping) return;
-    const y = window.scrollY || 0;
-    const targetFade = (y === 0) ? 0 : 1;
-    const makeCompact = (y !== 0);
-    animateFadeTo(targetFade, 220, () => {
-        if (makeCompact) header.classList.add('is-compact');
-        else header.classList.remove('is-compact');
+    if(!header||isSnapping) return;
+    const y = window.scrollY||0;
+    animateFadeTo(y===0?0:1, 220, () => {
+        if (y!==0) header.classList.add('is-compact'); else header.classList.remove('is-compact');
     });
 }
-
 function updateHeader(){
-    if (!header) return;
-    isSnapping = false;
-
-    const y = window.scrollY || 0;
-    const fade = clamp(y / FADE_RANGE, 0, 1);
-    setFade(fade);
-
-    if (y > 0) header.classList.add('is-compact');
-    else header.classList.remove('is-compact');
-
-    clearTimeout(idleTimer);
-    idleTimer = setTimeout(onScrollIdle, IDLE_MS);
+    if(!header) return; isSnapping=false;
+    const y = window.scrollY||0;
+    setFade(clamp(y/FADE_RANGE,0,1));
+    if (y>0) header.classList.add('is-compact'); else header.classList.remove('is-compact');
+    clearTimeout(idleTimer); idleTimer=setTimeout(onScrollIdle, IDLE_MS);
 }
 updateHeader();
-window.addEventListener('scroll', updateHeader, { passive: true });
+window.addEventListener('scroll', updateHeader, {passive:true});
 
-// ===== Auto-collapse when header would overflow =====
+// Auto-collapse when header would overflow
 (function autoCollapseWhenOverflow(){
-    const nav = document.querySelector('.nav');
-    const inner = nav?.querySelector('.nav-inner');
-    const brand = inner?.querySelector('.brand');
-    const links = inner?.querySelector('.nav-links');
-    const actions = inner?.querySelector('.nav-actions');
-    const SAFE = 64;
-
-    if (!nav || !inner || !brand || !links || !actions) return;
-
-    function measureAndToggle(){
-        const wasOverflow = nav.classList.contains('is-overflow');
-        if (wasOverflow) nav.classList.remove('is-overflow');
-        inner.offsetWidth; // reflow
-
-        const need = brand.offsetWidth + links.scrollWidth + actions.offsetWidth + SAFE;
-        const have = inner.clientWidth;
-
-        if (wasOverflow) nav.classList.add('is-overflow');
-        if (need > have) nav.classList.add('is-overflow');
-        else nav.classList.remove('is-overflow');
+    const nav=document.querySelector('.nav');
+    const inner=nav?.querySelector('.nav-inner');
+    const brand=inner?.querySelector('.brand');
+    const links=inner?.querySelector('.nav-links');
+    const actions=inner?.querySelector('.nav-actions');
+    const SAFE=64;
+    if(!nav||!inner||!brand||!links||!actions) return;
+    function measure(){
+        const was=nav.classList.contains('is-overflow');
+        if(was) nav.classList.remove('is-overflow');
+        inner.offsetWidth;
+        const need=brand.offsetWidth+links.scrollWidth+actions.offsetWidth+SAFE;
+        const have=inner.clientWidth;
+        if(was) nav.classList.add('is-overflow');
+        if(need>have) nav.classList.add('is-overflow'); else nav.classList.remove('is-overflow');
     }
-
-    measureAndToggle();
-    window.addEventListener('resize', measureAndToggle, { passive: true });
-    window.addEventListener('pageshow', measureAndToggle, { passive: true });
-    if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(measureAndToggle).catch(()=>{});
-    }
-    if ('ResizeObserver' in window){
-        const ro = new ResizeObserver(measureAndToggle);
-        ro.observe(inner); ro.observe(links); ro.observe(actions);
-    }
+    measure();
+    window.addEventListener('resize', measure, {passive:true});
+    window.addEventListener('pageshow', measure, {passive:true});
+    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(measure).catch(()=>{});
+    if('ResizeObserver' in window){ const ro=new ResizeObserver(measure); ro.observe(inner); ro.observe(links); ro.observe(actions); }
 })();
 
-// ===== Overlay menu toggles + animate hamburger =====
-const menuBtn = document.getElementById('menuBtn');
-const menuPanel = document.getElementById('menuPanel');
-const menuClose = document.getElementById('menuClose');
-
+// Overlay menu toggles + animate hamburger
+const menuBtn=document.getElementById('menuBtn');
+const menuPanel=document.getElementById('menuPanel');
+const menuClose=document.getElementById('menuClose');
 function openMenu(){
-    if (!menuPanel) return;
-    menuPanel.hidden = false;
-    requestAnimationFrame(() => menuPanel.classList.add('is-open'));
+    if(!menuPanel) return;
+    menuPanel.hidden=false;
+    requestAnimationFrame(()=>menuPanel.classList.add('is-open'));
     document.body.classList.add('no-scroll');
     menuBtn?.setAttribute('aria-expanded','true');
-    menuBtn?.classList.add('is-open');     // morph bars → X
+    menuBtn?.classList.add('is-open');
 }
 function closeMenu(){
-    if (!menuPanel) return;
+    if(!menuPanel) return;
     menuPanel.classList.remove('is-open');
     document.body.classList.remove('no-scroll');
     menuBtn?.setAttribute('aria-expanded','false');
-    menuBtn?.classList.remove('is-open');  // back to bars
-    setTimeout(() => (menuPanel.hidden = true), 250);
+    menuBtn?.classList.remove('is-open');
+    setTimeout(()=>menuPanel.hidden=true, 250);
 }
-menuBtn?.addEventListener('click', () => {
-    if (menuPanel?.hidden) openMenu(); else closeMenu();
-});
+menuBtn?.addEventListener('click', ()=>{ if(menuPanel?.hidden) openMenu(); else closeMenu(); });
 menuClose?.addEventListener('click', closeMenu);
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !menuPanel?.hidden) closeMenu();
-});
+document.addEventListener('keydown', e=>{ if(e.key==='Escape' && !menuPanel?.hidden) closeMenu(); });
 
-// ===== Adaptive hero fit: crop sides in tall view, fit width on ultra-wide =====
-(function adaptiveHero(){
-    const hero = document.querySelector('.hero-visual');
-    const imgEl = hero?.querySelector('.hero-img');
-    if (!hero || !imgEl) return;
+// ===== HERO FIT LOGIC =====
+// Default is background-size: cover (fills vertically, crops sides).
+// If viewport is wider than the image ratio, switch to contain (fit width).
+(function heroFit(){
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+
+    // extract URL from CSS var --hero-src
+    function getHeroUrl(){
+        const raw = getComputedStyle(hero).getPropertyValue('--hero-src') || '';
+        // raw looks like: url("/assets/main.jpg")
+        const m = raw.match(/url\((.+)\)/i);
+        if (!m) return '';
+        return m[1].trim().replace(/^['"]|['"]$/g, '');
+    }
+
+    const img = new Image();
+    const src = getHeroUrl();
+    if (!src) return;
+    img.src = src;
 
     function update(){
-        const vw = hero.clientWidth;
-        const vh = hero.clientHeight || window.innerHeight;
+        const vw = window.innerWidth;
+        const vh = window.innerHeight; // hero is 100svh
         const viewRatio = vw / vh;
 
-        const iw = imgEl.naturalWidth;
-        const ih = imgEl.naturalHeight;
+        const iw = img.naturalWidth;
+        const ih = img.naturalHeight;
         if (!iw || !ih) return;
 
         const imgRatio = iw / ih;
 
-        // If viewport is significantly wider than image, fit width (contain)
-        if (viewRatio > imgRatio + 0.02) hero.classList.add('is-wide');
-        else hero.classList.remove('is-wide');
+        // Small hysteresis to avoid flicker near the boundary
+        if (viewRatio > imgRatio + 0.02) hero.classList.add('fit-width');
+        else hero.classList.remove('fit-width');
     }
 
-    if (imgEl.complete && imgEl.naturalWidth) update();
-    else imgEl.addEventListener('load', update, { once:true });
+    if (img.complete && img.naturalWidth) update(); else img.onload = update;
 
-    window.addEventListener('resize', update, { passive:true });
+    window.addEventListener('resize', update, {passive:true});
     window.addEventListener('orientationchange', update);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(update).catch(()=>{});
     setTimeout(update, 0);
