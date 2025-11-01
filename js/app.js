@@ -110,5 +110,3 @@ function closeMenu(){
 menuBtn?.addEventListener('click', ()=>{ if(menuPanel?.hidden) openMenu(); else closeMenu(); });
 menuClose?.addEventListener('click', closeMenu);
 document.addEventListener('keydown', e=>{ if(e.key==='Escape' && !menuPanel?.hidden) closeMenu(); });
-
-// NOTE: No hero sizing/cropping JS at all. The image uses object-fit: contain in CSS.
