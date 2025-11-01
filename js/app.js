@@ -34,14 +34,13 @@ toggle?.addEventListener('click', () => {
     });
 })();
 
-// ===== Legacy-style fade + "follow-through", BUT expand only at top =====
+// ===== Fade + snap, expand only at top =====
 const header = document.querySelector('.nav');
-const FADE_RANGE = 40;   // px to fully fade contents
-const IDLE_MS    = 120;  // how long after scroll to finish motion
+const FADE_RANGE = 40;   // px to fully fade
+const IDLE_MS    = 120;  // snap delay after scroll
 let idleTimer = null;
 
 let lastY = window.scrollY || 0;
-let lastDir = 0;         // -1 up, +1 down, 0 unknown
 let isSnapping = false;
 let lastFade = 0;
 
@@ -72,7 +71,7 @@ function onScrollIdle(){
     if (!header || isSnapping) return;
     const y = window.scrollY || 0;
 
-    // NEW RULE: expand only at the very top (y === 0)
+    // Expand only at top; otherwise fully collapsed
     const targetFade = (y === 0) ? 0 : 1;
     const makeCompact = (y !== 0);
 
@@ -84,24 +83,20 @@ function onScrollIdle(){
 
 function updateHeader(){
     if (!header) return;
-
-    // Interrupt any snap if user is actively scrolling
     isSnapping = false;
 
     const y = window.scrollY || 0;
-    const dir = Math.sign(y - lastY);
-    if (dir !== 0) lastDir = dir;
     lastY = y;
 
-    // Live fade mapping while scrolling
+    // Live fade mapping during scroll
     const fade = clamp(y / FADE_RANGE, 0, 1);
     setFade(fade);
 
-    // NEW RULE: compact whenever not at top
+    // Compact whenever not at top
     if (y > 0) header.classList.add('is-compact');
     else header.classList.remove('is-compact');
 
-    // After short idle, snap to full state (top=expanded, else=collapsed)
+    // Snap shortly after scroll stops
     clearTimeout(idleTimer);
     idleTimer = setTimeout(onScrollIdle, IDLE_MS);
 }
@@ -115,7 +110,7 @@ window.addEventListener('scroll', updateHeader, { passive: true });
     const brand = inner?.querySelector('.brand');
     const links = inner?.querySelector('.nav-links');
     const actions = inner?.querySelector('.nav-actions');
-    const SAFE = 64;
+    const SAFE = 64; // reserve px so gap doesn't collapse
 
     if (!nav || !inner || !brand || !links || !actions) return;
 

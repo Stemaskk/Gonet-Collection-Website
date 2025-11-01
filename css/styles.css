@@ -236,23 +236,32 @@ input,textarea{border:1px solid #000; border-radius:12px; padding:10px; font:inh
 .menu-social .icon{ width:20px; height:20px; }
 .menu-social .icon-btn{ padding:6px; }
 
-/* ========== Home: full-bleed, flexible background hero ========== */
-.hero-bg{
+/* ========== Home: full-bleed hero (image fills vertically, crops sides) ========== */
+.hero-visual{
     position: relative;
+    min-height: 100svh;   /* fill screen vertical */
     display: grid;
     align-items: center;
-    min-height: 100svh;
-    padding: clamp(48px, 8vh, 96px) 0;
-    color: #fff;
-    --hero-overlay: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.45) 100%);
-    background:
-            var(--hero-overlay),
-            var(--hero-img) center / cover no-repeat;
+    isolation: isolate;   /* for overlay pseudo */
 }
-.hero-bg .hero-title{ color:#fff; }
-.hero-bg p{ color:rgba(255,255,255,.92); max-width: 56ch; }
-.hero-bg .row .btn{ border-color:#fff; color:#fff; }
-.hero-bg .row .btn:hover{ background:#fff; color:#000; }
+.hero-img{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit: cover;       /* fill, crop sides as needed; no whitespace */
+    object-position: center; /* keep center crop */
+    z-index:-1;
+}
+/* gradient overlay to keep text readable in all crops */
+.hero-visual::after{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.45) 100%);
+    z-index:-1;
+}
+.hero-content{ color:#fff; }
+.hero-content .hero-title{ color:#fff; }
+.hero-content p{ color:rgba(255,255,255,.92); max-width:56ch; }
+.hero-content .row .btn{ border-color:#fff; color:#fff; }
+.hero-content .row .btn:hover{ background:#fff; color:#000; }
 
 /* Content responsiveness */
 @media (max-width:960px){
@@ -370,25 +379,19 @@ main{ flex: 1 0 auto; }
     margin-left: calc(-1 * var(--edge-nudge));
 }
 
-/* Also nudge the brand in the overlay's top bar, for visual consistency */
+/* Also nudge the brand in the overlay's top bar for visual consistency */
 .menu-bar .brand{
     margin-left: calc(-1 * var(--edge-nudge));
 }
 
 /* 2) Line up the X button to the right edge in the overlay */
-.menu-bar{
-    /* keep container padding, but we’ll offset the button slightly */
-    padding-right: var(--pad); /* already present; restating is fine */
-}
+.menu-bar{ padding-right: var(--pad); }
 .menu-close{
     justify-self: end !important;
-    display: flex;                /* let the icon hug the right */
-    align-items: center;
-    justify-content: flex-end;
+    display: flex; align-items: center; justify-content: flex-end;
     padding: 12px 0 12px 6px !important;   /* no right padding */
     margin-right: calc(-1 * var(--edge-nudge)) !important; /* pull to edge */
-    color:#111 !important;
-    -webkit-tap-highlight-color: transparent;
+    color:#111 !important; -webkit-tap-highlight-color: transparent;
 }
 
 /* Make sure the three bars use the same right “edge” on mobile */
@@ -396,6 +399,6 @@ main{ flex: 1 0 auto; }
     .nav .nav-actions{
         justify-content: flex-end !important;
         justify-self: end !important;
-        margin-right: calc(-1 * var(--edge-nudge)); /* same visual edge as the X */
+        margin-right: calc(-1 * var(--edge-nudge));
     }
 }
