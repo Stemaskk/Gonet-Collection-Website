@@ -111,47 +111,4 @@ menuBtn?.addEventListener('click', ()=>{ if(menuPanel?.hidden) openMenu(); else 
 menuClose?.addEventListener('click', closeMenu);
 document.addEventListener('keydown', e=>{ if(e.key==='Escape' && !menuPanel?.hidden) closeMenu(); });
 
-// ===== HERO FIT LOGIC =====
-// Default is background-size: cover (fills vertically, crops sides).
-// If viewport is wider than the image ratio, switch to contain (fit width).
-(function heroFit(){
-    const hero = document.querySelector('.hero');
-    if (!hero) return;
-
-    // extract URL from CSS var --hero-src
-    function getHeroUrl(){
-        const raw = getComputedStyle(hero).getPropertyValue('--hero-src') || '';
-        // raw looks like: url("/assets/main.jpg")
-        const m = raw.match(/url\((.+)\)/i);
-        if (!m) return '';
-        return m[1].trim().replace(/^['"]|['"]$/g, '');
-    }
-
-    const img = new Image();
-    const src = getHeroUrl();
-    if (!src) return;
-    img.src = src;
-
-    function update(){
-        const vw = window.innerWidth;
-        const vh = window.innerHeight; // hero is 100svh
-        const viewRatio = vw / vh;
-
-        const iw = img.naturalWidth;
-        const ih = img.naturalHeight;
-        if (!iw || !ih) return;
-
-        const imgRatio = iw / ih;
-
-        // Small hysteresis to avoid flicker near the boundary
-        if (viewRatio > imgRatio + 0.02) hero.classList.add('fit-width');
-        else hero.classList.remove('fit-width');
-    }
-
-    if (img.complete && img.naturalWidth) update(); else img.onload = update;
-
-    window.addEventListener('resize', update, {passive:true});
-    window.addEventListener('orientationchange', update);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(update).catch(()=>{});
-    setTimeout(update, 0);
-})();
+// NOTE: No hero sizing/cropping JS at all. The image uses object-fit: contain in CSS.
