@@ -18,7 +18,7 @@ toggle?.addEventListener('click', () => {
     setLang(current === 'kr' ? 'en' : 'kr');
 });
 
-// Active nav state (works for "/", "/page", "/page/", "/page.html")
+// Highlight current link (supports /page or /page.html)
 (function highlightNav(){
     const norm = p => {
         let s = p.toLowerCase();
@@ -34,13 +34,11 @@ toggle?.addEventListener('click', () => {
     });
 })();
 
-// ===== Fade + snap, expand only at top =====
+// ===== Fade + snap header (expand only at top) =====
 const header = document.querySelector('.nav');
-const FADE_RANGE = 40;   // px to fully fade
-const IDLE_MS    = 120;  // snap delay after scroll
+const FADE_RANGE = 40;
+const IDLE_MS    = 120;
 let idleTimer = null;
-
-let lastY = window.scrollY || 0;
 let isSnapping = false;
 let lastFade = 0;
 
@@ -57,7 +55,7 @@ function animateFadeTo(target, duration = 220, onDone){
     isSnapping = true;
 
     function step(now){
-        if (!isSnapping) return; // interrupted by user scroll
+        if (!isSnapping) return;
         const t = clamp((now - start) / duration, 0, 1);
         const eased = t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2)/2;
         setFade(from + delta * eased);
@@ -70,11 +68,8 @@ function animateFadeTo(target, duration = 220, onDone){
 function onScrollIdle(){
     if (!header || isSnapping) return;
     const y = window.scrollY || 0;
-
-    // Expand only at top; otherwise fully collapsed
     const targetFade = (y === 0) ? 0 : 1;
     const makeCompact = (y !== 0);
-
     animateFadeTo(targetFade, 220, () => {
         if (makeCompact) header.classList.add('is-compact');
         else header.classList.remove('is-compact');
@@ -86,31 +81,26 @@ function updateHeader(){
     isSnapping = false;
 
     const y = window.scrollY || 0;
-    lastY = y;
-
-    // Live fade mapping during scroll
     const fade = clamp(y / FADE_RANGE, 0, 1);
     setFade(fade);
 
-    // Compact whenever not at top
     if (y > 0) header.classList.add('is-compact');
     else header.classList.remove('is-compact');
 
-    // Snap shortly after scroll stops
     clearTimeout(idleTimer);
     idleTimer = setTimeout(onScrollIdle, IDLE_MS);
 }
 updateHeader();
 window.addEventListener('scroll', updateHeader, { passive: true });
 
-// ===== Keep header spacing fixed; switch to hamburger when overflow =====
+// ===== Auto-collapse when header would overflow =====
 (function autoCollapseWhenOverflow(){
     const nav = document.querySelector('.nav');
     const inner = nav?.querySelector('.nav-inner');
     const brand = inner?.querySelector('.brand');
     const links = inner?.querySelector('.nav-links');
     const actions = inner?.querySelector('.nav-actions');
-    const SAFE = 64; // reserve px so gap doesn't collapse
+    const SAFE = 64;
 
     if (!nav || !inner || !brand || !links || !actions) return;
 
@@ -139,7 +129,7 @@ window.addEventListener('scroll', updateHeader, { passive: true });
     }
 })();
 
-// ===== Full-width overlay menu toggles + animated hamburger =====
+// ===== Overlay menu toggles + animate hamburger =====
 const menuBtn = document.getElementById('menuBtn');
 const menuPanel = document.getElementById('menuPanel');
 const menuClose = document.getElementById('menuClose');
@@ -167,3 +157,34 @@ menuClose?.addEventListener('click', closeMenu);
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !menuPanel?.hidden) closeMenu();
 });
+
+// ===== Adaptive hero fit: crop sides in tall view, fit width on ultra-wide =====
+(function adaptiveHero(){
+    const hero = document.querySelector('.hero-visual');
+    const imgEl = hero?.querySelector('.hero-img');
+    if (!hero || !imgEl) return;
+
+    function update(){
+        const vw = hero.clientWidth;
+        const vh = hero.clientHeight || window.innerHeight;
+        const viewRatio = vw / vh;
+
+        const iw = imgEl.naturalWidth;
+        const ih = imgEl.naturalHeight;
+        if (!iw || !ih) return;
+
+        const imgRatio = iw / ih;
+
+        // If viewport is significantly wider than image, fit width (contain)
+        if (viewRatio > imgRatio + 0.02) hero.classList.add('is-wide');
+        else hero.classList.remove('is-wide');
+    }
+
+    if (imgEl.complete && imgEl.naturalWidth) update();
+    else imgEl.addEventListener('load', update, { once:true });
+
+    window.addEventListener('resize', update, { passive:true });
+    window.addEventListener('orientationchange', update);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(update).catch(()=>{});
+    setTimeout(update, 0);
+})();
