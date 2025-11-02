@@ -28,44 +28,56 @@ toggle?.addEventListener('click', () => setLang(root.getAttribute('data-lang') =
     });
 })();
 
-// ===== Fade + snap header (expand only at top) =====
+// ===== Header fade/compact (DISABLED on Home) =====
 const header = document.querySelector('.nav');
-const FADE_RANGE = 40;
-const IDLE_MS    = 120;
-let idleTimer = null;
-let isSnapping = false;
-let lastFade = 0;
+const isHome = document.body.classList.contains('home');
 
-const clamp=(n,min,max)=>Math.min(Math.max(n,min),max);
-function setFade(v){ lastFade=v; header?.style.setProperty('--fade', v.toFixed(3)); }
-function animateFadeTo(target, dur=220, done){
-    const start=performance.now(), from=lastFade||0, delta=target-from; isSnapping=true;
-    function step(now){
-        if(!isSnapping) return;
-        const t=clamp((now-start)/dur,0,1);
-        const eased=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
-        setFade(from+delta*eased);
-        if(t<1) requestAnimationFrame(step); else { isSnapping=false; done&&done(); }
+(function headerBehavior(){
+    if (!header) return;
+
+    const FADE_RANGE = 40;
+    const IDLE_MS = 120;
+    let idleTimer = null, isSnapping = false, lastFade = 0;
+
+    const clamp=(n,min,max)=>Math.min(Math.max(n,min),max);
+    function setFade(v){ lastFade=v; header.style.setProperty('--fade', v.toFixed(3)); }
+    function animateFadeTo(target, dur=220, done){
+        const start=performance.now(), from=lastFade||0, delta=target-from; isSnapping=true;
+        function step(now){
+            if(!isSnapping) return;
+            const t=clamp((now-start)/dur,0,1);
+            const eased=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+            setFade(from+delta*eased);
+            if(t<1) requestAnimationFrame(step); else { isSnapping=false; done&&done(); }
+        }
+        requestAnimationFrame(step);
     }
-    requestAnimationFrame(step);
-}
-function onScrollIdle(){
-    if(!header||isSnapping) return;
-    const y = window.scrollY||0;
-    animateFadeTo(y===0?0:1, 220, () => {
-        if (y!==0) header.classList.add('is-compact'); else header.classList.remove('is-compact');
-    });
-}
-function updateHeader(){
-    if(!header) return; isSnapping=false;
-    const y = window.scrollY||0;
-    setFade(clamp(y/FADE_RANGE,0,1));
-    if (y>0) header.classList.add('is-compact'); else header.classList.remove('is-compact');
-    clearTimeout(idleTimer);
-    idleTimer=setTimeout(onScrollIdle, IDLE_MS);
-}
-updateHeader();
-window.addEventListener('scroll', updateHeader, { passive:true });
+    function onScrollIdle(){
+        if(!header||isSnapping) return;
+        const y = window.scrollY||0;
+        animateFadeTo(y===0?0:1, 220, () => {
+            if (y!==0) header.classList.add('is-compact'); else header.classList.remove('is-compact');
+        });
+    }
+    function updateHeader(){
+        if(!header) return; isSnapping=false;
+        const y = window.scrollY||0;
+        setFade(clamp(y/FADE_RANGE,0,1));
+        if (y>0) header.classList.add('is-compact'); else header.classList.remove('is-compact');
+        clearTimeout(idleTimer); idleTimer=setTimeout(onScrollIdle, IDLE_MS);
+    }
+
+    // Skip animation on Home
+    if (isHome){
+        setFade(0);
+        header.classList.remove('is-compact');
+        return; // no listeners
+    }
+
+    // Scrollable pages: enable animation
+    updateHeader();
+    window.addEventListener('scroll', updateHeader, { passive:true });
+})();
 
 // ===== Auto-collapse when header would overflow =====
 (function autoCollapseWhenOverflow(){
@@ -90,7 +102,7 @@ window.addEventListener('scroll', updateHeader, { passive:true });
     measure();
     window.addEventListener('resize', measure, { passive:true });
     window.addEventListener('pageshow', measure, { passive:true });
-    if(document.fonts && document.fonts.ready) document.fonts.ready.then(masure=>measure()).catch(()=>{});
+    if(document.fonts && document.fonts.ready){ document.fonts.ready.then(measure).catch(()=>{}); }
     if('ResizeObserver' in window){
         const ro=new ResizeObserver(measure);
         ro.observe(inner); ro.observe(links); ro.observe(actions);

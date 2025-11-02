@@ -11,6 +11,9 @@
 
     /* Tiny alignment tweak for brand/X */
     --edge-nudge: 12px;
+
+    /* Home hero offset (move headline upward a bit) */
+    --hero-offset: clamp(8vh, 14vh, 20vh);
 }
 
 /* Base */
@@ -21,7 +24,7 @@ img{max-width:100%;display:block}
 :focus-visible{outline:2px solid #000;outline-offset:2px}
 body.no-scroll{overflow:hidden}
 
-/* ——— FULL-PAGE BACKGROUND ON HOME (no white edges) ——— */
+/* ——— FULL-PAGE BACKGROUND ON HOME ——— */
 body.home::before{
     content:"";
     position:fixed; inset:0; z-index:-1;
@@ -33,7 +36,7 @@ body.home::after{
     background: linear-gradient(180deg, rgba(0,0,0,.30), rgba(0,0,0,.45));
 }
 
-/* Language toggle visibility */
+/* Language visibility */
 .lang{display:none}
 body[data-lang="kr"] .lang-kr{display:block}
 body[data-lang="en"] .lang-en{display:block}
@@ -52,9 +55,17 @@ body[data-lang="en"] .lang-en{display:block}
 /* Layout / type */
 .container{max-width:1200px; margin:0 auto; padding:0 var(--pad)}
 .section{margin:72px auto}
+
+/* Responsive headline & body so it never breaks weirdly */
 .hero-title{
     font-family:"Libre Bodoni",serif;
-    font-size:56px; line-height:1.05; letter-spacing:.02em; margin:0 0 16px;
+    font-size: clamp(30px, 6vw, 56px);
+    line-height: 1.06;
+    letter-spacing:.02em;
+    margin:0 0 16px;
+}
+.home .hero-content p{
+    font-size: clamp(14px, 2.2vw, 18px);
 }
 
 /* ===== Header (HAY-like) ===== */
@@ -96,7 +107,7 @@ body[data-lang="en"] .lang-en{display:block}
 .nav .icon-btn{padding:6px}
 .lang-toggle{min-width:auto}
 
-/* Header fade (contents only) */
+/* Header fade (used on scrollable pages only; JS keeps 0 on Home) */
 .nav .brand,.nav .nav-links,.nav .lang-toggle,.nav .nav-social{
     opacity: calc(1 - var(--fade, 0));
     transform: translateY(calc(-8px * (var(--fade, 0))));
@@ -185,14 +196,15 @@ body[data-lang="en"] .lang-en{display:block}
 .menu-social .icon{ width:20px; height:20px; }
 .menu-social .icon-btn{ padding:6px; }
 
-/* ===== HERO BLANK (no intrinsic height; background is on <body>) ===== */
+/* ===== HERO BLANK (background is on <body>) ===== */
 .hero-blank{
     position: relative;
     min-height: calc(100svh - var(--navH)); /* exactly under the sticky header */
-    display: grid; align-items: center;
+    display: grid;
+    align-items: start;
+    padding-top: var(--hero-offset);        /* move text a bit up */
 }
-/* Remove section margins on Home to prevent overflow/scroll */
-.home .section{ margin: 0; }
+.home .section{ margin: 0; }              /* avoid overflow */
 
 /* On Home, avoid a real border height that can add 1px scrollbars */
 .home .nav{
@@ -200,20 +212,22 @@ body[data-lang="en"] .lang-en{display:block}
     box-shadow: inset 0 -1px 0 var(--muted);
 }
 
-/* Footer floats visually at the bottom-left; doesn't increase layout height */
+/* Footer floats at bottom-left; smaller size; no layout height */
 .home .site-foot{
     position: fixed;
     left: 0; right: 0; bottom: 0;
     background: transparent;
-    padding: 12px var(--pad) calc(12px + env(safe-area-inset-bottom,0px));
+    padding: 10px var(--pad) calc(10px + env(safe-area-inset-bottom,0px));
     color: rgba(255,255,255,.85);
-    pointer-events: none; /* purely decorative here */
+    font-size: 11px;          /* smaller per request */
+    letter-spacing: .02em;
+    pointer-events: none;     /* purely decorative here */
 }
 .site-foot .container{
     display:flex; justify-content:flex-start; align-items:center; text-align:left;
 }
 
-/* Text on top of darkened background */
+/* Text contrast on background */
 .home .hero-title{ color:#fff }
 .home .hero-content p{ color:rgba(255,255,255,.92); max-width:56ch }
 
