@@ -349,3 +349,79 @@ body.story{ overflow: hidden; }          /* no scroll for now */
         margin-right: calc(-1 * var(--edge-nudge));
     }
 }
+
+/* ========== Collection page ========== */
+
+/* Full-bleed background like Home, but page can scroll */
+body.collection::before{
+    content:"";
+    position:fixed; inset:0; z-index:-1;
+    background: #000 url("/assets/collection.png") center center / cover no-repeat;
+}
+body.collection::after{
+    content:""; position:fixed; inset:0; z-index:-1;
+    background: linear-gradient(180deg, rgba(0,0,0,.26), rgba(0,0,0,.50));
+}
+
+/* Hero takes the viewport under the header */
+.collection-hero{
+    min-height: calc(100svh - var(--navH));
+    display: grid;
+    align-items: center;
+    padding: 8vh 0;
+}
+
+/* Translucent white panel */
+.collection-panel{
+    max-width: 760px;
+    background: rgba(255,255,255,.76);
+    border: 1px solid rgba(255,255,255,.95);
+    box-shadow: 0 20px 60px rgba(0,0,0,.18);
+    border-radius: 18px;
+    padding: clamp(18px, 3vw, 28px);
+    backdrop-filter: blur(4px);
+}
+
+/* Title fonts per language */
+.collection-title{
+    display:flex; gap:12px; align-items:baseline; margin:0 0 10px;
+    line-height:1;
+}
+.collection-title .title-en{
+    font-family: "Fira Sans Condensed", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-weight:600;
+    font-size: clamp(20px, 4.4vw, 28px);
+    letter-spacing:.04em;
+}
+.collection-title .title-kr{
+    font-family: "Sandoll OnGothic", "SD OnGothic", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-weight:600;
+    font-size: clamp(18px, 3.8vw, 24px);
+    letter-spacing:.02em;
+}
+
+/* Description fonts per language */
+.collection-desc{ margin-top:6px }
+.collection-desc p{ margin: 0 0 10px; line-height:1.5 }
+.collection-desc p.kr{
+    /* keep your current KR feel; solid KR stack */
+    font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", Inter, system-ui, sans-serif;
+    font-size: clamp(14px, 2.2vw, 17px);
+    color:#1a1a1a;
+}
+.collection-desc p.en{
+    /* Galvji if available; otherwise rounded/system fallbacks */
+    font-family: "Galvji", ui-rounded, "SF Pro Rounded", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: clamp(13.5px, 2.0vw, 16px);
+    color:#252525;
+}
+
+/* Naver store button uses Sandoll OnGothic */
+.btn-store{
+    font-family: "Sandoll OnGothic", "SD OnGothic", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    border-color:#111; color:#111; background:transparent;
+}
+.btn-store:hover{ background:#111; color:#fff }
+
+/* Make sure header text/icon sizes don't mush */
+.collection .nav-links a{ white-space:nowrap }
