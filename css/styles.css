@@ -25,6 +25,7 @@ img{max-width:100%;display:block}
 body.no-scroll{overflow:hidden}
 html,body{height:100%}
 body{min-height:100svh; display:flex; flex-direction:column}
+library,main{flex:1 0 auto}
 main{flex:1 0 auto}
 
 /* ========== Language toggle visibility ========== */
@@ -307,19 +308,18 @@ body.story{ overflow: hidden; }          /* no scroll for now */
     pointer-events: none;
 }
 
-/* ========== Collection page ========== */
-/* Full-bleed background; page can scroll */
+/* ========== Collection page (no scroll, original bg) ========== */
+/* Full-bleed background; NO dark overlay */
 body.collection::before{
     content:"";
     position:fixed; inset:0; z-index:-1;
-    background: #000 url("/assets/collection.png") center center / cover no-repeat;
+    background: url("/assets/collection.png") center center / cover no-repeat;
 }
-body.collection::after{
-    content:""; position:fixed; inset:0; z-index:-1;
-    background: linear-gradient(180deg, rgba(0,0,0,.26), rgba(0,0,0,.50));
-}
+/* (Removed body.collection::after overlay to keep original image) */
 
-/* Move panel to top-right */
+body.collection{ overflow: hidden; }      /* no scroll */
+.collection .section{ margin: 0; }
+
 .collection-hero{
     min-height: calc(100svh - var(--navH));
     display: block;
@@ -327,18 +327,18 @@ body.collection::after{
 }
 .collection-hero .container{
     display: flex;
-    justify-content: flex-end; /* right */
-    align-items: flex-start;   /* top */
+    justify-content: flex-end;  /* top-right panel */
+    align-items: flex-start;
     padding-top: clamp(24px, 10vh, 120px);
 }
 
-/* Translucent white panel (tighter radius) */
+/* Translucent white panel with tighter radius */
 .collection-panel{
     max-width: 760px;
     background: rgba(255,255,255,.76);
     border: 1px solid rgba(255,255,255,.95);
     box-shadow: 0 20px 60px rgba(0,0,0,.18);
-    border-radius: 10px;                  /* was 18px */
+    border-radius: 10px;
     padding: clamp(16px, 2.6vw, 24px);
     backdrop-filter: blur(4px);
 }
@@ -385,15 +385,16 @@ body.collection::after{
 /* Keep nav labels one-line */
 .collection .nav-links a{ white-space:nowrap }
 
-/* Mobile: center panel so it’s not cramped */
-@media (max-width: 900px){
-    .collection-hero .container{
-        justify-content: center;
-        align-items: flex-start;
-    }
-    .collection-panel{
-        width: min(94vw, 720px);
-    }
+/* Collection footer: white like Home, pinned bottom-left */
+.collection .site-foot{
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    background: transparent;
+    padding: 10px var(--pad) calc(10px + env(safe-area-inset-bottom,0px));
+    color: rgba(255,255,255,.90);
+    font-size: 11px;
+    letter-spacing: .02em;
+    pointer-events: none;
 }
 
 /* ========== Mobile & portrait tweaks (header/menu) ========== */
