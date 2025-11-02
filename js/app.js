@@ -12,7 +12,7 @@ function setLang(next){
 setLang((() => { try { return localStorage.getItem('gonet-lang') === 'en' ? 'en' : 'kr'; } catch { return 'kr'; } })());
 toggle?.addEventListener('click', () => setLang(root.getAttribute('data-lang') === 'kr' ? 'en' : 'kr'));
 
-// Highlight current link
+// Highlight current link (supports /page or /page.html)
 (function highlightNav(){
     const norm = p => {
         let s = p.toLowerCase();
@@ -28,10 +28,14 @@ toggle?.addEventListener('click', () => setLang(root.getAttribute('data-lang') =
     });
 })();
 
-// Header fade + snap (expand only at top)
+// ===== Fade + snap header (expand only at top) =====
 const header = document.querySelector('.nav');
-const FADE_RANGE = 40, IDLE_MS = 120;
-let idleTimer = null, isSnapping = false, lastFade = 0;
+const FADE_RANGE = 40;
+const IDLE_MS    = 120;
+let idleTimer = null;
+let isSnapping = false;
+let lastFade = 0;
+
 const clamp=(n,min,max)=>Math.min(Math.max(n,min),max);
 function setFade(v){ lastFade=v; header?.style.setProperty('--fade', v.toFixed(3)); }
 function animateFadeTo(target, dur=220, done){
@@ -57,12 +61,13 @@ function updateHeader(){
     const y = window.scrollY||0;
     setFade(clamp(y/FADE_RANGE,0,1));
     if (y>0) header.classList.add('is-compact'); else header.classList.remove('is-compact');
-    clearTimeout(idleTimer); idleTimer=setTimeout(onScrollIdle, IDLE_MS);
+    clearTimeout(idleTimer);
+    idleTimer=setTimeout(onScrollIdle, IDLE_MS);
 }
 updateHeader();
-window.addEventListener('scroll', updateHeader, {passive:true});
+window.addEventListener('scroll', updateHeader, { passive:true });
 
-// Auto-collapse when header would overflow
+// ===== Auto-collapse when header would overflow =====
 (function autoCollapseWhenOverflow(){
     const nav=document.querySelector('.nav');
     const inner=nav?.querySelector('.nav-inner');
@@ -71,42 +76,50 @@ window.addEventListener('scroll', updateHeader, {passive:true});
     const actions=inner?.querySelector('.nav-actions');
     const SAFE=64;
     if(!nav||!inner||!brand||!links||!actions) return;
+
     function measure(){
         const was=nav.classList.contains('is-overflow');
         if(was) nav.classList.remove('is-overflow');
-        inner.offsetWidth;
+        inner.offsetWidth; // reflow
         const need=brand.offsetWidth+links.scrollWidth+actions.offsetWidth+SAFE;
         const have=inner.clientWidth;
         if(was) nav.classList.add('is-overflow');
         if(need>have) nav.classList.add('is-overflow'); else nav.classList.remove('is-overflow');
     }
+
     measure();
-    window.addEventListener('resize', measure, {passive:true});
-    window.addEventListener('pageshow', measure, {passive:true});
-    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(measure).catch(()=>{});
-    if('ResizeObserver' in window){ const ro=new ResizeObserver(measure); ro.observe(inner); ro.observe(links); ro.observe(actions); }
+    window.addEventListener('resize', measure, { passive:true });
+    window.addEventListener('pageshow', measure, { passive:true });
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(masure=>measure()).catch(()=>{});
+    if('ResizeObserver' in window){
+        const ro=new ResizeObserver(measure);
+        ro.observe(inner); ro.observe(links); ro.observe(actions);
+    }
 })();
 
-// Overlay menu toggles + animate hamburger
+// ===== Overlay menu toggles + animate hamburger =====
 const menuBtn=document.getElementById('menuBtn');
 const menuPanel=document.getElementById('menuPanel');
 const menuClose=document.getElementById('menuClose');
+
 function openMenu(){
     if(!menuPanel) return;
     menuPanel.hidden=false;
     requestAnimationFrame(()=>menuPanel.classList.add('is-open'));
     document.body.classList.add('no-scroll');
     menuBtn?.setAttribute('aria-expanded','true');
-    menuBtn?.classList.add('is-open');
+    menuBtn?.classList.add('is-open');     // morph bars → X
 }
 function closeMenu(){
     if(!menuPanel) return;
     menuPanel.classList.remove('is-open');
     document.body.classList.remove('no-scroll');
     menuBtn?.setAttribute('aria-expanded','false');
-    menuBtn?.classList.remove('is-open');
+    menuBtn?.classList.remove('is-open');  // back to bars
     setTimeout(()=>menuPanel.hidden=true, 250);
 }
 menuBtn?.addEventListener('click', ()=>{ if(menuPanel?.hidden) openMenu(); else closeMenu(); });
 menuClose?.addEventListener('click', closeMenu);
-document.addEventListener('keydown', e=>{ if(e.key==='Escape' && !menuPanel?.hidden) closeMenu(); });
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !menuPanel?.hidden) closeMenu();
+});
