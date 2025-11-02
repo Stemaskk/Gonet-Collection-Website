@@ -9,10 +9,10 @@
     /* Header fade (set by JS; default 0) */
     --fade: 0;
 
-    /* Tiny alignment tweak for brand / close-X edge */
+    /* Small alignment tweaks */
     --edge-nudge: 12px;
 
-    /* Home hero offset (positions headline a bit higher) */
+    /* Home hero offset (move headline up a bit) */
     --hero-offset: clamp(8vh, 14vh, 20vh);
 }
 
@@ -25,7 +25,6 @@ img{max-width:100%;display:block}
 body.no-scroll{overflow:hidden}
 html,body{height:100%}
 body{min-height:100svh; display:flex; flex-direction:column}
-library,main{flex:1 0 auto}
 main{flex:1 0 auto}
 
 /* ========== Language toggle visibility ========== */
@@ -48,7 +47,7 @@ body[data-lang="en"] .lang-en{display:block}
 .container{max-width:1200px; margin:0 auto; padding:0 var(--pad)}
 .section{margin:72px auto}
 
-/* Page/hero titles (tuned smaller) */
+/* Titles */
 .hero-title{
     font-family:"Libre Bodoni",serif;
     font-size: clamp(28px, 5.2vw, 48px);
@@ -79,7 +78,7 @@ body[data-lang="en"] .lang-en{display:block}
     grid-template-columns:1fr;
 }
 
-/* Logo pinned to header height */
+/* Logo tracks header height */
 .logo{height:var(--navH); width:auto; max-width:none; transition:height .28s ease}
 .nav.is-compact .logo{height:var(--navH-compact)}
 .logo-white,.logo-black{display:none}
@@ -96,7 +95,7 @@ body[data-lang="en"] .lang-en{display:block}
 .nav .icon-btn{padding:6px}
 .lang-toggle{min-width:auto}
 
-/* Header fade (contents only). JS sets --fade; Home keeps it 0. */
+/* Header fade (JS updates --fade; Home keeps it 0) */
 .nav .brand,.nav .nav-links,.nav .lang-toggle,.nav .nav-social{
     opacity: calc(1 - var(--fade, 0));
     transform: translateY(calc(-8px * (var(--fade, 0))));
@@ -191,39 +190,28 @@ body[data-lang="en"] .lang-en{display:block}
 body.home::before{
     content:"";
     position:fixed; inset:0; z-index:-1;
-    background: #000 url("/assets/main.jpg") center center / cover no-repeat;
+    background: url("/assets/main.jpg") center center / cover no-repeat; /* original image, no dark overlay */
 }
-body.home::after{
-    content:""; position:fixed; inset:0; z-index:-1;
-    background: linear-gradient(180deg, rgba(0,0,0,.30), rgba(0,0,0,.45));
-}
+/* removed body.home::after overlay */
 
-/* Hero wrapper on Home (content only; background is on body) */
 .hero-blank{
     position: relative;
-    min-height: calc(100svh - var(--navH)); /* exactly under the sticky header */
+    min-height: calc(100svh - var(--navH));
     display: grid; align-items: start;
     padding-top: var(--hero-offset);
 }
-
-/* Avoid overflow/scroll on Home */
 .home .section{ margin: 0; }
-
-/* On Home, avoid a real border height that can add 1px scrollbars */
 .home .nav{
     border-bottom: 0;
     box-shadow: inset 0 -1px 0 var(--muted);
 }
-
-/* Text on top of darkened background */
 .home .hero-title{ color:#fff }
 .home .hero-content p{
     color:rgba(255,255,255,.92);
     max-width:56ch;
     font-size: clamp(13px, 1.9vw, 16px);
 }
-
-/* Footer floats at bottom-left on Home; small size */
+/* Home footer: white, bottom-left, small */
 .home .site-foot{
     position: fixed;
     left: 0; right: 0; bottom: 0;
@@ -239,7 +227,7 @@ body.home::after{
 }
 
 /* ========== Our Story page (no scroll) ========== */
-body.story{ overflow: hidden; }          /* no scroll for now */
+body.story{ overflow: hidden; }
 .story .section{ margin: 0; }
 
 .story-hero{
@@ -248,7 +236,6 @@ body.story{ overflow: hidden; }          /* no scroll for now */
     align-items: center;
     overflow: hidden;
 }
-
 .story-hero .story-grid{
     display:grid;
     grid-template-columns: 1fr minmax(260px, 420px);
@@ -259,7 +246,6 @@ body.story{ overflow: hidden; }          /* no scroll for now */
     .story-hero .story-grid{ grid-template-columns: 1fr; }
     .story-book{ order: 2; }
 }
-
 .story-copy .tagline{
     opacity:.75; text-transform:uppercase; letter-spacing:.08em; font-size:12px;
 }
@@ -295,8 +281,7 @@ body.story{ overflow: hidden; }          /* no scroll for now */
     border-radius: 12px;
     box-shadow: inset 0 0 0 1px rgba(0,0,0,.04);
 }
-
-/* Story footer: same size as Home (11px), bottom-left, darker text */
+/* Story footer: small, darker text */
 .story .site-foot{
     position: fixed;
     left: 0; right: 0; bottom: 0;
@@ -309,15 +294,14 @@ body.story{ overflow: hidden; }          /* no scroll for now */
 }
 
 /* ========== Collection page (no scroll, original bg) ========== */
-/* Full-bleed background; NO dark overlay */
 body.collection::before{
     content:"";
     position:fixed; inset:0; z-index:-1;
-    background: url("/assets/collection.png") center center / cover no-repeat;
+    background: url("/assets/collection.png") center center / cover no-repeat; /* original, no overlay */
 }
-/* (Removed body.collection::after overlay to keep original image) */
+/* removed collection ::after overlay */
 
-body.collection{ overflow: hidden; }      /* no scroll */
+body.collection{ overflow: hidden; }
 .collection .section{ margin: 0; }
 
 .collection-hero{
@@ -327,12 +311,12 @@ body.collection{ overflow: hidden; }      /* no scroll */
 }
 .collection-hero .container{
     display: flex;
-    justify-content: flex-end;  /* top-right panel */
+    justify-content: flex-end;  /* top-right */
     align-items: flex-start;
     padding-top: clamp(24px, 10vh, 120px);
 }
 
-/* Translucent white panel with tighter radius */
+/* Translucent panel (tighter radius) */
 .collection-panel{
     max-width: 760px;
     background: rgba(255,255,255,.76);
@@ -361,7 +345,7 @@ body.collection{ overflow: hidden; }      /* no scroll */
     letter-spacing:.02em;
 }
 
-/* Description fonts per language */
+/* Descriptions */
 .collection-desc{ margin-top:6px }
 .collection-desc p{ margin: 0 0 10px; line-height:1.5 }
 .collection-desc p.kr{
@@ -375,7 +359,7 @@ body.collection{ overflow: hidden; }      /* no scroll */
     color:#252525;
 }
 
-/* Naver store button uses Sandoll OnGothic */
+/* Naver store button */
 .btn-store{
     font-family: "Sandoll OnGothic", "SD OnGothic", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
     border-color:#111; color:#111; background:transparent;
@@ -385,7 +369,7 @@ body.collection{ overflow: hidden; }      /* no scroll */
 /* Keep nav labels one-line */
 .collection .nav-links a{ white-space:nowrap }
 
-/* Collection footer: white like Home, pinned bottom-left */
+/* Collection footer: white like Home */
 .collection .site-foot{
     position: fixed;
     left: 0; right: 0; bottom: 0;
