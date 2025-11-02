@@ -6,7 +6,7 @@
     --navH: 88px;
     --navH-compact: 56px;
 
-    /* Header fade (set by JS; default to 0 to avoid console warnings) */
+    /* Header fade (set by JS; default 0) */
     --fade: 0;
 
     /* Tiny alignment tweak for brand / close-X edge */
@@ -23,6 +23,9 @@ a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
 :focus-visible{outline:2px solid #000;outline-offset:2px}
 body.no-scroll{overflow:hidden}
+html,body{height:100%}
+body{min-height:100svh; display:flex; flex-direction:column}
+main{flex:1 0 auto}
 
 /* ========== Language toggle visibility ========== */
 .lang{display:none}
@@ -44,10 +47,10 @@ body[data-lang="en"] .lang-en{display:block}
 .container{max-width:1200px; margin:0 auto; padding:0 var(--pad)}
 .section{margin:72px auto}
 
-/* Responsive headline & body */
+/* Page/hero titles (tuned smaller) */
 .hero-title{
     font-family:"Libre Bodoni",serif;
-    font-size: clamp(28px, 5.2vw, 48px); /* tuned smaller */
+    font-size: clamp(28px, 5.2vw, 48px);
     line-height: 1.06;
     letter-spacing:.02em;
     margin:0 0 16px;
@@ -92,7 +95,7 @@ body[data-lang="en"] .lang-en{display:block}
 .nav .icon-btn{padding:6px}
 .lang-toggle{min-width:auto}
 
-/* Header fade (contents only). JS sets --fade; Home keeps it at 0. */
+/* Header fade (contents only). JS sets --fade; Home keeps it 0. */
 .nav .brand,.nav .nav-links,.nav .lang-toggle,.nav .nav-social{
     opacity: calc(1 - var(--fade, 0));
     transform: translateY(calc(-8px * (var(--fade, 0))));
@@ -199,7 +202,7 @@ body.home::after{
     position: relative;
     min-height: calc(100svh - var(--navH)); /* exactly under the sticky header */
     display: grid; align-items: start;
-    padding-top: var(--hero-offset);        /* move text a bit up */
+    padding-top: var(--hero-offset);
 }
 
 /* Avoid overflow/scroll on Home */
@@ -216,28 +219,25 @@ body.home::after{
 .home .hero-content p{
     color:rgba(255,255,255,.92);
     max-width:56ch;
-    font-size: clamp(13px, 1.9vw, 16px); /* tuned smaller */
+    font-size: clamp(13px, 1.9vw, 16px);
 }
 
-/* Footer floats at bottom-left; smaller size; no layout height */
-html,body{height:100%}
-body{min-height:100svh; display:flex; flex-direction:column}
-main{flex:1 0 auto}
+/* Footer floats at bottom-left on Home; small size */
 .home .site-foot{
     position: fixed;
     left: 0; right: 0; bottom: 0;
     background: transparent;
     padding: 10px var(--pad) calc(10px + env(safe-area-inset-bottom,0px));
     color: rgba(255,255,255,.85);
-    font-size: 11px;          /* Home baseline */
+    font-size: 11px;
     letter-spacing: .02em;
-    pointer-events: none;     /* purely decorative here */
+    pointer-events: none;
 }
 .site-foot .container{
     display:flex; justify-content:flex-start; align-items:center; text-align:left;
 }
 
-/* ========== Our Story page ========== */
+/* ========== Our Story page (no scroll) ========== */
 body.story{ overflow: hidden; }          /* no scroll for now */
 .story .section{ margin: 0; }
 
@@ -295,19 +295,108 @@ body.story{ overflow: hidden; }          /* no scroll for now */
     box-shadow: inset 0 0 0 1px rgba(0,0,0,.04);
 }
 
-/* Story footer: same size as Home (11px), bottom-left, but darker for light bg */
+/* Story footer: same size as Home (11px), bottom-left, darker text */
 .story .site-foot{
     position: fixed;
     left: 0; right: 0; bottom: 0;
     background: transparent;
     padding: 10px var(--pad) calc(10px + env(safe-area-inset-bottom,0px));
-    font-size: 11px;               /* match Home */
+    font-size: 11px;
     letter-spacing: .02em;
-    color: #555;                    /* Story page is light */
-    pointer-events: none;           /* decorative text only */
+    color: #555;
+    pointer-events: none;
 }
 
-/* ========== Mobile & portrait tweaks ========== */
+/* ========== Collection page ========== */
+/* Full-bleed background; page can scroll */
+body.collection::before{
+    content:"";
+    position:fixed; inset:0; z-index:-1;
+    background: #000 url("/assets/collection.png") center center / cover no-repeat;
+}
+body.collection::after{
+    content:""; position:fixed; inset:0; z-index:-1;
+    background: linear-gradient(180deg, rgba(0,0,0,.26), rgba(0,0,0,.50));
+}
+
+/* Move panel to top-right */
+.collection-hero{
+    min-height: calc(100svh - var(--navH));
+    display: block;
+    padding: 0;
+}
+.collection-hero .container{
+    display: flex;
+    justify-content: flex-end; /* right */
+    align-items: flex-start;   /* top */
+    padding-top: clamp(24px, 10vh, 120px);
+}
+
+/* Translucent white panel (tighter radius) */
+.collection-panel{
+    max-width: 760px;
+    background: rgba(255,255,255,.76);
+    border: 1px solid rgba(255,255,255,.95);
+    box-shadow: 0 20px 60px rgba(0,0,0,.18);
+    border-radius: 10px;                  /* was 18px */
+    padding: clamp(16px, 2.6vw, 24px);
+    backdrop-filter: blur(4px);
+}
+
+/* Title fonts per language */
+.collection-title{
+    display:flex; gap:12px; align-items:baseline; margin:0 0 10px;
+    line-height:1;
+}
+.collection-title .title-en{
+    font-family: "Fira Sans Condensed", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-weight:600;
+    font-size: clamp(20px, 4.4vw, 28px);
+    letter-spacing:.04em;
+}
+.collection-title .title-kr{
+    font-family: "Sandoll OnGothic", "SD OnGothic", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-weight:600;
+    font-size: clamp(18px, 3.8vw, 24px);
+    letter-spacing:.02em;
+}
+
+/* Description fonts per language */
+.collection-desc{ margin-top:6px }
+.collection-desc p{ margin: 0 0 10px; line-height:1.5 }
+.collection-desc p.kr{
+    font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", Inter, system-ui, sans-serif;
+    font-size: clamp(14px, 2.2vw, 17px);
+    color:#1a1a1a;
+}
+.collection-desc p.en{
+    font-family: "Galvji", ui-rounded, "SF Pro Rounded", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: clamp(13.5px, 2.0vw, 16px);
+    color:#252525;
+}
+
+/* Naver store button uses Sandoll OnGothic */
+.btn-store{
+    font-family: "Sandoll OnGothic", "SD OnGothic", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    border-color:#111; color:#111; background:transparent;
+}
+.btn-store:hover{ background:#111; color:#fff }
+
+/* Keep nav labels one-line */
+.collection .nav-links a{ white-space:nowrap }
+
+/* Mobile: center panel so it’s not cramped */
+@media (max-width: 900px){
+    .collection-hero .container{
+        justify-content: center;
+        align-items: flex-start;
+    }
+    .collection-panel{
+        width: min(94vw, 720px);
+    }
+}
+
+/* ========== Mobile & portrait tweaks (header/menu) ========== */
 @media (orientation:portrait), (max-width:820px){
     .nav .menu-btn{ display:inline-flex !important; margin:0 !important; color:#111 !important; -webkit-tap-highlight-color:transparent; -webkit-touch-callout:none; }
     .nav .nav-actions{ justify-content:flex-end !important; justify-self:end !important; }
@@ -343,45 +432,5 @@ body.story{ overflow: hidden; }          /* no scroll for now */
     padding:12px 0 12px 6px !important; margin-right: calc(-1 * var(--edge-nudge)) !important;
 }
 @media (orientation:portrait), (max-width:820px){
-    .nav .nav-actions {
-        justify-content: flex-end !important;
-        justify-self: end !important;
-        margin-right: calc(-1 * var(--edge-nudge));
-    }
-}
-
-/* ========== Collection page ========== */
-
-.collection-hero{
-    min-height: calc(100svh - var(--navH));
-    display: block;            /* no grid centering */
-    padding: 0;                /* remove extra vertical padding */
-}
-.collection-hero .container{
-    display: flex;
-    justify-content: flex-end; /* right */
-    align-items: flex-start;   /* top */
-    padding-top: clamp(24px, 10vh, 120px); /* nice top offset */
-}
-
-/* Translucent panel tweaks: tighter radius */
-.collection-panel{
-    max-width: 760px;
-    background: rgba(255,255,255,.76);
-    border: 1px solid rgba(255,255,255,.95);
-    box-shadow: 0 20px 60px rgba(0,0,0,.18);
-    border-radius: 10px;                  /* was 18px */
-    padding: clamp(16px, 2.6vw, 24px);    /* slightly tighter padding */
-    backdrop-filter: blur(4px);
-}
-
-/* Mobile: center it so it doesn’t feel cramped on the edge */
-@media (max-width: 900px){
-    .collection-hero .container{
-        justify-content: center;
-        align-items: flex-start;
-    }
-    .collection-panel{
-        width: min(94vw, 720px);
-    }
+    .nav .nav-actions{ justify-content:flex-end !important; justify-self:end !important; margin-right: calc(-1 * var(--edge-nudge)) }
 }
