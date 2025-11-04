@@ -135,3 +135,62 @@ menuClose?.addEventListener('click', closeMenu);
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !menuPanel?.hidden) closeMenu();
 });
+
+// --- Scene grid: image -> video on hover (desktop), tap-to-toggle (touch) ---
+function initSceneGrid(){
+    const items = document.querySelectorAll('.scene-item');
+    if (!items.length) return;
+
+    const isTouch = window.matchMedia('(hover: none)').matches;
+
+    items.forEach((item) => {
+        const videoEl = item.querySelector('video');
+        const src = item.getAttribute('data-video');
+
+        // Lazy-attach the video src the first time we try to play
+        let loaded = false;
+        const ensureLoaded = () => {
+            if (!loaded && src) {
+                videoEl.src = src;
+                loaded = true;
+            }
+        };
+
+        if (!isTouch){
+            // Desktop: play on hover
+            item.addEventListener('mouseenter', () => {
+                ensureLoaded();
+                if (videoEl.paused) { videoEl.play().catch(()=>{}); }
+            });
+            item.addEventListener('mouseleave', () => {
+                videoEl.pause();
+                // keep current frame hidden again via CSS opacity
+            });
+        } else {
+            // Touch: tap toggles playback and visual state
+            item.addEventListener('click', (e) => {
+                e.preventDefault(); // keep the <a> from navigating
+                ensureLoaded();
+                if (videoEl.paused){
+                    // pause any other playing tiles
+                    document.querySelectorAll('.scene-item.is-playing').forEach(it => {
+                        if (it !== item){
+                            it.classList.remove('is-playing');
+                            const v = it.querySelector('video');
+                            if (v) v.pause();
+                        }
+                    });
+                    videoEl.play().catch(()=>{});
+                    item.classList.add('is-playing');
+                } else {
+                    videoEl.pause();
+                    item.classList.remove('is-playing');
+                }
+            }, {passive:false});
+        }
+    });
+}
+
+// If you already have a DOMContentLoaded handler, just call initSceneGrid() inside it.
+// Otherwise, this standalone listener is fine:
+document.addEventListener('DOMContentLoaded', initSceneGrid);
