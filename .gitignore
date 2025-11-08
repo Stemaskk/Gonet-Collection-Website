@@ -2,3 +2,5 @@
 .env*.local
 
 assets/film/*.mp4
+.DS_Store
+assets/.DS_Store
