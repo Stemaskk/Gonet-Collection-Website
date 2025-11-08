@@ -473,38 +473,39 @@ body.collection{ overflow: hidden; }
 /* --- Scene (masonry like your concept) --- */
 .scene .hero-title{ text-transform:uppercase; margin-bottom: 8px; }
 .scene .scene-intro p{ margin: 0 0 12px; color:#333; }
-
-/* Masonry columns */
+/* === Scene: column-major (1,2,3 in col1; 4,5,6 in col2; 7,8,9 in col3) === */
 .scene-board{
-    column-count: 3;
-    column-gap: clamp(12px, 2vw, 20px);
+    display: block !important;                     /* kill the grid */
+    column-count: 3 !important;                    /* always 3 columns */
+    column-gap: clamp(12px, 2vw, 20px) !important;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--pad) 60px;
 }
-@media (max-width: 1040px){ .scene-board{ column-count: 2; } }
-@media (max-width: 560px){ .scene-board{ column-count: 1; } }
 
+/* Keep each tile intact within a column */
 .scene-tile{
     break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    display: block;
+    width: 100%;
     margin: 0 0 clamp(12px, 2vw, 20px);
-    border-radius: 12px;
-    overflow: hidden;
-    background: #f6f6f6;
-    box-shadow: 0 8px 18px rgba(0,0,0,.06);
 }
+
+/* Ensure video overlays the image on hover */
 .scene-tile .media{ position: relative; }
 .scene-tile img{
-    display:block; width:100%; height:auto;
+    display:block; width:100%; height:auto; position: relative; z-index: 0;
 }
 .scene-tile video{
     position:absolute; inset:0;
     width:100%; height:100%;
     object-fit: cover;
-    opacity: 0;
+    opacity: 0; z-index: 1;
     transition: opacity .22s ease;
 }
-.scene-tile:hover video{ opacity: 1; }
+.scene-tile:hover video{ opacity:1; }
 
 @media (hover:none){
     .scene-tile:hover video{ opacity:0; }
@@ -516,27 +517,58 @@ body.collection{ overflow: hidden; }
 
 @media (max-width: 1040px) { .scene-board { column-count: 3 !important; } }
 @media (max-width: 560px)  { .scene-board { column-count: 3 !important; } }
-
-/* Scene intro: subtitle inline with title */
+/* ===== Scene intro: title left, subtitle inline on the right ===== */
 .scene-intro .intro-row{
     display:flex;
-    align-items:baseline;       /* align to the text baseline */
+    align-items:baseline;
     gap: clamp(12px, 3vw, 28px);
     flex-wrap: nowrap;
 }
 .scene-intro .hero-title{
     margin:0;
-    line-height:1;              /* no extra top/bottom slack */
+    line-height:1;           /* keep SCENE tight */
     white-space:nowrap;
 }
 .scene-intro .intro-copy{
     flex:1 1 auto;
+    color:#333;
+    font-size:14px;          /* adjust this to change “height” of subtext */
     line-height:1.3;
-    position: relative;
-    top: -5px;
+    position:relative;
+    top:-2px;                /* tiny nudge so baselines match */
 }
 .scene-intro .intro-copy p{ margin:0; }
 
+/* ===== Scene grid: force 3×3, row-major; ensure video overlays image ===== */
+/* neutralize any previous masonry/column rules */
+.scene-board{ column-count: initial !important; column-gap: 0 !important; }
+
+.scene-board{
+    display:grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: clamp(12px, 2vw, 20px) !important;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--pad) 60px;
+}
+
+.scene-tile .media{ position: relative; }
+.scene-tile img{
+    display:block; width:100%; height:auto; position: relative; z-index: 0;
+}
+.scene-tile video{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit: cover;
+    opacity: 0; z-index: 1;
+    transition: opacity .22s ease;
+}
+.scene-tile:hover video{ opacity:1; }
+
+@media (hover:none){
+    .scene-tile:hover video{ opacity:0; }
+    .scene-tile.is-playing video{ opacity:1; }
+}
 /* Collection title: show only the active language */
 body[data-lang="kr"] .collection-title .title-en { display: none !important; }
 body[data-lang="en"] .collection-title .title-kr { display: none !important; }
