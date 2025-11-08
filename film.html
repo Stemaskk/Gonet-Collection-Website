@@ -10,7 +10,7 @@
   <script defer src="/js/app.js"></script>
 </head>
 <body class="scene" data-lang="kr">
-<!-- Header (same structure as other pages) -->
+<!-- Header (same as other pages) -->
 <nav class="nav is-top" aria-label="Primary">
   <div class="nav-inner container">
     <a class="brand" href="/" aria-label="GONET Home">
@@ -77,76 +77,77 @@
 <main>
   <section class="section scene-intro">
     <div class="container">
-      <h1 class="hero-title">Scene</h1>
+      <h1 class="hero-title" style="text-transform:uppercase;">Scene</h1>
       <div class="lang lang-kr">
-        <p>음식의 순간을 영상으로 남깁니다.<br>
-          빛, 질감, 손끝의 감정까지 테이블 위의 예술을 장면으로 기록합니다.</p>
+        <p>음식의 순간을 영상으로 남깁니다. <br>빛, 질감, 손끝의 감정까지 테이블 위의 예술을 장면으로 기록합니다.</p>
       </div>
       <div class="lang lang-en">
-        <p>Capturing moments in food —<br>
-          light, texture, and emotion.<br>
-          Turning the table into a scene.</p>
+        <p>Capturing moments in food — light, texture, and emotion. Turning the table into a scene.</p>
       </div>
     </div>
   </section>
 
-  <!-- 3×3 grid; each tile has .scene-figure wrapper to match your CSS -->
-  <section class="scene-grid container">
-    <!-- Row 1 -->
-    <figure class="scene-item">
-      <div class="scene-figure">
+  <!-- Masonry board -->
+  <section class="scene-board">
+    <!-- 1 -->
+    <figure class="scene-tile">
+      <div class="media">
         <img src="/assets/film/1.jpg" alt="Scene 1">
         <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/1.mp4"></video>
       </div>
     </figure>
-    <figure class="scene-item">
-      <div class="scene-figure">
+    <!-- 2 -->
+    <figure class="scene-tile">
+      <div class="media">
         <img src="/assets/film/2.jpg" alt="Scene 2">
         <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/2.mp4"></video>
       </div>
     </figure>
-    <figure class="scene-item">
-      <div class="scene-figure">
+    <!-- 3 -->
+    <figure class="scene-tile">
+      <div class="media">
         <img src="/assets/film/3.jpg" alt="Scene 3">
         <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/3.mp4"></video>
       </div>
     </figure>
-
-    <!-- Row 2 -->
-    <figure class="scene-item">
-      <div class="scene-figure">
+    <!-- 4 -->
+    <figure class="scene-tile">
+      <div class="media">
         <img src="/assets/film/4.jpg" alt="Scene 4">
         <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/4.mp4"></video>
       </div>
     </figure>
-    <figure class="scene-item">
-      <div class="scene-figure">
+    <!-- 5 -->
+    <figure class="scene-tile">
+      <div class="media">
         <img src="/assets/film/5.jpg" alt="Scene 5">
         <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/5.mp4"></video>
       </div>
     </figure>
-    <figure class="scene-item">
-      <div class="scene-figure">
+    <!-- 6 -->
+    <figure class="scene-tile">
+      <div class="media">
         <img src="/assets/film/6.jpg" alt="Scene 6">
         <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/6.mp4"></video>
       </div>
     </figure>
-
-    <!-- Row 3 -->
-    <figure class="scene-item">
-      <div class="scene-figure">
+    <!-- 7 -->
+    <figure class="scene-tile">
+      <div class="media">
         <img src="/assets/film/7.jpg" alt="Scene 7">
         <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/7.mp4"></video>
       </div>
     </figure>
-    <figure class="scene-item">
-      <div class="scene-figure">
+    <!-- 8 -->
+    <figure class="scene-tile">
+      <div class="media">
         <img src="/assets/film/8.jpg" alt="Scene 8">
         <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/8.mp4"></video>
       </div>
     </figure>
-    <figure class="scene-item">
-      <div class="scene-figure">
+    <!-- 9 -->
+    <figure class="scene-tile">
+      <div class="media">
         <img src="/assets/film/9.jpg" alt="Scene 9">
         <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/9.mp4"></video>
       </div>
@@ -158,32 +159,17 @@
   <div class="container">©2025 GONET All rights reserved.</div>
 </footer>
 
-<!-- Tiny helper for hover/touch play -->
+<!-- Hover/touch play -->
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const tiles = document.querySelectorAll('.scene-item');
-    tiles.forEach(tile => {
+    document.querySelectorAll('.scene-tile').forEach(tile => {
       const v = tile.querySelector('video');
-      if (!v) return;
-
-      tile.addEventListener('mouseenter', () => {
-        v.currentTime = 0;
-        v.play().catch(() => {});
-        tile.classList.add('is-playing');
-      });
-      tile.addEventListener('mouseleave', () => {
-        v.pause();
-        v.currentTime = 0;
-        tile.classList.remove('is-playing');
-      });
-      // Touch toggle
+      if(!v) return;
+      tile.addEventListener('mouseenter', () => { v.currentTime = 0; v.play().catch(()=>{}); });
+      tile.addEventListener('mouseleave', () => { v.pause(); v.currentTime = 0; });
       tile.addEventListener('touchstart', () => {
-        if (tile.classList.toggle('is-playing')) {
-          v.play().catch(() => {});
-        } else {
-          v.pause();
-          v.currentTime = 0;
-        }
+        if (tile.classList.toggle('is-playing')) { v.play().catch(()=>{}); }
+        else { v.pause(); v.currentTime = 0; }
       }, {passive:true});
     });
   });
