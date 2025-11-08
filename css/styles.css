@@ -470,3 +470,11 @@ body.collection{ overflow: hidden; }
 /* Optional: subtle focus style for keyboard users */
 .scene-item{ display:block; border-radius:12px; outline:none; }
 .scene-item:focus-visible .scene-figure{ box-shadow: 0 0 0 2px #000 inset, 0 8px 18px rgba(0,0,0,.08); }
+
+/* --- header offset on wide screens --- */
+@media (min-width: 1200px) {
+    .nav .nav-links { margin-left: 6rem; }
+}
+@media (min-width: 1440px) {
+    .nav .nav-links { margin-left: 8rem; }
+}
