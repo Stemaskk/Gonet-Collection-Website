@@ -517,21 +517,26 @@ body.collection{ overflow: hidden; }
 @media (max-width: 1040px) { .scene-board { column-count: 3 !important; } }
 @media (max-width: 560px)  { .scene-board { column-count: 3 !important; } }
 
-/* Scene intro: title left, subtitle right */
+/* Scene intro: subtitle inline with title */
 .scene-intro .intro-row{
     display:flex;
-    align-items:baseline;           /* lines up with the title baseline */
+    align-items:baseline;       /* align to the text baseline */
     gap: clamp(12px, 3vw, 28px);
+    flex-wrap: nowrap;
 }
 .scene-intro .hero-title{
     margin:0;
-    text-transform:uppercase;
-    white-space:nowrap;             /* keeps “Scene” on one line */
+    line-height:1;              /* no extra top/bottom slack */
+    white-space:nowrap;
 }
 .scene-intro .intro-copy{
     flex:1 1 auto;
-    color:#333;
-    font-size:14px;
-    line-height:1.5;
+    line-height:1.3;
+    position: relative;
+    top: -2px;                  /* tiny visual nudge so baselines match */
 }
 .scene-intro .intro-copy p{ margin:0; }
+
+/* Collection title: show only the active language */
+body[data-lang="kr"] .collection-title .title-en { display: none !important; }
+body[data-lang="en"] .collection-title .title-kr { display: none !important; }
