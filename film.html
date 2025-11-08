@@ -163,7 +163,7 @@
   <div class="container">©2025 GONET All rights reserved.</div>
 </footer>
 
-<!-- Hover/touch play -->
+<!-- Simple hover/touch play -->
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.scene-tile').forEach((tile) => {
@@ -182,10 +182,6 @@
         if (tile.classList.toggle('is-playing')) { v.play().catch(()=>{}); }
         else { v.pause(); v.currentTime = 0; }
       }, {passive:true});
-
-      v.addEventListener('error', () => {
-        tile.classList.add('video-error');
-      });
     });
   });
 </script>
