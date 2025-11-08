@@ -75,82 +75,81 @@
 </div>
 
 <main>
-  <!-- Title + inline subtitle -->
+  <!-- Title + fixed two-line subtitle inline -->
   <section class="section scene-intro">
     <div class="container">
       <div class="intro-row">
         <h1 class="hero-title">Scene</h1>
         <div class="intro-copy">
           <div class="lang lang-kr">
-            <p>음식의 순간을 영상으로 남깁니다. 빛, 질감, 손끝의 감정까지 테이블 위의 예술을 장면으로 기록합니다.</p>
+            <p>
+              <span class="line1">음식의 순간을 영상으로 남깁니다.</span>
+              <span class="line2">빛, 질감, 손끝의 감정까지 테이블 위의 예술을 장면으로 기록합니다.</span>
+            </p>
           </div>
           <div class="lang lang-en">
-            <p>Capturing moments in food — light, texture, and emotion. Turning the table into a scene.</p>
+            <p>
+              <span class="line1">Capturing moments in food — light, texture, and emotion.</span>
+              <span class="line2">Turning the table into a scene.</span>
+            </p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 3×3 grid, row-major order -->
+  <!-- 3×3 row-major grid -->
   <section class="scene-board">
-    <!-- 1 -->
     <figure class="scene-tile">
       <div class="media">
         <img src="/assets/film/1.jpg" alt="Scene 1">
         <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/1.mp4"></video>
       </div>
     </figure>
-    <!-- 2 -->
     <figure class="scene-tile">
       <div class="media">
         <img src="/assets/film/2.jpg" alt="Scene 2">
         <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/2.mp4"></video>
       </div>
     </figure>
-    <!-- 3 -->
     <figure class="scene-tile">
       <div class="media">
         <img src="/assets/film/3.jpg" alt="Scene 3">
         <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/3.mp4"></video>
       </div>
     </figure>
-    <!-- 4 -->
+
     <figure class="scene-tile">
       <div class="media">
         <img src="/assets/film/4.jpg" alt="Scene 4">
         <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/4.mp4"></video>
       </div>
     </figure>
-    <!-- 5 -->
     <figure class="scene-tile">
       <div class="media">
         <img src="/assets/film/5.jpg" alt="Scene 5">
         <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/5.mp4"></video>
       </div>
     </figure>
-    <!-- 6 -->
     <figure class="scene-tile">
       <div class="media">
         <img src="/assets/film/6.jpg" alt="Scene 6">
         <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/6.mp4"></video>
       </div>
     </figure>
-    <!-- 7 -->
+
     <figure class="scene-tile">
       <div class="media">
         <img src="/assets/film/7.jpg" alt="Scene 7">
         <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/7.mp4"></video>
       </div>
     </figure>
-    <!-- 8 -->
     <figure class="scene-tile">
       <div class="media">
         <img src="/assets/film/8.jpg" alt="Scene 8">
         <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/8.mp4"></video>
       </div>
     </figure>
-    <!-- 9 -->
     <figure class="scene-tile">
       <div class="media">
         <img src="/assets/film/9.jpg" alt="Scene 9">
@@ -164,7 +163,7 @@
   <div class="container">©2025 GONET All rights reserved.</div>
 </footer>
 
-<!-- Robust hover/touch play -->
+<!-- Hover/touch play -->
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.scene-tile').forEach((tile) => {
@@ -185,7 +184,7 @@
       }, {passive:true});
 
       v.addEventListener('error', () => {
-        tile.classList.add('video-error'); // Optional: style if needed
+        tile.classList.add('video-error');
       });
     });
   });
