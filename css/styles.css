@@ -510,3 +510,28 @@ body.collection{ overflow: hidden; }
     .scene-tile:hover video{ opacity:0; }
     .scene-tile.is-playing video{ opacity:1; }
 }
+
+/* Lock Scene to 3 columns at all screen sizes */
+.scene-board { column-count: 3 !important; }
+
+@media (max-width: 1040px) { .scene-board { column-count: 3 !important; } }
+@media (max-width: 560px)  { .scene-board { column-count: 3 !important; } }
+
+/* Scene intro: title left, subtitle right */
+.scene-intro .intro-row{
+    display:flex;
+    align-items:baseline;           /* lines up with the title baseline */
+    gap: clamp(12px, 3vw, 28px);
+}
+.scene-intro .hero-title{
+    margin:0;
+    text-transform:uppercase;
+    white-space:nowrap;             /* keeps “Scene” on one line */
+}
+.scene-intro .intro-copy{
+    flex:1 1 auto;
+    color:#333;
+    font-size:14px;
+    line-height:1.5;
+}
+.scene-intro .intro-copy p{ margin:0; }
