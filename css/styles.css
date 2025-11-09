@@ -434,7 +434,7 @@ body[data-lang="en"] .collection-title .title-kr { display: none !important; }
 .scene-intro .intro-copy{
     display:inline-block;
     position:relative;
-    top:-5px;                 /* tweak to align with title */
+    top:-10px;                 /* tweak to align with title */
     font-size:14px;           /* ← change this to adjust subtext “height” */
     line-height:1.3;          /* ← and this for spacing */
 }
@@ -490,4 +490,62 @@ body[data-lang="kr"] .scene-intro .intro-copy{ inline-size: var(--scene-sub-w-kr
     color: #333;
     font-size: 12px;
     letter-spacing: .02em;
+}
+/* ===== SCENE — ORIGINAL LOOK (MASONRY 3-COLUMN + HOVER VIDEO) ===== */
+
+/* Title left, fixed two-line subtitle inline on right (kept) */
+:root{
+    --scene-sub-w-en: 46ch;
+    --scene-sub-w-kr: 34ch;
+}
+.scene-intro .intro-row{
+    display:flex; align-items:flex-start; gap: clamp(12px, 3vw, 28px); flex-wrap: nowrap;
+}
+.scene-intro .hero-title{ margin:0; line-height:1; white-space:nowrap; }
+.scene-intro .intro-copy{
+    display:inline-block; position:relative; top:-2px;
+    font-size:14px; line-height:1.3;
+}
+body[data-lang="en"] .scene-intro .intro-copy{ inline-size: var(--scene-sub-w-en); }
+body[data-lang="kr"] .scene-intro .intro-copy{ inline-size: var(--scene-sub-w-kr); }
+.scene-intro .intro-copy p{ margin:0; }
+.scene-intro .intro-copy .line1,
+.scene-intro .intro-copy .line2{ display:block; white-space:nowrap; text-wrap:nowrap; }
+
+/* Masonry columns (column-major), images define height */
+.scene-board{
+    display:block !important;
+    column-count: 3 !important;
+    column-gap: clamp(12px, 2vw, 20px) !important;
+    max-width: 1200px;          /* keep within site container like your mock */
+    margin: 0 auto;
+    padding: 0 var(--pad) 60px;
+}
+.scene-tile{
+    display:block;
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    margin: 0 0 clamp(12px, 2vw, 20px);
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 8px 18px rgba(0,0,0,.06);
+}
+.scene-tile .media{ position: relative; }
+.scene-tile img{ display:block; width:100%; height:auto; position:relative; z-index:0; }
+
+/* Video fades in over the image, filling the tile */
+.scene-tile video{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit: cover;                /* fill whatever height the image gives */
+    opacity: 0; transition: opacity .22s ease;
+    z-index: 1; pointer-events: none;
+}
+.scene-tile:hover video{ opacity:1; }
+
+@media (hover:none){
+    .scene-tile:hover video{ opacity:0; }
+    .scene-tile.is-playing video{ opacity:1; }
 }
