@@ -549,3 +549,41 @@ body[data-lang="kr"] .scene-intro .intro-copy{ inline-size: var(--scene-sub-w-kr
     .scene-tile:hover video{ opacity:0; }
     .scene-tile.is-playing video{ opacity:1; }
 }
+
+/* === Scene: ROW-MAJOR 3×3 grid (uniform tiles, hover video) === */
+.scene-board{
+    column-count: initial !important;          /* kill masonry */
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: clamp(12px, 2vw, 20px) !important;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--pad) 60px;
+}
+
+.scene-tile{
+    break-inside: auto !important;             /* neutralize column rules */
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 8px 18px rgba(0,0,0,.06);
+    aspect-ratio: 3 / 4;                       /* keeps rows even; tweak if you like */
+}
+
+.scene-tile .media{ position: absolute; inset: 0; }
+.scene-tile img,
+.scene-tile video{
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;                          /* fill each tile */
+}
+
+.scene-tile video{
+    opacity: 0; transition: opacity .22s ease; z-index: 1; pointer-events: none;
+}
+.scene-tile:hover video{ opacity: 1; }
+
+@media (hover:none){
+    .scene-tile:hover video{ opacity: 0; }
+    .scene-tile.is-playing video{ opacity: 1; }
+}
