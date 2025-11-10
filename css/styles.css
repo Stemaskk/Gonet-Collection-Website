@@ -510,8 +510,8 @@ body[data-lang="kr"] .scene-intro .intro-copy{ inline-size: var(--scene-sub-w-kr
 
 /* === Scene: tight gaps, keep rounded edges === */
 .scene-board{
-    gap: 6px !important;          /* make them very close (tweak 4–8px as you like) */
-    grid-gap: 6px !important;     /* legacy alias */
+    gap: 10px !important;          /* make them very close (tweak 4–8px as you like) */
+    grid-gap: 10px !important;     /* legacy alias */
 }
 
 .scene-tile{
