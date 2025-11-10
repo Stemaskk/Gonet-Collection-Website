@@ -493,3 +493,31 @@ body[data-lang="kr"] .scene-intro .intro-copy{ inline-size: var(--scene-sub-w-kr
     font-size: 12px;
     letter-spacing: .02em;
 }
+
+/* === Footer: match Story style on Scene and onward pages === */
+.scene .site-foot,
+.consulting .site-foot,
+.contact .site-foot {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    background: transparent;
+    padding: 10px var(--pad) calc(10px + env(safe-area-inset-bottom,0px));
+    color: #555;
+    font-size: 11px;
+    letter-spacing: .02em;
+    pointer-events: none; /* so it never blocks clicks */
+}
+
+/* === Scene: no gaps between tiles === */
+.scene-board{
+    gap: 0 !important;
+    grid-gap: 0 !important;     /* older syntax */
+    border-radius: 12px;         /* keep only outer rounding */
+    overflow: hidden;            /* clip outer corners */
+}
+
+.scene-tile{
+    border-radius: 0 !important; /* no inner rounding (prevents tiny cross gaps) */
+    box-shadow: none !important; /* avoid “gap” look from shadows */
+    margin: 0 !important;
+}
