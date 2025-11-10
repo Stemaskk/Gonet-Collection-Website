@@ -549,3 +549,40 @@ body.consulting::before{
     pointer-events: auto;
     margin-top: 48px;
 }
+
+/* Disable old fixed background on Consulting (if it exists) */
+body.consulting::before { content: none !important; }
+
+/* Consulting hero uses a real <img> so it only scales horizontally */
+.consulting-hero{ position: relative; }
+.consulting-hero .consulting-bg{
+    display:block;
+    width:100%;
+    height:auto;           /* keep image ratio; resizes only with width */
+}
+
+/* Overlay panel on top-right of the image */
+.consulting-panel{
+    position: absolute;
+    top: clamp(24px, 10vh, 120px);
+    right: var(--pad);
+}
+
+/* On smaller screens, stack panel below the image */
+@media (max-width: 900px){
+    .consulting-panel{
+        position: static;
+        margin: 12px var(--pad) 0;
+    }
+}
+
+/* Footer on Consulting should be part of page flow (not sticky) */
+.consulting .site-foot{
+    position: static !important;
+    left: auto !important; right: auto !important; bottom: auto !important;
+    padding: 10px var(--pad);
+    color: #555;
+    font-size: 11px;
+    letter-spacing: .02em;
+    margin-top: 48px;
+}
