@@ -587,3 +587,54 @@ body[data-lang="kr"] .scene-intro .intro-copy{ inline-size: var(--scene-sub-w-kr
     .scene-tile:hover video{ opacity: 0; }
     .scene-tile.is-playing video{ opacity: 1; }
 }
+
+/* === Scene: natural-size tiles (row-major), keep rounded edges === */
+.scene-board{
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: clamp(12px, 2vw, 20px) !important;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--pad) 60px;
+}
+
+/* Tile uses the image's natural height (no forced aspect ratio) */
+.scene-tile{
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 8px 18px rgba(0,0,0,.06);
+    aspect-ratio: auto !important;          /* override any prior fixed ratio */
+}
+
+/* Media wrapper sizes itself by the IMG inside */
+.scene-tile .media{
+    position: relative !important;           /* override any absolute rules */
+    inset: auto !important;
+}
+
+/* Image defines the tile height: full width, natural height */
+.scene-tile img{
+    display: block;
+    width: 100%;
+    height: auto;                            /* keep original aspect ratio */
+}
+
+/* Video overlays the same box, filling it */
+.scene-tile video{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;                       /* cover the image area */
+    opacity: 0;
+    transition: opacity .22s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+.scene-tile:hover video{ opacity: 1; }
+
+@media (hover:none){
+    .scene-tile:hover video{ opacity: 0; }
+    .scene-tile.is-playing video{ opacity: 1; }
+}
