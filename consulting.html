@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/css/styles.css" />
     <script defer src="/js/app.js"></script>
 </head>
-<body data-lang="kr">
+<body class="consulting" data-lang="kr">
 <nav class="nav is-top" aria-label="Primary">
     <div class="nav-inner container">
         <a class="brand" href="/" aria-label="GONET Home">
@@ -25,9 +25,15 @@
         </div>
         <div class="nav-actions">
             <nav class="nav-social" aria-label="Contact & Social">
-                <a class="icon-btn" href="mailto:gonet@goodonetable.com" aria-label="Email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7.5L12 13l9-5.5"/></svg></a>
-                <a class="icon-btn" href="https://www.instagram.com/g.one_t/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17" cy="7" r="1"/></svg></a>
-                <a class="icon-btn" href="https://www.youtube.com/c/GONETable" target="_blank" rel="noopener" aria-label="YouTube"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2.5"/><path d="M10 9.5 L15 12 L10 14.5 Z" fill="currentColor" stroke="none"/></svg></a>
+                <a class="icon-btn" href="mailto:gonet@goodonetable.com" aria-label="Email">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7.5L12 13l9-5.5"/></svg>
+                </a>
+                <a class="icon-btn" href="https://www.instagram.com/g.one_t/" target="_blank" rel="noopener" aria-label="Instagram">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17" cy="7" r="1"/></svg>
+                </a>
+                <a class="icon-btn" href="https://www.youtube.com/c/GONETable" target="_blank" rel="noopener" aria-label="YouTube">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2.5"/><path d="M10 9.5 L15 12 L10 14.5 Z" fill="currentColor" stroke="none"/></svg>
+                </a>
             </nav>
             <button class="btn lang-toggle" id="langToggle" aria-pressed="false" aria-label="Toggle language">KR</button>
             <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel"><span class="menu-icon" aria-hidden="true"></span></button>
@@ -53,36 +59,50 @@
             <hr>
         </nav>
         <div class="menu-social container" aria-label="Contact & Social">
-            <a class="icon-btn" href="mailto:gonet@goodonetable.com" aria-label="Email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7.5L12 13l9-5.5"/></svg></a>
-            <a class="icon-btn" href="https://www.instagram.com/g.one_t/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17" cy="7" r="1"/></svg></a>
-            <a class="icon-btn" href="https://www.youtube.com/c/GONETable" target="_blank" rel="noopener" aria-label="YouTube"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2.5"/><path d="M10 9.5 L15 12 L10 14.5 Z" fill="currentColor" stroke="none"/></svg></a>
+            <a class="icon-btn" href="mailto:gonet@goodonetable.com" aria-label="Email">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7.5L12 13l9-5.5"/></svg>
+            </a>
+            <a class="icon-btn" href="https://www.instagram.com/g.one_t/" target="_blank" rel="noopener" aria-label="Instagram">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17" cy="7" r="1"/></svg>
+            </a>
+            <a class="icon-btn" href="https://www.youtube.com/c/GONETable" target="_blank" rel="noopener" aria-label="YouTube">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2.5"/><path d="M10 9.5 L15 12 L10 14.5 Z" fill="currentColor" stroke="none"/></svg>
+            </a>
         </div>
     </div>
 </div>
 
 <main>
-    <section class="section container">
-        <h1 class="hero-title">Consulting</h1>
-
-        <div class="lang lang-kr">
-            <p>고네뜨의 컨설팅은 음식의 아름다움을 시각적으로 구현하는 일입니다.
-                우리는 요리의 본질에서 출발해, 그 음식이 가장 아름답게 빛나는 장면과 테이블의 형태를 디자인합니다.</p>
-            <p>플레이팅, 색, 빛, 질감, 그리고 감정 — 그 모든 요소가 하나로 이어질 때, 비로소 테이블은 완성됩니다.</p>
-            <p>고네뜨는 브랜드, 레스토랑, 그리고 크리에이터와 함께 보여지는 아름다움 너머의 감각을 만들어갑니다.
-                ‘보이는 음식의 미학’을 완성합니다.</p>
-        </div>
-
-        <div class="lang lang-en">
-            <p>GONET’s consulting brings the beauty of food to life through visuals.
-                We begin with the essence of a dish, designing the scene and the table where it shines the most.</p>
-            <p>Plating, color, light, texture, and emotion — when these elements flow together, the table becomes whole.</p>
-            <p>Working with brands, restaurants, and creators, GONET shapes the sensibility beyond what is seen, completing the visual art of food.</p>
+    <section class="collection-hero">
+        <div class="container">
+            <div class="collection-panel">
+                <div class="collection-desc">
+                    <div class="lang lang-kr">
+                        <p>고네뜨의 컨설팅은<br>
+                            음식의 아름다움이 시각으로 피어나는 순간을 설계합니다.</p>
+                        <p>요리의 본질을 읽고,<br>
+                            그 음식이 가장 빛나는 장면과 테이블을 디자인합니다.</p>
+                        <p>브랜드와 레스토랑, 크리에이터와 함께<br>
+                            보이는 아름다움 너머의 감각을 만들어갑니다.</p>
+                        <p>음식이 예술이 되는 자리, 고네뜨입니다.</p>
+                    </div>
+                    <div class="lang lang-en">
+                        <p>We design the moment where food comes alive visually.<br>
+                            By understanding the true character of each dish,<br>
+                            we create the scene and the table where it shines.</p>
+                        <p>Together with brands, restaurants, and creators,<br>
+                            we craft a beauty that goes beyond what is seen.</p>
+                        <p>Where food becomes art —<br>
+                            GONET.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
-</main>
 
-<footer class="site-foot" aria-label="Site footer">
-    <div class="container">©2025 GONET All rights reserved.</div>
-</footer>
+    <footer class="site-foot" aria-label="Site footer">
+        <div class="container">©2025 GONET All rights reserved.</div>
+    </footer>
+</main>
 </body>
 </html>
