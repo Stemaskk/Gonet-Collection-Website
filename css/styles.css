@@ -421,7 +421,7 @@ body[data-lang="en"] .collection-title .title-kr { display: none !important; }
 }
 .scene-intro .hero-title{ margin:0; line-height:1; white-space:nowrap; }
 .scene-intro .intro-copy{
-    display:inline-block; position:relative; top:-2px;
+    display:inline-block; position:relative; top:-5px;
     font-size:14px; line-height:1.3;
 }
 body[data-lang="en"] .scene-intro .intro-copy{ inline-size: var(--scene-sub-w-en); }
@@ -508,16 +508,20 @@ body[data-lang="kr"] .scene-intro .intro-copy{ inline-size: var(--scene-sub-w-kr
     pointer-events: none; /* so it never blocks clicks */
 }
 
-/* === Scene: no gaps between tiles === */
+/* === Scene: tight gaps, keep rounded edges === */
 .scene-board{
-    gap: 0 !important;
-    grid-gap: 0 !important;     /* older syntax */
-    border-radius: 12px;         /* keep only outer rounding */
-    overflow: hidden;            /* clip outer corners */
+    gap: 6px !important;          /* make them very close (tweak 4–8px as you like) */
+    grid-gap: 6px !important;     /* legacy alias */
 }
 
 .scene-tile{
-    border-radius: 0 !important; /* no inner rounding (prevents tiny cross gaps) */
-    box-shadow: none !important; /* avoid “gap” look from shadows */
-    margin: 0 !important;
+    border-radius: 12px !important;  /* round each tile */
+    overflow: hidden !important;     /* clip image/video to the round corners */
+    box-shadow: 0 6px 14px rgba(0,0,0,.06);
+    margin: 0 !important;            /* ensure no extra margins */
+}
+
+.scene-tile img,
+.scene-tile video{
+    border-radius: inherit;          /* keep media corners rounded too */
 }
