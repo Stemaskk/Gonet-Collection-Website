@@ -98,53 +98,64 @@
     </div>
   </section>
 
-  <!-- Masonry: 3 columns, images define height, video fades on hover -->
+  <!-- 3×3 row-major grid -->
   <section class="scene-board">
-    <!-- 1..9 in natural order -->
-    <figure class="scene-tile"><div class="media">
-      <img src="/assets/film/1.jpg" alt="Scene 1">
-      <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/1.mp4"></video>
-    </div></figure>
+    <figure class="scene-tile">
+      <div class="media">
+        <img src="/assets/film/1.jpg" alt="Scene 1">
+        <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/1.mp4"></video>
+      </div>
+    </figure>
+    <figure class="scene-tile">
+      <div class="media">
+        <img src="/assets/film/2.jpg" alt="Scene 2">
+        <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/2.mp4"></video>
+      </div>
+    </figure>
+    <figure class="scene-tile">
+      <div class="media">
+        <img src="/assets/film/3.jpg" alt="Scene 3">
+        <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/3.mp4"></video>
+      </div>
+    </figure>
 
-    <figure class="scene-tile"><div class="media">
-      <img src="/assets/film/2.jpg" alt="Scene 2">
-      <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/2.mp4"></video>
-    </div></figure>
+    <figure class="scene-tile">
+      <div class="media">
+        <img src="/assets/film/4.jpg" alt="Scene 4">
+        <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/4.mp4"></video>
+      </div>
+    </figure>
+    <figure class="scene-tile">
+      <div class="media">
+        <img src="/assets/film/5.jpg" alt="Scene 5">
+        <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/5.mp4"></video>
+      </div>
+    </figure>
+    <figure class="scene-tile">
+      <div class="media">
+        <img src="/assets/film/6.jpg" alt="Scene 6">
+        <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/6.mp4"></video>
+      </div>
+    </figure>
 
-    <figure class="scene-tile"><div class="media">
-      <img src="/assets/film/3.jpg" alt="Scene 3">
-      <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/3.mp4"></video>
-    </div></figure>
-
-    <figure class="scene-tile"><div class="media">
-      <img src="/assets/film/4.jpg" alt="Scene 4">
-      <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/4.mp4"></video>
-    </div></figure>
-
-    <figure class="scene-tile"><div class="media">
-      <img src="/assets/film/5.jpg" alt="Scene 5">
-      <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/5.mp4"></video>
-    </div></figure>
-
-    <figure class="scene-tile"><div class="media">
-      <img src="/assets/film/6.jpg" alt="Scene 6">
-      <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/6.mp4"></video>
-    </div></figure>
-
-    <figure class="scene-tile"><div class="media">
-      <img src="/assets/film/7.jpg" alt="Scene 7">
-      <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/7.mp4"></video>
-    </div></figure>
-
-    <figure class="scene-tile"><div class="media">
-      <img src="/assets/film/8.jpg" alt="Scene 8">
-      <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/8.mp4"></video>
-    </div></figure>
-
-    <figure class="scene-tile"><div class="media">
-      <img src="/assets/film/9.jpg" alt="Scene 9">
-      <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/9.mp4"></video>
-    </div></figure>
+    <figure class="scene-tile">
+      <div class="media">
+        <img src="/assets/film/7.jpg" alt="Scene 7">
+        <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/7.mp4"></video>
+      </div>
+    </figure>
+    <figure class="scene-tile">
+      <div class="media">
+        <img src="/assets/film/8.jpg" alt="Scene 8">
+        <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/8.mp4"></video>
+      </div>
+    </figure>
+    <figure class="scene-tile">
+      <div class="media">
+        <img src="/assets/film/9.jpg" alt="Scene 9">
+        <video preload="none" muted playsinline loop src="https://tfptwr9fxljxsexy.public.blob.vercel-storage.com/9.mp4"></video>
+      </div>
+    </figure>
   </section>
 </main>
 
@@ -167,7 +178,6 @@
       tile.addEventListener('mouseleave', () => {
         v.pause(); v.currentTime = 0;
       });
-
       tile.addEventListener('touchstart', () => {
         if (tile.classList.toggle('is-playing')) { v.play().catch(()=>{}); }
         else { v.pause(); v.currentTime = 0; }

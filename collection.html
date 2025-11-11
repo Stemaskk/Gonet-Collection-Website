@@ -7,13 +7,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Libre+Bodoni:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="icon" href="/assets/gonet-logo-black.png">
   <script defer src="/js/app.js"></script>
 </head>
 <body class="collection" data-lang="kr">
+<!-- Header -->
 <nav class="nav is-top" aria-label="Primary">
   <div class="nav-inner container">
     <a class="brand" href="/" aria-label="GONET Home">
-      <img class="logo logo-black" src="/assets/gonet-logo-black.png" alt="gonet — good one table">
+      <img class="logo logo-black" src="/assets/gonet-logo-black.png" alt="GONET — GOOD ONE TABLE">
       <img class="logo logo-white" src="/assets/gonet-logo-white.png" alt="" aria-hidden="true">
     </a>
     <div class="nav-links" role="menubar">
@@ -25,9 +27,9 @@
     </div>
     <div class="nav-actions">
       <nav class="nav-social" aria-label="Contact & Social">
-        <a class="icon-btn" href="mailto:gonet@goodonetable.com" aria-label="Email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7.5L12 13l9-5.5"/></svg></a>
-        <a class="icon-btn" href="https://www.instagram.com/g.one_t/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17" cy="7" r="1"/></svg></a>
-        <a class="icon-btn" href="https://www.youtube.com/c/GONETable" target="_blank" rel="noopener" aria-label="YouTube"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2.5"/><path d="M10 9.5 L15 12 L10 14.5 Z" fill="currentColor" stroke="none"/></svg></a>
+        <a class="icon-btn" href="mailto:gonet@goodonetable.com" aria-label="Email"></a>
+        <a class="icon-btn" href="https://www.instagram.com/g.one_t/" target="_blank" rel="noopener" aria-label="Instagram"></a>
+        <a class="icon-btn" href="https://www.youtube.com/c/GONETable" target="_blank" rel="noopener" aria-label="YouTube"></a>
       </nav>
       <button class="btn lang-toggle" id="langToggle" aria-pressed="false" aria-label="Toggle language">KR</button>
       <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel"><span class="menu-icon" aria-hidden="true"></span></button>
@@ -35,11 +37,12 @@
   </div>
 </nav>
 
+<!-- Menu -->
 <div id="menuPanel" class="menu-panel" hidden>
   <div class="menu-overlay" role="dialog" aria-modal="true" aria-label="Site menu">
     <header class="menu-bar container">
       <a class="brand" href="/" aria-label="GONET Home">
-        <img class="logo logo-black" src="/assets/gonet-logo-black.png" alt="gonet — good one table">
+        <img class="logo logo-black" src="/assets/gonet-logo-black.png" alt="GONET — GOOD ONE TABLE">
         <img class="logo logo-white" src="/assets/gonet-logo-white.png" alt="" aria-hidden="true">
       </a>
       <button class="menu-close" id="menuClose" aria-label="Close menu"><span class="menu-icon" aria-hidden="true"></span></button>
@@ -53,9 +56,9 @@
       <hr>
     </nav>
     <div class="menu-social container" aria-label="Contact & Social">
-      <a class="icon-btn" href="mailto:gonet@goodonetable.com" aria-label="Email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7.5L12 13l9-5.5"/></svg></a>
-      <a class="icon-btn" href="https://www.instagram.com/g.one_t/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17" cy="7" r="1"/></svg></a>
-      <a class="icon-btn" href="https://www.youtube.com/c/GONETable" target="_blank" rel="noopener" aria-label="YouTube"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2.5"/><path d="M10 9.5 L15 12 L10 14.5 Z" fill="currentColor" stroke="none"/></svg></a>
+      <a class="icon-btn" href="mailto:gonet@goodonetable.com" aria-label="Email"></a>
+      <a class="icon-btn" href="https://www.instagram.com/g.one_t/" target="_blank" rel="noopener" aria-label="Instagram"></a>
+      <a class="icon-btn" href="https://www.youtube.com/c/GONETable" target="_blank" rel="noopener" aria-label="YouTube"></a>
     </div>
   </div>
 </div>
@@ -65,35 +68,33 @@
     <div class="container">
       <div class="collection-panel">
         <div class="collection-title">
-          <span class="title-en">Leaf Dish</span>
-          <span class="title-kr">입담 접시</span>
+          <span class="title-en lang lang-en">Leaf Dish</span>
+          <span class="title-kr lang lang-kr">잎담접시</span>
         </div>
-
         <div class="collection-desc">
           <div class="lang lang-kr">
-            <p>테이블 위에 자연을 담았습니다.<br>
-              음식의 아름다움을 머금는 그릇,<br>
-              한 끼의 순간에 고요한 완성을 더하는<br>
-              입담 접시입니다.</p>
+            <p>테이블 위에 자연을 담았습니다.</p>
+            <p>음식의 아름다움을 머금는 그릇,</p>
+            <p>한 끼의 순간에 고요한 완성을 더하는</p>
+            <p>잎담 접시입니다.</p>
           </div>
           <div class="lang lang-en">
-            <p>Inspired by nature.<br>
-              Designed to make every dish look beautiful<br>
-              and every meal feel complete.<br>
-              Meet the Leaf Dish.</p>
+            <p>Inspired by nature.</p>
+            <p>Designed to make every dish look beautiful</p>
+            <p>and every meal feel complete.</p>
+            <p>Meet the Leaf Dish.</p>
           </div>
-        </div>
-
-        <div class="row" style="margin-top:12px">
-          <a class="btn btn-store" href="https://smartstore.naver.com/gonet_" target="_blank" rel="noopener">네이버 스토어</a>
+          <div class="row" style="margin-top:10px">
+            <a class="btn btn-store" href="https://smartstore.naver.com/gonet_" target="_blank" rel="noopener">NAVER STORE</a>
+          </div>
         </div>
       </div>
     </div>
   </section>
-</main>
 
-<footer class="site-foot" aria-label="Site footer">
-  <div class="container">©2025 GONET All rights reserved.</div>
-</footer>
+  <footer class="site-foot" aria-label="Site footer">
+    <div class="container">©2025 GONET All rights reserved.</div>
+  </footer>
+</main>
 </body>
 </html>

@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Libre+Bodoni:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="icon" href="/assets/gonet-logo-black.png">
     <script defer src="/js/app.js"></script>
 </head>
 <body class="consulting" data-lang="kr">
@@ -14,7 +15,7 @@
 <nav class="nav is-top" aria-label="Primary">
     <div class="nav-inner container">
         <a class="brand" href="/" aria-label="GONET Home">
-            <img class="logo logo-black" src="/assets/gonet-logo-black.png" alt="gonet — good one table">
+            <img class="logo logo-black" src="/assets/gonet-logo-black.png" alt="GONET — GOOD ONE TABLE">
             <img class="logo logo-white" src="/assets/gonet-logo-white.png" alt="" aria-hidden="true">
         </a>
         <div class="nav-links" role="menubar">
@@ -26,15 +27,9 @@
         </div>
         <div class="nav-actions">
             <nav class="nav-social" aria-label="Contact & Social">
-                <a class="icon-btn" href="mailto:gonet@goodonetable.com" aria-label="Email">
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7.5L12 13l9-5.5"/></svg>
-                </a>
-                <a class="icon-btn" href="https://www.instagram.com/g.one_t/" target="_blank" rel="noopener" aria-label="Instagram">
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17" cy="7" r="1"/></svg>
-                </a>
-                <a class="icon-btn" href="https://www.youtube.com/c/GONETable" target="_blank" rel="noopener" aria-label="YouTube">
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2.5"/><path d="M10 9.5 L15 12 L10 14.5 Z" fill="currentColor" stroke="none"/></svg>
-                </a>
+                <a class="icon-btn" href="mailto:gonet@goodonetable.com" aria-label="Email"></a>
+                <a class="icon-btn" href="https://www.instagram.com/g.one_t/" target="_blank" rel="noopener" aria-label="Instagram"></a>
+                <a class="icon-btn" href="https://www.youtube.com/c/GONETable" target="_blank" rel="noopener" aria-label="YouTube"></a>
             </nav>
             <button class="btn lang-toggle" id="langToggle" aria-pressed="false" aria-label="Toggle language">KR</button>
             <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel"><span class="menu-icon" aria-hidden="true"></span></button>
@@ -42,12 +37,12 @@
     </div>
 </nav>
 
-<!-- Overlay menu -->
+<!-- Menu -->
 <div id="menuPanel" class="menu-panel" hidden>
     <div class="menu-overlay" role="dialog" aria-modal="true" aria-label="Site menu">
         <header class="menu-bar container">
             <a class="brand" href="/" aria-label="GONET Home">
-                <img class="logo logo-black" src="/assets/gonet-logo-black.png" alt="gonet — good one table">
+                <img class="logo logo-black" src="/assets/gonet-logo-black.png" alt="GONET — GOOD ONE TABLE">
                 <img class="logo logo-white" src="/assets/gonet-logo-white.png" alt="" aria-hidden="true">
             </a>
             <button class="menu-close" id="menuClose" aria-label="Close menu"><span class="menu-icon" aria-hidden="true"></span></button>
@@ -61,21 +56,15 @@
             <hr>
         </nav>
         <div class="menu-social container" aria-label="Contact & Social">
-            <a class="icon-btn" href="mailto:gonet@goodonetable.com" aria-label="Email">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7.5L12 13l9-5.5"/></svg>
-            </a>
-            <a class="icon-btn" href="https://www.instagram.com/g.one_t/" target="_blank" rel="noopener" aria-label="Instagram">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17" cy="7" r="1"/></svg>
-            </a>
-            <a class="icon-btn" href="https://www.youtube.com/c/GONETable" target="_blank" rel="noopener" aria-label="YouTube">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2.5"/><path d="M10 9.5 L15 12 L10 14.5 Z" fill="currentColor" stroke="none"/></svg>
-            </a>
+            <a class="icon-btn" href="mailto:gonet@goodonetable.com" aria-label="Email"></a>
+            <a class="icon-btn" href="https://www.instagram.com/g.one_t/" target="_blank" rel="noopener" aria-label="Instagram"></a>
+            <a class="icon-btn" href="https://www.youtube.com/c/GONETable" target="_blank" rel="noopener" aria-label="YouTube"></a>
         </div>
     </div>
 </div>
 
 <main>
-    <!-- Horizontally-scaling hero image with top-right panel -->
+    <!-- Hero with horizontally-scaling image and pinned panel -->
     <section class="consulting-hero">
         <img class="consulting-bg" src="/assets/consulting.jpg" alt="GONET Consulting background">
         <div class="container">
@@ -83,12 +72,9 @@
                 <h2 class="consulting-title">CONSULTING</h2>
                 <div class="collection-desc">
                     <div class="lang lang-kr">
-                        <p>고네뜨의 컨설팅은<br>
-                            음식의 아름다움이 시각으로 피어나는 순간을 설계합니다.</p>
-                        <p>요리의 본질을 읽고,<br>
-                            그 음식이 가장 빛나는 장면과 테이블을 디자인합니다.</p>
-                        <p>브랜드와 레스토랑, 크리에이터와 함께<br>
-                            보이는 아름다움 너머의 감각을 만들어갑니다.</p>
+                        <p>고네뜨의 컨설팅은<br>음식의 아름다움이 시각으로 피어나는 순간을 설계합니다.</p>
+                        <p>요리의 본질을 읽고,<br>그 음식이 가장 빛나는 장면과 테이블을 디자인합니다.</p>
+                        <p>브랜드와 레스토랑, 크리에이터와 함께<br>보이는 아름다움 너머의 감각을 만들어갑니다.</p>
                         <p>음식이 예술이 되는 자리, 고네뜨입니다.</p>
                     </div>
                     <div class="lang lang-en">
@@ -97,38 +83,35 @@
                             we create the scene and the table where it shines.</p>
                         <p>Together with brands, restaurants, and creators,<br>
                             we craft a beauty that goes beyond what is seen.</p>
-                        <p>Where food becomes art —<br>
-                            GONET.</p>
+                        <p>Where food becomes art —<br>GONET.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 16-image grid (row-major, natural sizes, rounded, tight gaps) -->
+    <!-- 4x4 image grid -->
     <section class="consulting-grid container" aria-label="Consulting gallery">
-        <!-- Row 1 -->
-        <figure class="consulting-tile"><img src="/assets/consulting/1.jpg"  alt="Consulting 1"></figure>
-        <figure class="consulting-tile"><img src="/assets/consulting/2.jpg"  alt="Consulting 2"></figure>
-        <figure class="consulting-tile"><img src="/assets/consulting/3.jpg"  alt="Consulting 3"></figure>
-        <!-- Row 2 -->
-        <figure class="consulting-tile"><img src="/assets/consulting/4.jpg"  alt="Consulting 4"></figure>
-        <figure class="consulting-tile"><img src="/assets/consulting/5.jpg"  alt="Consulting 5"></figure>
-        <figure class="consulting-tile"><img src="/assets/consulting/6.jpg"  alt="Consulting 6"></figure>
-        <!-- Row 3 -->
-        <figure class="consulting-tile"><img src="/assets/consulting/7.jpg"  alt="Consulting 7"></figure>
-        <figure class="consulting-tile"><img src="/assets/consulting/8.jpg"  alt="Consulting 8"></figure>
-        <figure class="consulting-tile"><img src="/assets/consulting/9.jpg"  alt="Consulting 9"></figure>
-        <!-- Row 4 -->
-        <figure class="consulting-tile"><img src="/assets/consulting/10.jpg" alt="Consulting 10"></figure>
-        <figure class="consulting-tile"><img src="/assets/consulting/11.jpg" alt="Consulting 11"></figure>
-        <figure class="consulting-tile"><img src="/assets/consulting/12.jpg" alt="Consulting 12"></figure>
-        <!-- Row 5 -->
-        <figure class="consulting-tile"><img src="/assets/consulting/13.jpg" alt="Consulting 13"></figure>
-        <figure class="consulting-tile"><img src="/assets/consulting/14.jpg" alt="Consulting 14"></figure>
-        <figure class="consulting-tile"><img src="/assets/consulting/15.jpg" alt="Consulting 15"></figure>
-        <!-- Row 6 (last one centered using empty placeholders if desired) -->
-        <figure class="consulting-tile"><img src="/assets/consulting/16.jpg" alt="Consulting 16"></figure>
+        <!-- 1..16 -->
+        <figure class="consulting-tile"><img src="/assets/consulting/1.jpg"  alt=""></figure>
+        <figure class="consulting-tile"><img src="/assets/consulting/2.jpg"  alt=""></figure>
+        <figure class="consulting-tile"><img src="/assets/consulting/3.jpg"  alt=""></figure>
+        <figure class="consulting-tile"><img src="/assets/consulting/4.jpg"  alt=""></figure>
+
+        <figure class="consulting-tile"><img src="/assets/consulting/5.jpg"  alt=""></figure>
+        <figure class="consulting-tile"><img src="/assets/consulting/6.jpg"  alt=""></figure>
+        <figure class="consulting-tile"><img src="/assets/consulting/7.jpg"  alt=""></figure>
+        <figure class="consulting-tile"><img src="/assets/consulting/8.jpg"  alt=""></figure>
+
+        <figure class="consulting-tile"><img src="/assets/consulting/9.jpg"  alt=""></figure>
+        <figure class="consulting-tile"><img src="/assets/consulting/10.jpg" alt=""></figure>
+        <figure class="consulting-tile"><img src="/assets/consulting/11.jpg" alt=""></figure>
+        <figure class="consulting-tile"><img src="/assets/consulting/12.jpg" alt=""></figure>
+
+        <figure class="consulting-tile"><img src="/assets/consulting/13.jpg" alt=""></figure>
+        <figure class="consulting-tile"><img src="/assets/consulting/14.jpg" alt=""></figure>
+        <figure class="consulting-tile"><img src="/assets/consulting/15.jpg" alt=""></figure>
+        <figure class="consulting-tile"><img src="/assets/consulting/16.jpg" alt=""></figure>
     </section>
 
     <footer class="site-foot" aria-label="Site footer">
