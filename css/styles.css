@@ -777,3 +777,44 @@ body.consulting::before { content: none !important; }
         border-radius: 12px;
     }
 }
+
+/* --- CONTACT: no page scroll + side-cropped image --- */
+
+/* Stop page scroll on Contact */
+body.contact{ overflow: hidden; }
+
+/* Lock the split section to the viewport height
+   (header height + a small footer space subtracted) */
+.contact-split{
+    height: calc(100svh - var(--navH) - 40px);
+    padding: 12px var(--pad);
+    align-items: stretch;              /* both columns fill the height */
+    min-height: 0;                     /* ensure grid can shrink */
+}
+
+/* Left image: fill column height and crop the sides */
+.contact-photo{ position: relative; height: 100%; }
+.contact-photo img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;                 /* crops left/right for wide images */
+    object-position: center;           /* center the crop */
+    border-radius: 12px;
+}
+
+/* Right panel: fit within the fixed-height area */
+.contact-panel{
+    display: flex; flex-direction: column; justify-content: flex-start;
+    height: 100%; overflow: hidden;
+}
+.contact-form{ gap: 8px; }
+.contact-title{ font-size: clamp(24px, 4.4vw, 40px); }
+.contact-form textarea{ min-height: 120px; }
+
+/* Keep two columns even on smaller widths so height stays one screen */
+@media (max-width: 920px){
+    .contact-split{
+        grid-template-columns: 1fr 1fr !important;
+        gap: 12px;
+    }
+}
