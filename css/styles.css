@@ -404,3 +404,41 @@ body[data-lang="kr"] .contact-form textarea{
     font-family:var(--font-body-latin),var(--font-hangul) !important;
 }
 .en-font{font-family:var(--font-body-latin) !important}
+
+/* ===== HOME: center all content ===== */
+.home .hero-blank{
+    /* grid already; center items horizontally */
+    justify-items: center;
+}
+
+.home .hero-title,
+.home .hero-content{
+    text-align: center;
+}
+
+.home .hero-content p{
+    margin-left: auto;
+    margin-right: auto;  /* keep paragraphs centered with a max width */
+}
+
+/* ===== OUR STORY: center all content ===== */
+.story-hero .story-grid{
+    margin: 0 auto;        /* center the whole two-column block in the page */
+    justify-items: center; /* center items within each grid cell */
+}
+
+.story-copy{
+    text-align: center;    /* center the text itself */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.story-book{
+    justify-self: center;  /* center the book card column */
+}
+
+/* On narrow screens (where it stacks), keep everything centered */
+@media (max-width: 900px){
+    .story-hero .story-grid{ justify-items: center; }
+    .story-copy{ text-align: center; }
+}
