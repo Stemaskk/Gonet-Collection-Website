@@ -430,3 +430,39 @@ body[data-lang="kr"] .contact-form textarea{
     line-height: 1.5 !important;
     letter-spacing: .01em !important;
 }
+
+/* === OUR STORY: force absolute, viewport-based centering === */
+body.story .story-hero{
+    position: relative !important;
+    min-height: calc(100svh - var(--navH)) !important;  /* viewport minus header */
+    display: block !important;
+}
+
+body.story .story-hero > .container{
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;        /* true center */
+    width: min(94vw, 1100px) !important;                 /* max width for the two cols */
+    padding: 0 var(--pad) !important;
+}
+
+body.story .story-grid{
+    display: grid !important;
+    grid-template-columns: minmax(320px, 560px) minmax(260px, 420px) !important;
+    gap: clamp(24px, 4vw, 56px) !important;
+    align-items: center !important;
+    justify-items: center !important;
+}
+
+body.story .story-copy{
+    text-align: center !important;                       /* center text like Home */
+    margin: 0 auto !important;
+}
+
+body.story .story-book{ justify-self: center !important; }
+
+@media (max-width: 900px){
+    body.story .story-grid{ grid-template-columns: 1fr !important; }
+    body.story .story-hero > .container{ width: min(94vw, 640px) !important; }
+}
