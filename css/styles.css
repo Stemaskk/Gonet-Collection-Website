@@ -528,3 +528,52 @@ body[data-lang="kr"] .contact-form textarea{
 
 /* tiny spacing between lines */
 .home .hero-content p + p{ margin-top: 4px; }
+
+/* === HOME: hard horizontal centering; keep current vertical position === */
+.home .hero-blank .container{
+    /* center the children as a group */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;    /* centers horizontally */
+    text-align: center !important;     /* center lines */
+
+    /* keep content narrow so it actually looks centered */
+    width: 100% !important;
+    max-width: 60ch !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+}
+
+/* make all Home hero text the same small size (your request) */
+.home .hero-title,
+.home .hero-content,
+.home .hero-content p{
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    letter-spacing: .01em !important;
+    margin: 0 !important;
+    color: #fff !important;
+}
+
+/* === OUR STORY: same horizontal centering; keep your vertical placement === */
+body.story .story-hero .container{
+    display: grid !important;
+    justify-items: center !important;  /* centers the grid itself horizontally */
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: var(--pad) !important;
+    padding-right: var(--pad) !important;
+}
+
+/* center the two-column block itself */
+body.story .story-grid{
+    margin-left: auto !important;
+    margin-right: auto !important;
+    justify-items: center !important;  /* centers text and book card in their cells */
+}
+
+/* if you want the text block itself centered, keep this;
+   if you prefer left-aligned text, delete the next line */
+body.story .story-copy{ text-align: center !important; }
