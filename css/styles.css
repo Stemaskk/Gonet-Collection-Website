@@ -560,3 +560,29 @@ body[data-lang="kr"] .contact-form textarea{
     margin-inline: auto;
 }
 .story-book{ justify-self: center; }/* center the book card column */
+
+/* === HOME: force absolute, viewport-based centering === */
+.home .hero-blank{
+    position: relative !important;
+    min-height: calc(100svh - var(--navH)) !important; /* viewport minus header */
+    display: block !important;                         /* kill any prior grid */
+}
+
+.home .hero-blank > .container{
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;       /* true center of viewport */
+    width: min(92vw, 60ch) !important;                 /* readable width */
+    padding: 0 16px !important;                        /* safe edges */
+    text-align: center !important;
+}
+
+/* keep the small, uniform type the client wanted */
+.home .hero-title,
+.home .hero-content,
+.home .hero-content p{
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    letter-spacing: .01em !important;
+}
