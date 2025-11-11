@@ -650,3 +650,27 @@ body.consulting::before { content: none !important; }
 .consulting-tile{
     margin: 0 !important;      /* be sure figures add no extra space */
 }
+
+/* Consulting panel: add title + make the box smaller */
+.consulting-panel{
+    max-width: 480px !important;            /* smaller than Collection’s 760px */
+    padding: clamp(14px, 2vw, 20px) !important;
+    border-radius: 10px !important;
+}
+
+.consulting-title{
+    margin: 0 0 8px;
+    font-family: "Fira Sans Condensed", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    font-size: clamp(18px, 2.8vw, 24px);
+    line-height: 1.1;
+}
+
+/* Slightly tighten paragraph typesetting inside the panel */
+.consulting-panel .collection-desc p{
+    margin: 0 0 8px;
+    line-height: 1.45;
+    font-size: clamp(13px, 2.0vw, 15px);
+}
