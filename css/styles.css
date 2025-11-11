@@ -431,3 +431,36 @@ body[data-lang="kr"] .contact-form textarea{
     letter-spacing: .01em !important;
 }
 
+/* === OUR STORY: hard center the whole block horizontally & vertically === */
+body.story .story-hero{
+    position: relative !important;
+    min-height: calc(100svh - var(--navH)) !important;
+    display: grid !important;
+    place-items: center !important;     /* centers its first-level child */
+    padding: 0 var(--pad) !important;
+}
+
+/* match regardless of nesting depth (no > combinator) */
+body.story .story-hero .container{
+    width: min(94vw, 1100px) !important; /* room for 2 columns */
+    margin: 0 auto !important;           /* center horizontally */
+}
+
+/* two-column grid, centered items */
+body.story .story-grid{
+    display: grid !important;
+    grid-template-columns: minmax(320px, 560px) minmax(260px, 420px) !important;
+    gap: clamp(24px, 4vw, 56px) !important;
+    align-items: center !important;
+    justify-items: center !important;
+}
+
+/* center the text block; keep image card centered */
+body.story .story-copy{ text-align: center !important; margin: 0 auto !important; }
+body.story .story-book{ justify-self: center !important; }
+
+/* stack & keep centered on small screens */
+@media (max-width: 900px){
+    body.story .story-grid{ grid-template-columns: 1fr !important; }
+    body.story .story-hero .container{ width: min(94vw, 640px) !important; }
+}
