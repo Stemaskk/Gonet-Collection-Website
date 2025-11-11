@@ -818,3 +818,76 @@ body.contact{ overflow: hidden; }
         gap: 12px;
     }
 }
+
+/* CONTACT: soften the side crop + show footer */
+
+@media (min-width: 921px){
+    /* Make the image column a bit wider and the section a bit shorter → less crop */
+    .contact-split{
+        grid-template-columns: 1.6fr 1fr;             /* was 1.35fr 1fr */
+        height: calc(100svh - var(--navH) - 80px);    /* was -40px */
+    }
+}
+
+.contact-photo{ position: relative; height: 100%; }
+.contact-photo img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;        /* still fills, but with less crop due to changes above */
+    object-position: center;
+    border-radius: 12px;
+}
+
+/* Footer visible on Contact (since page is non-scroll) */
+.contact .site-foot{
+    position: fixed !important;
+    left: 0; right: auto; bottom: 0;
+    padding: 10px var(--pad) calc(10px + env(safe-area-inset-bottom,0px));
+    color: #555;
+    font-size: 11px;
+    letter-spacing: .02em;
+    background: transparent;
+    pointer-events: none;
+}
+
+/* === Replace social icons with your images (Email/IG/YT) === */
+.icon-btn[aria-label="Email"],
+.icon-btn[aria-label="Instagram"],
+.icon-btn[aria-label="YouTube"]{
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Hide the old inline SVGs inside the buttons */
+.icon-btn[aria-label="Email"] .icon,
+.icon-btn[aria-label="Instagram"] .icon,
+.icon-btn[aria-label="YouTube"] .icon{
+    display: none !important;
+}
+
+/* Email + YouTube: static PNGs */
+.icon-btn[aria-label="Email"]   { background-image: url("/assets/icon/email.PNG"); }
+.icon-btn[aria-label="YouTube"] { background-image: url("/assets/icon/youtube.PNG"); }
+
+/* Instagram: animated GIF “activates” on hover (subdued at rest) */
+.icon-btn[aria-label="Instagram"]{
+    background-image: url("/assets/icon/instagram.GIF");
+    filter: grayscale(1) contrast(0.9) brightness(0.95);
+    transition: filter .2s ease, transform .2s ease;
+}
+.icon-btn[aria-label="Instagram"]:hover{
+    filter: none;
+    transform: translateY(-1px);
+}
+
+/* Optional: tiny hover nudge for the others for consistency */
+.icon-btn[aria-label="Email"]:hover,
+.icon-btn[aria-label="YouTube"]:hover{
+    transform: translateY(-1px);
+}
