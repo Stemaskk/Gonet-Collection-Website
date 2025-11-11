@@ -917,6 +917,6 @@ body.contact{ overflow: hidden; }
 /* CONTACT: show more of the image's right side */
 @media (min-width: 921px){
     .contact-photo img{
-        object-position: 95% center !important; /* 0% = left, 100% = right */
+        object-position: 65% center !important; /* 0% = left, 100% = right */
     }
 }
