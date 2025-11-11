@@ -494,3 +494,12 @@ body[data-lang="kr"] .contact-form textarea{
         max-width: min(520px, 88vw) !important;  /* compact on small screens */
     }
 }
+
+/* Collection: single unified title */
+.collection-title .title-any{
+    font-family: "Fira Sans Condensed", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-weight: 800;
+    font-size: clamp(20px, 4.4vw, 28px);
+    letter-spacing: .04em;
+    line-height: 1;
+}
