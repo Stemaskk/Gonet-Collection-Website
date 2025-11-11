@@ -86,7 +86,9 @@
             <p class="contact-sub lang lang-kr">프로젝트 / 협업 / 문의 내용을 적어주세요.</p>
             <p class="contact-sub lang lang-en">Tell us about your project, collaboration, or question.</p>
 
-            <form class="contact-form" method="post" action="#">
+            <form id="contactForm" class="contact-form" method="post" action="/api/contact">
+                <input type="hidden" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+
                 <label class="visually-hidden" for="c-email">Email</label>
                 <input id="c-email" name="email" type="email" placeholder="EMAIL*" required>
 
@@ -96,7 +98,8 @@
                 <label class="visually-hidden" for="c-msg">Message</label>
                 <textarea id="c-msg" name="message" rows="6" placeholder="ENTER YOUR MESSAGE*" required></textarea>
 
-                <button type="submit" class="btn btn-primary">SUBMIT</button>
+                <button type="submit" class="btn btn-primary" id="contactSubmit">SUBMIT</button>
+                <p id="contactNote" class="contact-note" aria-live="polite"></p>
             </form>
 
             <p class="contact-alt">or email us directly: <a href="mailto:gonet@goodonetable.com">gonet@goodonetable.com</a></p>

@@ -194,3 +194,48 @@ function initSceneGrid(){
 // If you already have a DOMContentLoaded handler, just call initSceneGrid() inside it.
 // Otherwise, this standalone listener is fine:
 document.addEventListener('DOMContentLoaded', initSceneGrid);
+
+// Contact AJAX submit (keeps the page in place and shows a status line)
+(() => {
+    const form = document.getElementById("contactForm");
+    if (!form) return;
+
+    const btn = document.getElementById("contactSubmit");
+    const note = document.getElementById("contactNote");
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        note.textContent = "";
+        btn.disabled = true;
+        btn.textContent = "Sending…";
+
+        const data = {
+            email: form.email.value.trim(),
+            first_name: form.first_name.value.trim(),
+            message: form.message.value.trim(),
+            website: form.website?.value || "" // honeypot
+        };
+
+        try {
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(data)
+            });
+            const out = await res.json();
+            if (out.ok) {
+                form.reset();
+                note.textContent = "Thanks! We received your message.";
+                note.style.color = "#1b7f4b";
+            } else {
+                throw new Error(out.error || "Failed");
+            }
+        } catch (err) {
+            note.textContent = "Sorry, something went wrong. Please email us at gonet@goodonetable.com.";
+            note.style.color = "#a11";
+        } finally {
+            btn.disabled = false;
+            btn.textContent = "SUBMIT";
+        }
+    });
+})();
