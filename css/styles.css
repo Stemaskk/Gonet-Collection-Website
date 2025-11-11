@@ -917,6 +917,26 @@ body.contact{ overflow: hidden; }
 /* CONTACT: show more of the image's right side */
 @media (min-width: 921px){
     .contact-photo img{
-        object-position: 55% center !important; /* 0% = left, 100% = right */
+        object-position: 53% center !important; /* 0% = left, 100% = right */
     }
+}
+
+/* === CONTACT: increase horizontal ratio (wider image vs form) === */
+@media (min-width: 921px){
+    /* Give the section more horizontal room on large screens */
+    .contact .container{ max-width: 1600px !important; }
+
+    /* Make the image column take more width than the form */
+    .contact-split{
+        grid-template-columns: 2.3fr 1fr !important;   /* was ~1.6–1.9 : 1 */
+        height: calc(100svh - var(--navH) - 120px) !important; /* shorter = wider feel */
+    }
+
+    /* Bias crop to the right so more of that side shows */
+    .contact-photo img{
+        object-position: 53% center !important; /* 0% left … 100% right */
+    }
+
+    /* Optional: keep the form from growing too wide */
+    .contact-panel{ max-width: 520px; }
 }
