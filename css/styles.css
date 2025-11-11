@@ -891,3 +891,25 @@ body.contact{ overflow: hidden; }
 .icon-btn[aria-label="YouTube"]:hover{
     transform: translateY(-1px);
 }
+
+/* === CONTACT: make the left image bigger horizontally, crop less === */
+@media (min-width: 921px){
+    /* Give Contact a wider canvas than other pages */
+    .contact .container{ max-width: 1400px !important; }
+
+    /* Make the image column take more width, and reduce overall height a bit
+       so object-fit: cover has to crop less from the sides */
+    .contact-split{
+        grid-template-columns: 1.9fr 1fr !important;   /* was ~1.35–1.6 : 1 */
+        height: calc(100svh - var(--navH) - 120px) !important; /* was smaller subtract; this lowers the section */
+    }
+}
+
+/* Keep full-bleed fill with gentler side crop */
+.contact-photo img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center; /* tweak to '60% center' if subject is off-center */
+    border-radius: 12px;
+}
