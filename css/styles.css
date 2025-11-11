@@ -530,3 +530,33 @@ body[data-lang="kr"] .contact-form textarea{
     line-height: 1.5;
     letter-spacing: .01em;
 }
+
+/* === HOME: force true horizontal centering for the hero === */
+.home .hero-blank{
+    min-height: calc(100svh - var(--navH));
+    display: grid;
+    place-items: center;              /* centers the block in viewport */
+    padding: 0 var(--pad);
+}
+.home .hero-blank > .container{
+    width: 100%;
+    display: grid;
+    justify-items: center;            /* centers inner content horizontally */
+}
+.home .hero-title,
+.home .hero-content{ text-align: center; }
+.home .hero-content{ max-width: 60ch; margin-inline: auto; }
+
+/* === OUR STORY: center the whole two-column block and its items === */
+.story-hero .container{
+    display: grid;
+}
+.story-hero .story-grid{
+    margin-inline: auto;              /* center the grid itself */
+    justify-items: center;            /* center items in each cell */
+}
+.story-copy{
+    text-align: center;               /* center the text block */
+    margin-inline: auto;
+}
+.story-book{ justify-self: center; }/* center the book card column */
