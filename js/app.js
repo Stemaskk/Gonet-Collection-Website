@@ -14,17 +14,16 @@
     });
 })();
 
-/* ===== Header: fade + compact (HAY-like) + menu X alignment ===== */
+/* ===== Header: fade + compact (HAY-like) + precise overflow + menu X alignment ===== */
 (function(){
     const nav = document.querySelector('.nav');
     if (!nav) return;
 
-    const root = document.documentElement;
-    const menuBtn = document.getElementById('menuBtn');
+    const root      = document.documentElement;
+    const menuBtn   = document.getElementById('menuBtn');
     const menuPanel = document.getElementById('menuPanel');
     const menuClose = document.getElementById('menuClose');
 
-    let lastY = 0;
     let ticking = false;
 
     // Decide if the overlay X should be centered (desktop compact) or right-aligned (mobile/overflow)
@@ -39,8 +38,40 @@
         menuPanel.classList.toggle('align-right', !center);
     }
 
+    // Accurate overflow test: compare needed link width to available room between brand & actions
+    function computeOverflow(){
+        const inner   = nav.querySelector('.nav-inner');
+        const brand   = nav.querySelector('.brand');
+        const actions = nav.querySelector('.nav-actions');
+        const links   = nav.querySelector('.nav-links');
+        if (!inner || !links) {
+            nav.classList.remove('is-overflow');
+            return false;
+        }
+
+        // If links are display:none (e.g., compact), skip calculation
+        const linksVisible = links.offsetParent !== null;
+        if (!linksVisible){
+            nav.classList.remove('is-overflow');
+            return false;
+        }
+
+        const room =
+            inner.clientWidth
+            - (brand?.offsetWidth   || 0)
+            - (actions?.offsetWidth || 0)
+            - 40; // gutter
+
+        const need = links.scrollWidth;
+        const overflow = need > room;
+
+        nav.classList.toggle('is-overflow', overflow);
+        return overflow;
+    }
+
     function applyFade() {
         const y = window.scrollY || 0;
+
         // Fade range ~0..80px; compact snaps at ~120px
         const fade = Math.max(0, Math.min(1, y / 80));
         root.style.setProperty('--fade', fade.toFixed(3));
@@ -48,25 +79,13 @@
         const shouldCompact = y > 120;
         nav.classList.toggle('is-compact', shouldCompact);
 
-        // Overflow check (nav-links too wide)
-        const links = nav.querySelector('.nav-links');
-        if (links) {
-            const inner = nav.querySelector('.nav-inner');
-            const room = inner ? inner.clientWidth : window.innerWidth;
-            const need = links.scrollWidth + 360; // brand + actions approx
-            nav.classList.toggle('is-overflow', need > room);
-        }
-
-        computeMenuAlign();
+        computeOverflow();    // precise overflow detection
+        computeMenuAlign();   // keep X aligned with hamburger position
     }
 
     function onScroll(){
-        lastY = window.scrollY || 0;
         if (!ticking){
-            window.requestAnimationFrame(() => {
-                applyFade();
-                ticking = false;
-            });
+            window.requestAnimationFrame(() => { applyFade(); ticking = false; });
             ticking = true;
         }
     }
@@ -77,17 +96,18 @@
         if (y <= 2) {
             root.style.setProperty('--fade', '0');
             nav.classList.remove('is-compact');
+            computeOverflow();
             computeMenuAlign();
         }
     }
 
     window.addEventListener('scroll', onScroll, {passive:true});
-    // `scrollend` is not universal, but keep it for browsers that support it
+    // `scrollend` is not universal, but harmless where unsupported
     window.addEventListener('scrollend', onScrollEndSnap);
-    window.addEventListener('resize', () => { applyFade(); computeMenuAlign(); });
+    window.addEventListener('resize', () => { applyFade(); });
 
+    // Initial paint
     applyFade();
-    computeMenuAlign();
 
     /* Menu open/close */
     function openMenu(){
