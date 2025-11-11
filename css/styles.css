@@ -1009,3 +1009,29 @@ body.contact{ overflow: hidden; }
     box-shadow: 0 10px 24px rgba(0,0,0,.08);
     border-color: #ddd;
 }
+/* ===== Overlay menu close button alignment ===== */
+/* Baseline: X on the right (matches hamburger on mobile/overflow) */
+.menu-bar{
+    grid-template-columns: 1fr auto !important;
+}
+#menuClose{
+    justify-self: end !important;
+    margin-right: calc(-1 * var(--edge-nudge)) !important;
+}
+
+/* When the header is compact (HAY style on scroll), center the X to match */
+@supports(selector(body:has(.nav.is-compact))){
+    body:has(.nav.is-compact) .menu-bar{
+        grid-template-columns: 1fr auto 1fr !important;
+    }
+    body:has(.nav.is-compact) #menuClose{
+        justify-self: center !important;
+        margin-right: 0 !important;
+    }
+}
+
+/* Safety: on very small screens, keep it on the right */
+@media (max-width: 820px), (orientation: portrait){
+    .menu-bar{ grid-template-columns: 1fr auto !important; }
+    #menuClose{ justify-self: end !important; }
+}
