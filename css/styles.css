@@ -913,3 +913,10 @@ body.contact{ overflow: hidden; }
     object-position: center; /* tweak to '60% center' if subject is off-center */
     border-radius: 12px;
 }
+
+/* CONTACT: show more of the image's right side */
+@media (min-width: 921px){
+    .contact-photo img{
+        object-position: 80% center !important; /* 0% = left, 100% = right */
+    }
+}
