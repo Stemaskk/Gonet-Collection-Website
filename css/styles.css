@@ -491,3 +491,42 @@ body[data-lang="kr"] .contact-form textarea{
     margin-right: auto;
     max-width: 56ch;               /* keep nice reading width */
 }
+
+/* --- HOME: bulletproof centering that doesn't "break" at fullscreen --- */
+:root { --footH: 32px; }  /* reserve a bit for the footer overlay */
+
+.home { --hero-offset: 0; } /* kill any earlier upward offset */
+
+.home .hero-blank{
+    position: relative;
+    min-height: calc(100svh - var(--navH) - var(--footH));
+    display: grid;
+    place-items: center;         /* centers vertically + horizontally */
+    padding: 0;
+}
+
+.home .hero-blank > .container{
+    width: 100%;
+    display: grid;
+    place-items: center;         /* centers the inner block within the container */
+}
+
+.home .hero-title,
+.home .hero-content{
+    text-align: center;
+}
+
+.home .hero-content{
+    max-width: 60ch;             /* nice readable width */
+    padding: 0 var(--pad);       /* safe edges on tiny screens */
+    margin: 0 auto;
+}
+
+/* If you want the small uniform size you requested earlier */
+.home .hero-title,
+.home .hero-content,
+.home .hero-content p{
+    font-size: 14px !important;
+    line-height: 1.5;
+    letter-spacing: .01em;
+}
