@@ -635,3 +635,8 @@ body.consulting::before { content: none !important; }
     letter-spacing: .02em;
     margin-top: 32px;
 }
+
+/* Consulting: 4 columns (4x4 for 16 images) */
+.consulting-grid{
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
