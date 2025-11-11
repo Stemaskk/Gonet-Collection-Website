@@ -443,3 +443,54 @@ body[data-lang="kr"] .collection-title .title-kr {
     }
     .collection-panel{ max-width: 92vw; }
 }
+
+/* === Mixed-language font routing: Latin uses EN fonts in KR mode === */
+:root{
+    --font-latin-title: "Fira Sans Condensed", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --font-latin-body:  Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --font-hangul:      "SD OnGothic","Sandoll OnGothic","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+
+/* Global default in KR mode: Latin first; Hangul falls back to KR fonts */
+body[data-lang="kr"]{
+    font-family: var(--font-latin-body), var(--font-hangul) !important;
+}
+
+/* Titles (KR mode): English letters use Fira; Hangul uses KR stack */
+body[data-lang="kr"] .hero-title,
+body[data-lang="kr"] .scene-intro .scene-title,
+body[data-lang="kr"] .consulting-title,
+body[data-lang="kr"] .collection-title .title-kr{
+    font-family: var(--font-latin-title), var(--font-hangul) !important;
+}
+
+/* Body text that previously forced KR fonts first */
+body[data-lang="kr"] .collection-desc p.kr,
+body[data-lang="kr"] .scene-intro .intro-copy,
+body[data-lang="kr"] .story-copy,
+body[data-lang="kr"] .contact-sub,
+body[data-lang="kr"] .contact-form input,
+body[data-lang="kr"] .contact-form textarea{
+    font-family: var(--font-latin-body), var(--font-hangul) !important;
+}
+
+/* Utility: force English font anywhere if needed */
+.en-font{ font-family: var(--font-latin-body) !important; }
+
+/* === COLLECTION: make the panel compact again === */
+.collection-panel{
+    max-width: 560px !important;              /* was 760px; override to smaller */
+    padding: clamp(14px, 2.2vw, 20px) !important;
+    border-radius: 10px !important;
+}
+
+/* Mobile: keep it small and still push it lower without widening */
+@media (max-width: 900px){
+    .collection-hero .container{
+        justify-content: flex-end !important;    /* don't center; keep right-aligned */
+        padding-top: min(56vh, 440px) !important;/* keep the “lower” feel */
+    }
+    .collection-panel{
+        max-width: min(520px, 88vw) !important;  /* compact on small screens */
+    }
+}
