@@ -640,3 +640,13 @@ body.consulting::before { content: none !important; }
 .consulting-grid{
     grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
 }
+
+/* Consulting grid: use the same 10px spacing as Film */
+.consulting-grid{
+    gap: 10px !important;
+    grid-gap: 10px !important; /* legacy alias */
+}
+
+.consulting-tile{
+    margin: 0 !important;      /* be sure figures add no extra space */
+}
