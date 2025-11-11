@@ -977,49 +977,10 @@ body.contact{ overflow: hidden; }
     height: calc(100svh - var(--navH) - 56px) !important; /* ~footer height */
 }
 
-/* ===== Overlay menu: align the X to match the hamburger position ===== */
-.menu-panel.align-center .menu-bar{ grid-template-columns: 1fr auto 1fr; }
-.menu-panel.align-center #menuClose{
-    justify-self: center;
-    margin-right: 0 !important;
-}
-
-.menu-panel.align-right .menu-bar{ grid-template-columns: 1fr auto; }
-.menu-panel.align-right #menuClose{
-    justify-self: end;
-    margin-right: calc(-1 * var(--edge-nudge)) !important; /* same nudge as header */
-}
-
-/* Portrait / narrow: always force the X to the right */
-@media (orientation:portrait),(max-width:820px){
-    .menu-panel.align-center .menu-bar{ grid-template-columns: 1fr auto; }
-    .menu-panel.align-center #menuClose{ justify-self: end; }
-}
-
 /* SCENE: lock title size (no responsive scaling) */
 .scene-intro .scene-title{
     font-size: 48px !important;   /* pick your fixed size */
     line-height: 1.05;
-}
-
-/* === STORY: show book.png as a normal image (no tilt/overlay/shadow) === */
-.story-book .book-card{
-    position: static !important;
-    padding: 0 !important;
-    background: none !important;
-    border: 0 !important;
-    box-shadow: none !important;
-    transform: none !important;
-    filter: none !important;
-    border-radius: 0 !important;
-}
-.story-book .book-card::before{ display: none !important; }
-.story-book .book-card img{
-    width: 100%;
-    height: auto;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    transform: none !important;
 }
 
 /* === STORY: book image crisp (no tilt/blur), rounded + framed === */
@@ -1047,37 +1008,4 @@ body.contact{ overflow: hidden; }
 .story-book .book-card:hover{
     box-shadow: 0 10px 24px rgba(0,0,0,.08);
     border-color: #ddd;
-}
-
-/* Lock SCENE title size (no responsive scaling) */
-.scene .scene-intro .scene-title{
-    font-size: 48px !important;
-    line-height: 1.05;
-}
-
-/* Show hamburger ONLY when compact or overflowing */
-.menu-btn{ display: none; }
-.nav.is-compact .menu-btn,
-.nav.is-overflow .menu-btn{ display: inline-flex; }
-
-/* Keep links/actions visible by default; hide only when compact/overflow */
-.nav.is-overflow .nav-links,
-.nav.is-overflow .lang-toggle,
-.nav.is-overflow .nav-social{ display: none !important; }
-.nav.is-compact .brand,
-.nav.is-compact .nav-links{ display: none; }
-
-/* Override old portrait rule that forced hamburger on */
-@media (orientation:portrait), (max-width: 820px){
-    /* default: show full nav; only collapse if overflow actually happens */
-    .nav .menu-btn{ display: none !important; }
-    .nav .nav-links,
-    .nav .lang-toggle,
-    .nav .nav-social{ display: flex !important; }
-
-    /* if it overflows on small screens, then switch to hamburger */
-    .nav.is-overflow .menu-btn{ display: inline-flex !important; }
-    .nav.is-overflow .nav-links,
-    .nav.is-overflow .lang-toggle,
-    .nav.is-overflow .nav-social{ display: none !important; }
 }
