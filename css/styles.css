@@ -609,3 +609,45 @@ body[data-lang="kr"] .contact-form textarea{
 .home .hero-content{
     font-family: "Noto Sans KR", system-ui, sans-serif !important;
 }
+
+/* Home hero: top line = Gowun Batang, lines below = Noto Sans KR */
+.home .hero-title{
+    font-family: "Gowun Batang", serif !important;
+    font-weight: 700;
+    /* small size but slightly bigger per your request */
+    font-size: clamp(18px, 2.1vw, 22px);
+}
+
+.home .hero-content p{
+    font-family: "Noto Sans KR", "Noto Sans CJK KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
+    font-weight: 400;
+    font-size: clamp(14px, 1.8vw, 18px);
+}
+
+/* If you have any global rule that forces Inter in KR mode,
+   this keeps our Home hero fonts from being overridden */
+body[data-lang="kr"] .home .hero-title,
+body[data-lang="kr"] .home .hero-content p{
+    font-family: inherit !important;
+}
+
+/* Home hero: top line = Gowun Batang, lines below = Noto Sans KR */
+.home .hero-title{
+    font-family: "Gowun Batang", serif !important;
+    font-weight: 700;
+    /* small size but slightly bigger per your request */
+    font-size: clamp(18px, 2.1vw, 22px);
+}
+
+.home .hero-content p{
+    font-family: "Noto Sans KR", "Noto Sans CJK KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
+    font-weight: 400;
+    font-size: clamp(14px, 1.8vw, 18px);
+}
+
+/* If you have any global rule that forces Inter in KR mode,
+   this keeps our Home hero fonts from being overridden */
+body[data-lang="kr"] .home .hero-title,
+body[data-lang="kr"] .home .hero-content p{
+    font-family: inherit !important;
+}
