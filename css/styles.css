@@ -739,3 +739,17 @@ body[data-lang="kr"] .home .hero-content p{
     line-height: 1.05 !important;
     letter-spacing: .01em !important;
 }
+
+/* Our Story title: only "GOOD ONE TABLE" uses the SCENE/CONTACT style */
+.story .story-title .story-title-base{
+    font-family: var(--font-latin-title, "Fira Sans Condensed"), Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif !important;
+    font-weight: 800 !important;               /* your usual title weight */
+    letter-spacing: .01em;
+}
+
+.story .story-title .story-title-andong{
+    font-family: "AndongWolyeonggyoOTF", "Noto Sans KR", system-ui, sans-serif !important;
+    font-weight: 400 !important;               /* match SCENE/CONTACT feel */
+    letter-spacing: .01em;
+    /* Size/line-height inherit from the <h1>, which you already set to 48px */
+}
