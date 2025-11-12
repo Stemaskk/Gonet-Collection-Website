@@ -697,3 +697,16 @@ body[data-lang="kr"] .home .hero-content p{
     font-size: var(--title-size-nonhome) !important;
     line-height: 1.05 !important;
 }
+
+/* Default static PNG */
+.icon-btn[aria-label="Instagram"]{
+    background-image: url("/assets/icon/instagram.png");
+    filter: grayscale(1) contrast(.9) brightness(.95);
+    transition: filter .2s ease, transform .2s ease, background-image .0s;
+}
+/* Swap to GIF only on hover */
+.icon-btn[aria-label="Instagram"]:hover{
+    background-image: url("/assets/icon/instagram.GIF");
+    filter: none;
+    transform: translateY(-1px);
+}

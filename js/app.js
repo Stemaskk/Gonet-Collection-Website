@@ -1,6 +1,7 @@
-// Language toggle (KR default)
+// ===== Language toggle (KR default) =====
 const root = document.body;
 const toggle = document.getElementById('langToggle');
+
 function setLang(next){
     root.setAttribute('data-lang', next);
     try { localStorage.setItem('gonet-lang', next); } catch {}
@@ -9,10 +10,18 @@ function setLang(next){
         toggle.textContent = next === 'en' ? 'EN' : 'KR';
     }
 }
-setLang((() => { try { return localStorage.getItem('gonet-lang') === 'en' ? 'en' : 'kr'; } catch { return 'kr'; } })());
-toggle?.addEventListener('click', () => setLang(root.getAttribute('data-lang') === 'kr' ? 'en' : 'kr'));
 
-// Highlight current link (supports /page or /page.html)
+setLang((() => {
+    try { return localStorage.getItem('gonet-lang') === 'en' ? 'en' : 'kr'; }
+    catch { return 'kr'; }
+})());
+
+toggle?.addEventListener('click', () =>
+    setLang(root.getAttribute('data-lang') === 'kr' ? 'en' : 'kr')
+);
+
+
+// ===== Highlight current link (supports /page or /page.html) =====
 (function highlightNav(){
     const norm = p => {
         let s = p.toLowerCase();
@@ -27,6 +36,7 @@ toggle?.addEventListener('click', () => setLang(root.getAttribute('data-lang') =
         }catch{}
     });
 })();
+
 
 // ===== Header fade/compact (DISABLED on Home) =====
 const header = document.querySelector('.nav');
@@ -67,17 +77,16 @@ const isHome = document.body.classList.contains('home');
         clearTimeout(idleTimer); idleTimer=setTimeout(onScrollIdle, IDLE_MS);
     }
 
-    // Skip animation on Home
     if (isHome){
         setFade(0);
         header.classList.remove('is-compact');
-        return; // no listeners
+        return; // no listeners on Home
     }
 
-    // Scrollable pages: enable animation
     updateHeader();
     window.addEventListener('scroll', updateHeader, { passive:true });
 })();
+
 
 // ===== Auto-collapse when header would overflow =====
 (function autoCollapseWhenOverflow(){
@@ -109,6 +118,7 @@ const isHome = document.body.classList.contains('home');
     }
 })();
 
+
 // ===== Overlay menu toggles + animate hamburger =====
 const menuBtn=document.getElementById('menuBtn');
 const menuPanel=document.getElementById('menuPanel');
@@ -120,14 +130,14 @@ function openMenu(){
     requestAnimationFrame(()=>menuPanel.classList.add('is-open'));
     document.body.classList.add('no-scroll');
     menuBtn?.setAttribute('aria-expanded','true');
-    menuBtn?.classList.add('is-open');     // morph bars → X
+    menuBtn?.classList.add('is-open');
 }
 function closeMenu(){
     if(!menuPanel) return;
     menuPanel.classList.remove('is-open');
     document.body.classList.remove('no-scroll');
     menuBtn?.setAttribute('aria-expanded','false');
-    menuBtn?.classList.remove('is-open');  // back to bars
+    menuBtn?.classList.remove('is-open');
     setTimeout(()=>menuPanel.hidden=true, 250);
 }
 menuBtn?.addEventListener('click', ()=>{ if(menuPanel?.hidden) openMenu(); else closeMenu(); });
@@ -136,66 +146,46 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !menuPanel?.hidden) closeMenu();
 });
 
-// --- Scene grid: image -> video on hover (desktop), tap-to-toggle (touch) ---
+
+// ===== Scene grid (no lazy src): hover/tap play-pause only =====
 function initSceneGrid(){
-    const items = document.querySelectorAll('.scene-item');
-    if (!items.length) return;
+    const tiles = document.querySelectorAll('.scene-item, .scene-tile');
+    if (!tiles.length) return;
 
     const isTouch = window.matchMedia('(hover: none)').matches;
 
-    items.forEach((item) => {
-        const videoEl = item.querySelector('video');
-        const src = item.getAttribute('data-video');
-
-        // Lazy-attach the video src the first time we try to play
-        let loaded = false;
-        const ensureLoaded = () => {
-            if (!loaded && src) {
-                videoEl.src = src;
-                loaded = true;
-            }
-        };
+    tiles.forEach((item) => {
+        const v = item.querySelector('video');
+        if (!v) return;
 
         if (!isTouch){
-            // Desktop: play on hover
-            item.addEventListener('mouseenter', () => {
-                ensureLoaded();
-                if (videoEl.paused) { videoEl.play().catch(()=>{}); }
-            });
-            item.addEventListener('mouseleave', () => {
-                videoEl.pause();
-                // keep current frame hidden again via CSS opacity
-            });
+            item.addEventListener('mouseenter', () => { v.play().catch(()=>{}); });
+            item.addEventListener('mouseleave', () => { v.pause(); });
         } else {
-            // Touch: tap toggles playback and visual state
             item.addEventListener('click', (e) => {
-                e.preventDefault(); // keep the <a> from navigating
-                ensureLoaded();
-                if (videoEl.paused){
-                    // pause any other playing tiles
-                    document.querySelectorAll('.scene-item.is-playing').forEach(it => {
+                e.preventDefault();
+                if (v.paused){
+                    document.querySelectorAll('.scene-item.is-playing, .scene-tile.is-playing').forEach(it => {
                         if (it !== item){
                             it.classList.remove('is-playing');
-                            const v = it.querySelector('video');
-                            if (v) v.pause();
+                            const ov = it.querySelector('video');
+                            if (ov) ov.pause();
                         }
                     });
-                    videoEl.play().catch(()=>{});
+                    v.play().catch(()=>{});
                     item.classList.add('is-playing');
                 } else {
-                    videoEl.pause();
+                    v.pause();
                     item.classList.remove('is-playing');
                 }
-            }, {passive:false});
+            }, { passive:false });
         }
     });
 }
-
-// If you already have a DOMContentLoaded handler, just call initSceneGrid() inside it.
-// Otherwise, this standalone listener is fine:
 document.addEventListener('DOMContentLoaded', initSceneGrid);
 
-// Contact AJAX submit (keeps the page in place and shows a status line)
+
+// ===== Contact AJAX submit =====
 (() => {
     const form = document.getElementById("contactForm");
     if (!form) return;
