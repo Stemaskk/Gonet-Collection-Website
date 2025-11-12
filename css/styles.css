@@ -914,3 +914,30 @@ body.story .story-copy{
     .scene-intro.section{ margin-bottom: 10px !important; }
     .scene-board{ gap: 8px !important; padding-bottom: 40px !important; }
 }
+
+/* === SCENE — mobile gap fix (robust) === */
+@media (max-width: 900px), (orientation: portrait){
+    /* If your body is <body class="scene"> or older <body class="film"> */
+    body.scene .section:first-of-type,
+    body.film .section:first-of-type{
+        margin-bottom: 10px !important;   /* was ~72px */
+    }
+
+    /* Scene intro block itself */
+    body.scene .scene-intro,
+    body.film .scene-intro{
+        margin-bottom: 10px !important;
+        padding-bottom: 0 !important;
+    }
+
+    /* Tighter rhythm in the intro text */
+    .scene-intro .intro-row{ margin-bottom: 6px !important; }
+    .scene-intro .intro-copy p{ margin: 0 0 4px !important; }
+
+    /* Grid right under the intro */
+    .scene-board{
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+        gap: 8px !important;              /* a bit tighter on mobile */
+    }
+}
