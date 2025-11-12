@@ -892,3 +892,25 @@ body.story .story-copy{
         max-width: min(300px, 88vw) !important;
     }
 }
+
+/* === SCENE: tighten space between intro text and video grid === */
+/* The big gap comes from .section { margin:72px auto } */
+.scene-intro.section{
+    margin-bottom: 14px !important;   /* was ~72px from .section */
+}
+
+/* Make sure the grid itself doesn’t add extra space */
+.scene-board{
+    margin-top: 0 !important;
+    padding-top: 0 !important;        /* already 0, just enforcing */
+}
+
+/* Slightly tighter rhythm inside the intro block */
+.scene-intro .intro-row{ margin-bottom: 6px !important; }
+.scene-intro .intro-copy p{ margin: 0 0 4px !important; }
+
+/* Mobile: even tighter */
+@media (max-width: 820px){
+    .scene-intro.section{ margin-bottom: 10px !important; }
+    .scene-board{ gap: 8px !important; padding-bottom: 40px !important; }
+}
