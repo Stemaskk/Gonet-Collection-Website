@@ -201,5 +201,14 @@
     });
   });
 </script>
+
+<!-- Scene video modal -->
+<div id="sceneModal" class="scene-modal" hidden>
+  <div class="scene-modal__backdrop"></div>
+  <div class="scene-modal__dialog">
+    <button id="sceneModalClose" class="scene-modal__close" aria-label="Close">&times;</button>
+    <video id="sceneModalVideo" playsinline controls preload="auto"></video>
+  </div>
+</div>
 </body>
 </html>

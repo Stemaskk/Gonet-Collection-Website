@@ -753,3 +753,80 @@ body[data-lang="kr"] .home .hero-content p{
     letter-spacing: .01em;
     /* Size/line-height inherit from the <h1>, which you already set to 48px */
 }
+
+/* === HOME — force horizontal center at all widths === */
+body.home .hero-blank{
+    display: grid !important;
+    place-items: start center !important;   /* vertical = start, horizontal = center */
+}
+
+/* Catch the actual hero wrapper no matter what it's called */
+body.home .hero-blank > .container,
+body.home .hero-blank > .section,
+body.home .hero-blank > .content,
+body.home .hero-blank > .hero,
+body.home .hero-blank > div{
+    justify-self: center !important;        /* center the block itself */
+    width: min(92vw, 60ch) !important;      /* narrow readable width */
+    max-width: 60ch !important;
+    margin-inline: auto !important;         /* horizontal center */
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    text-align: center !important;          /* center lines */
+}
+
+/* If your markup nests one more <div> inside, center that too */
+body.home .hero-blank > div > .container,
+body.home .hero-blank > div{
+    justify-self: center !important;
+    width: min(92vw, 60ch) !important;
+    max-width: 60ch !important;
+    margin-inline: auto !important;
+    text-align: center !important;
+}
+
+/* === OUR STORY — center the two-column block; keep text left === */
+body.story .story-hero{
+    display: grid !important;
+    place-items: center start !important;   /* center horizontally, keep top alignment */
+}
+
+body.story .story-hero .story-grid{
+    margin-inline: auto !important;         /* center the grid wrapper */
+    justify-items: center !important;
+    width: min(92vw, 1200px) !important;
+}
+
+body.story .story-copy{
+    text-align: left !important;            /* keep paragraphs left */
+}
+
+.scene-modal[hidden]{display:none}
+.scene-modal{
+    position:fixed; inset:0; z-index:999;
+    display:grid; place-items:center;
+}
+.scene-modal__backdrop{
+    position:absolute; inset:0;
+    background:rgba(0,0,0,.6); backdrop-filter:blur(2px);
+}
+.scene-modal__dialog{
+    position:relative;
+    width:min(96vw, 720px);
+    border-radius:12px; overflow:hidden;
+    box-shadow:0 20px 60px rgba(0,0,0,.4);
+    background:#000;
+}
+.scene-modal__dialog video{display:block; width:100%; height:auto; background:#000}
+.scene-modal__close{
+    position:absolute; top:8px; right:8px;
+    width:36px; height:36px;
+    border:0; border-radius:999px;
+    background:rgba(0,0,0,.6); color:#fff;
+    font-size:24px; line-height:1; display:grid; place-items:center; cursor:pointer;
+}
+
+/* Only used on touch devices; desktop still uses hover-in-grid */
+@media (hover:hover){
+    .scene-modal{display:none !important}
+}

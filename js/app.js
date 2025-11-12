@@ -229,3 +229,68 @@ document.addEventListener('DOMContentLoaded', initSceneGrid);
         }
     });
 })();
+
+// --- Scene grid: hover on desktop; modal on touch ---
+function initSceneGrid(){
+    const items = document.querySelectorAll('.scene-item');
+    if (!items.length) return;
+
+    const isTouch = window.matchMedia('(hover: none)').matches;
+
+    items.forEach((item) => {
+        const videoEl = item.querySelector('video');
+        const srcFromAttr = item.getAttribute('data-video');
+        const src = srcFromAttr || videoEl?.getAttribute('data-src') || videoEl?.src || "";
+
+        if (!isTouch){
+            // Desktop: play inline on hover
+            if (!videoEl) return;
+            item.addEventListener('mouseenter', () => {
+                if (videoEl.paused) videoEl.play().catch(()=>{});
+            });
+            item.addEventListener('mouseleave', () => {
+                videoEl.pause();
+            });
+        } else {
+            // Touch: open modal and play there
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (!src) return;
+                openSceneModal(src);
+            }, {passive:false});
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initSceneGrid);
+
+// --- Modal helpers (mobile only opened; safe on desktop) ---
+const sceneModal = document.getElementById('sceneModal');
+const sceneModalVideo = document.getElementById('sceneModalVideo');
+const sceneModalClose = document.getElementById('sceneModalClose');
+
+function openSceneModal(src){
+    if (!sceneModal || !sceneModalVideo) return;
+    sceneModalVideo.src = src;
+    sceneModal.hidden = false;
+    document.body.classList.add('no-scroll');
+    // user tap → allowed to play
+    sceneModalVideo.play().catch(()=>{});
+}
+
+function closeSceneModal(){
+    if (!sceneModal || !sceneModalVideo) return;
+    sceneModalVideo.pause();
+    sceneModalVideo.removeAttribute('src');
+    sceneModalVideo.load();
+    sceneModal.hidden = true;
+    document.body.classList.remove('no-scroll');
+}
+
+sceneModalClose?.addEventListener('click', closeSceneModal);
+sceneModal?.addEventListener('click', (e) => {
+    if (e.target === sceneModal || e.target.classList.contains('scene-modal__backdrop')) closeSceneModal();
+});
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !sceneModal?.hidden) closeSceneModal();
+});
