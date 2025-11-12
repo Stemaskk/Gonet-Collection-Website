@@ -852,3 +852,43 @@ body.story .story-copy{
 .collection-panel .collection-desc{
     max-width: 58ch;  /* tweak 52–62ch as you like */
 }
+
+/* ==== MOBILE: make Collection & Consulting boxes smaller ==== */
+@media (max-width: 680px){
+    /* COLLECTION panel */
+    .collection-panel{
+        max-width: min(320px, 82vw) !important;   /* narrower box */
+        padding: 12px 14px !important;            /* tighter padding */
+    }
+    .collection .collection-title,
+    .collection .collection-title .title-any{
+        font-size: clamp(22px, 7vw, 34px) !important;  /* prevent title from blowing up the box */
+        line-height: 1.05 !important;
+    }
+    .collection .collection-desc p{
+        font-size: clamp(12px, 3.6vw, 14px) !important; /* optional: keep copy compact */
+    }
+
+    /* CONSULTING panel (still overlaid on the image, just slimmer) */
+    .consulting-panel{
+        max-width: min(320px, 86vw) !important;   /* much smaller on phones */
+        right: var(--pad) !important;             /* keep pinned to the right edge */
+        left: auto !important;                    /* ensure it doesn't stretch */
+        padding: 12px 14px !important;            /* tighter padding */
+    }
+    .consulting-title{
+        font-size: clamp(22px, 7vw, 34px) !important;
+        line-height: 1.05 !important;
+    }
+    .consulting-panel .collection-desc p{
+        font-size: clamp(12px, 3.6vw, 14px) !important;
+    }
+}
+
+/* (Optional) even smaller for very narrow screens */
+@media (max-width: 360px){
+    .collection-panel,
+    .consulting-panel{
+        max-width: min(300px, 88vw) !important;
+    }
+}
