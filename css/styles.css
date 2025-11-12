@@ -941,3 +941,56 @@ body.story .story-copy{
         gap: 8px !important;              /* a bit tighter on mobile */
     }
 }
+
+/* =========================
+   MOBILE FIXES — COLLECTION
+   ========================= */
+@media (max-width: 900px), (orientation: portrait){
+    /* Allow scrolling on small screens (the page was locked) */
+    body.collection{ overflow: auto !important; }
+
+    /* Pull the panel back INTO view and make it smaller */
+    body.collection .collection-hero .container{
+        justify-content: flex-end !important;
+        align-items: flex-start !important;
+        padding-top: 18vh !important;       /* was min(56vh, 440px) pushing it below */
+        padding-bottom: 12px !important;
+    }
+
+    body.collection .collection-panel{
+        max-width: min(340px, 86vw) !important;  /* narrower */
+        padding: 12px 14px !important;           /* tighter padding */
+        border-radius: 10px !important;
+        box-shadow: 0 12px 28px rgba(0,0,0,.16) !important;
+    }
+
+    /* Slightly smaller type inside the panel for balance */
+    body.collection .collection-title{ margin: 0 0 6px !important; }
+    body.collection .collection-title .title-any{ font-size: 18px !important; line-height: 1.1 !important; }
+    body.collection .collection-desc p{ font-size: 13px !important; line-height: 1.45 !important; }
+}
+
+/* =========================
+   MOBILE FIXES — CONSULTING
+   ========================= */
+@media (max-width: 900px), (orientation: portrait){
+    body.consulting .consulting-panel{
+        top: 10px !important;
+        right: 10px !important;
+        max-width: min(340px, 88vw) !important;   /* smaller box */
+        padding: 12px 14px !important;            /* tighter padding */
+        border-radius: 10px !important;
+        box-shadow: 0 12px 28px rgba(0,0,0,.16) !important;
+    }
+
+    /* Make the title + copy scale down on phones */
+    body.consulting .consulting-title{
+        font-size: 22px !important;    /* previously bumped by global 48px rule */
+        line-height: 1.12 !important;
+        letter-spacing: .01em !important;
+    }
+    body.consulting .collection-desc p{
+        font-size: 13px !important;
+        line-height: 1.45 !important;
+    }
+}
