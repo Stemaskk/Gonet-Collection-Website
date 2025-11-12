@@ -651,3 +651,17 @@ body[data-lang="kr"] .home .hero-title,
 body[data-lang="kr"] .home .hero-content p{
     font-family: inherit !important;
 }
+
+/* === Unify all non-Home titles to match SCENE (48px) === */
+:root{ --title-size-nonhome: 48px; }
+
+.story .hero-title,                          /* Our Story */
+.collection .collection-title .title-any,    /* Collection (unified title) */
+.collection .collection-title .title-en,     /* Collection (fallbacks) */
+.collection .collection-title .title-kr,
+.consulting .consulting-title,               /* Consulting */
+.contact .contact-title,                     /* Contact */
+.scene-intro .scene-title {                  /* Scene (kept same for consistency) */
+    font-size: var(--title-size-nonhome) !important;
+    line-height: 1.05 !important;
+}
