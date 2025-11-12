@@ -294,3 +294,50 @@ sceneModal?.addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !sceneModal?.hidden) closeSceneModal();
 });
+
+// OUR STORY — Mobile "book" popup on first load per session
+(function storyBookMobileModal(){
+    // Only run on Our Story page
+    if (!document.body.classList.contains('story')) return;
+
+    // Mobile only
+    const isMobile = window.matchMedia('(max-width: 900px), (orientation: portrait)').matches;
+    if (!isMobile) return;
+
+    // Show only once per session (tab)
+    if (sessionStorage.getItem('story-book-modal-dismissed') === '1') return;
+
+    // Use the existing book image on the page if present
+    const bookImg = document.querySelector('.story-book img');
+    const src = bookImg?.getAttribute('src') || '/assets/story/book.jpg'; // <- fallback: adjust if needed
+
+    // Build modal
+    const modal = document.createElement('div');
+    modal.className = 'storybook-modal';
+    modal.setAttribute('role','dialog');
+    modal.setAttribute('aria-modal','true');
+    modal.setAttribute('aria-label','Book preview');
+    modal.innerHTML = `
+    <div class="storybook-modal__backdrop"></div>
+    <div class="storybook-modal__dialog">
+      <button class="storybook-modal__close" aria-label="Close">×</button>
+      <img class="storybook-modal__img" src="${src}" alt="GONET book">
+    </div>
+  `;
+
+    function close(){
+        modal.remove();
+        document.body.classList.remove('no-scroll');
+        sessionStorage.setItem('story-book-modal-dismissed','1');
+        document.removeEventListener('keydown', onEsc);
+    }
+    function onEsc(e){ if (e.key === 'Escape') close(); }
+
+    modal.querySelector('.storybook-modal__backdrop').addEventListener('click', close);
+    modal.querySelector('.storybook-modal__close').addEventListener('click', close);
+    document.addEventListener('keydown', onEsc);
+
+    // Show and lock background scroll (reuses your existing .no-scroll pattern)
+    document.body.appendChild(modal);
+    document.body.classList.add('no-scroll');
+})();

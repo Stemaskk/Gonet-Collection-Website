@@ -1045,3 +1045,61 @@ body.story .story-copy{
         margin-top: 16px !important;
     }
 }
+
+/* OUR STORY — hide inline book on mobile and show modal styles */
+@media (max-width: 900px), (orientation: portrait){
+    /* remove the book card from the layout on mobile */
+    body.story .story-book{ display:none !important; }
+}
+
+/* Modal (mobile) */
+.storybook-modal[hidden]{ display:none !important; }
+.storybook-modal{
+    position:fixed; inset:0; z-index:999; display:grid; place-items:center;
+}
+.storybook-modal__backdrop{
+    position:absolute; inset:0;
+    background:rgba(0,0,0,.65); backdrop-filter:blur(2px);
+}
+.storybook-modal__dialog{
+    position:relative;
+    width:min(92vw, 520px);
+    border-radius:12px; overflow:hidden;
+    background:#000; box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+.storybook-modal__img{ display:block; width:100%; height:auto; background:#000; }
+.storybook-modal__close{
+    position:absolute; top:8px; right:8px;
+    width:36px; height:36px; border:0; border-radius:999px;
+    background:rgba(0,0,0,.6); color:#fff; font-size:24px; line-height:1;
+    display:grid; place-items:center; cursor:pointer;
+}
+
+/* OUR STORY — hide inline book on mobile and show modal styles */
+@media (max-width: 900px), (orientation: portrait){
+    /* remove the book card from the layout on mobile */
+    body.story .story-book{ display:none !important; }
+}
+
+/* Modal (mobile) */
+.storybook-modal[hidden]{ display:none !important; }
+.storybook-modal{
+    position:fixed; inset:0; z-index:999; display:grid; place-items:center;
+}
+.storybook-modal__backdrop{
+    position:absolute; inset:0;
+    background:rgba(0,0,0,.65); backdrop-filter:blur(2px);
+}
+.storybook-modal__dialog{
+    position:relative;
+    width:min(92vw, 520px);
+    border-radius:12px; overflow:hidden;
+    background:#000; box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+.storybook-modal__img{ display:block; width:100%; height:auto; background:#000; }
+.storybook-modal__close{
+    position:absolute; top:8px; right:8px;
+    width:36px; height:36px; border:0; border-radius:999px;
+    background:rgba(0,0,0,.6); color:#fff; font-size:24px; line-height:1;
+    display:grid; place-items:center; cursor:pointer;
+}
