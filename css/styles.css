@@ -1023,3 +1023,25 @@ body.story .story-copy{
     body.consulting .consulting-title{ font-size: 18px !important; }
     body.consulting .collection-desc p{ font-size: 12px !important; }
 }
+
+/* CONTACT — hide image on mobile; make form full width */
+@media (max-width: 900px), (orientation: portrait){
+    body.contact .contact-photo{
+        display: none !important;               /* hide the image column */
+    }
+    body.contact .contact-split{
+        grid-template-columns: 1fr !important;  /* single column */
+        gap: 12px !important;
+        height: auto !important;                /* let content define height */
+        min-height: calc(100svh - var(--navH)) !important;
+        padding: 12px var(--pad) 0 !important;
+    }
+    body.contact .contact-panel{
+        height: auto !important;
+        max-width: 720px !important;
+        margin-inline: auto !important;         /* center the form block */
+    }
+    .contact .site-foot{
+        margin-top: 16px !important;
+    }
+}
