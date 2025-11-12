@@ -1200,3 +1200,30 @@ body.story .story-copy{
         hyphens: auto !important;
     }
 }
+
+/* Our Story — book modal (mobile only) */
+.story-modal[hidden]{display:none}
+.story-modal{
+    position:fixed; inset:0; z-index:1000;
+    display:grid; place-items:center;
+    opacity:0; transform:translateY(4px);
+    transition:opacity .2s ease, transform .2s ease;
+}
+.story-modal.is-open{opacity:1; transform:none}
+.story-modal__backdrop{position:absolute; inset:0; background:rgba(0,0,0,.6); backdrop-filter:blur(2px)}
+.story-modal__dialog{
+    position:relative; width:min(92vw, 540px);
+    border-radius:12px; overflow:hidden; background:#000;
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+.story-modal__dialog img{display:block; width:100%; height:auto; background:#000}
+.story-modal__close{
+    position:absolute; top:8px; right:8px;
+    width:36px; height:36px; border:0; border-radius:999px;
+    background:rgba(0,0,0,.6); color:#fff; font-size:24px; line-height:1;
+    display:grid; place-items:center; cursor:pointer;
+}
+/* show modal only on touch/mobile; desktop keeps inline layout */
+@media (hover:hover){ .story-modal{display:none !important} }
+/* hide inline book on mobile since the modal shows it */
+@media (hover:none){ body.story .story-book{ display:none !important; } }
