@@ -994,3 +994,32 @@ body.story .story-copy{
         line-height: 1.45 !important;
     }
 }
+
+/* CONSULTING — make the overlay panel + text a bit smaller on mobile */
+@media (max-width: 900px), (orientation: portrait){
+    body.consulting .consulting-panel{
+        top: 8px !important;
+        right: 8px !important;
+        max-width: min(310px, 84vw) !important;   /* narrower than before */
+        padding: 10px 12px !important;            /* tighter padding */
+        box-shadow: 0 10px 24px rgba(0,0,0,.14) !important;
+    }
+    body.consulting .consulting-title{
+        font-size: 20px !important;               /* down from 22px */
+        line-height: 1.12 !important;
+        letter-spacing: .005em !important;
+    }
+    body.consulting .collection-desc p{
+        font-size: 12.5px !important;             /* down slightly */
+        line-height: 1.45 !important;
+    }
+}
+
+/* Ultra-small screens: dial it down one more notch */
+@media (max-width: 480px){
+    body.consulting .consulting-panel{
+        max-width: min(300px, 86vw) !important;
+    }
+    body.consulting .consulting-title{ font-size: 18px !important; }
+    body.consulting .collection-desc p{ font-size: 12px !important; }
+}
