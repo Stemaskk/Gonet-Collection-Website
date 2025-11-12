@@ -665,3 +665,35 @@ body[data-lang="kr"] .home .hero-content p{
     font-size: var(--title-size-nonhome) !important;
     line-height: 1.05 !important;
 }
+
+/* ==== Force non-Home titles to match SCENE (48px) ==== */
+:root { --title-size-nonhome: 48px; }
+
+/* Our Story */
+.story .story-hero h1,
+.story .hero-title,
+.story .story-title{
+    font-size: var(--title-size-nonhome) !important;
+    line-height: 1.05 !important;
+}
+
+/* Collection (cover both the wrapper and any inner spans) */
+.collection .collection-title,
+.collection .collection-title .title-any,
+.collection .collection-title .title-en,
+.collection .collection-title .title-kr{
+    font-size: var(--title-size-nonhome) !important;
+    line-height: 1.05 !important;
+}
+
+/* Contact */
+.contact .contact-title{
+    font-size: var(--title-size-nonhome) !important;
+    line-height: 1.05 !important;
+}
+
+/* Keep SCENE as the reference (already 48px) */
+.scene-intro .scene-title{
+    font-size: var(--title-size-nonhome) !important;
+    line-height: 1.05 !important;
+}
