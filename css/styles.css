@@ -710,3 +710,42 @@ body[data-lang="kr"] .home .hero-content p{
     filter: none;
     transform: translateY(-1px);
 }
+
+/* ===== FORCE unified title font & size (same as SCENE) ===== */
+:root { --page-title-size: 48px; }
+
+/* Collection: cover all variants we've used (.title-en / .title-kr / .title-any) */
+.collection .collection-title .title-en,
+.collection .collection-title .title-kr,
+.collection .collection-title .title-any {
+    font-family: "Fira Sans Condensed", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif !important;
+    font-weight: 800 !important;
+    font-size: var(--page-title-size) !important;
+    line-height: 1.05 !important;
+    letter-spacing: .01em !important;
+}
+
+/* Consulting */
+.consulting .consulting-title {
+    font-family: "Fira Sans Condensed", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif !important;
+    font-weight: 800 !important;
+    font-size: var(--page-title-size) !important;
+    line-height: 1.05 !important;
+    letter-spacing: .01em !important;
+}
+
+/* Contact */
+.contact .contact-title {
+    font-family: "Fira Sans Condensed", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif !important;
+    font-weight: 800 !important;
+    font-size: var(--page-title-size) !important;
+    line-height: 1.05 !important;
+    letter-spacing: .01em !important;
+}
+
+/* In KR mode, keep English letters using the same Latin title font */
+body[data-lang="kr"] .collection .collection-title .title-en,
+body[data-lang="kr"] .consulting .consulting-title,
+body[data-lang="kr"] .contact .contact-title {
+    font-family: "Fira Sans Condensed", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif !important;
+}
