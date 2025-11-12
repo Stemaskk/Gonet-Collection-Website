@@ -830,3 +830,25 @@ body.story .story-copy{
 @media (hover:hover){
     .scene-modal{display:none !important}
 }
+
+/* === COLLECTION: make the right-side panel narrower === */
+.collection-panel{
+    max-width: 440px !important;            /* was 560px */
+    padding: clamp(12px, 2vw, 18px) !important;
+    border-radius: 10px !important;
+}
+
+/* Keep it compact on mobile/tablet too */
+@media (max-width: 1200px){
+    .collection-panel{ max-width: 400px !important; }
+}
+@media (max-width: 900px){
+    .collection-panel{
+        max-width: min(360px, 86vw) !important;
+    }
+}
+
+/* (Optional) limit text line length inside for nicer rhythm */
+.collection-panel .collection-desc{
+    max-width: 58ch;  /* tweak 52–62ch as you like */
+}
