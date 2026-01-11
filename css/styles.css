@@ -7,7 +7,7 @@
     --hero-offset:clamp(8vh,14vh,20vh);
     --scene-sub-w-en:46ch; --scene-sub-w-kr:34ch;
 
-    /* Our Story: space reserved for fixed footer overlay (visual centering) */
+    /* Our Story: reserve space for fixed footer overlay (visual centering) */
     --story-foot-space: calc(34px + env(safe-area-inset-bottom, 0px));
 }
 
@@ -217,14 +217,15 @@ body.home::before{
 .site-foot .container{display:flex;justify-content:flex-start;align-items:center;text-align:left}
 
 /* =========================
-   Story (FIXED: Perfect centering)
+   Story (Perfect centering + fixes left-sticking)
    ========================= */
 body.story{overflow:hidden}
-.story .section{margin:0}
 
-/* The key fix:
-   - grid centering via place-items:center
-   - add bottom padding to compensate for fixed footer overlay */
+/* CRITICAL FIX:
+   .story .section was overriding .container's margin:auto (centering)
+   which caused the whole section to "stick" left on wide screens. */
+.story .section{margin:0 auto}
+
 .story-hero{
     min-height:calc(100svh - var(--navH));
     display:grid;
@@ -233,13 +234,14 @@ body.story{overflow:hidden}
     padding-bottom:var(--story-foot-space);
 }
 
-/* keep the two-column layout centered as a block */
+/* story grid remains two-column, but centered as a block */
 .story-hero .story-grid{
     display:grid;
     grid-template-columns:1fr minmax(260px,420px);
     gap:clamp(24px,4vw,56px);
     align-items:center;
-    width:min(92vw,1200px);
+
+    width:100%;
     margin-inline:auto;
 }
 @media (max-width:900px){
@@ -422,8 +424,6 @@ body.contact{overflow:hidden}
 .icon-btn[aria-label="YouTube"] .icon{display:none !important}
 .icon-btn[aria-label="Email"]{background-image:url("/assets/icon/email.PNG")}
 .icon-btn[aria-label="YouTube"]{background-image:url("/assets/icon/youtube.PNG")}
-
-/* Default Instagram PNG + swap GIF on hover */
 .icon-btn[aria-label="Instagram"]{
     background-image:url("/assets/icon/instagram.png");
     filter:grayscale(1) contrast(.9) brightness(.95);
@@ -552,12 +552,6 @@ body.contact{overflow:hidden}
         margin-inline:auto !important;
     }
     .contact .site-foot{margin-top:16px !important}
-
-    /* Story: keep centered on mobile too (no top-align override) */
-    body.story .story-hero .story-grid{
-        width:min(94vw, 64ch) !important;
-        margin-inline:auto !important;
-    }
 
     body.story .container{padding-inline:18px !important}
     body[data-lang="kr"] .story-copy{word-break:keep-all !important;hyphens:manual !important}
