@@ -7,5 +7,8 @@
     { "source": "/film.html", "destination": "/scene", "permanent": true }
   ],
 
-  "rewrites": []
+  "rewrites": [
+    { "source": "/favicon.ico",          "destination": "/assets/icon/favicon.ico" },
+    { "source": "/apple-touch-icon.png", "destination": "/assets/icon/apple-touch-icon.png" }
+  ]
 }
