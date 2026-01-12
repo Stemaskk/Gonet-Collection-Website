@@ -1,14 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
-
   "redirects": [
-    { "source": "/film",      "destination": "/scene", "permanent": true },
+    { "source": "/film", "destination": "/scene", "permanent": true },
     { "source": "/film.html", "destination": "/scene", "permanent": true }
-  ],
-
-  "rewrites": [
-    { "source": "/favicon.ico",          "destination": "/assets/icon/favicon.ico" },
-    { "source": "/apple-touch-icon.png", "destination": "/assets/icon/apple-touch-icon.png" }
   ]
 }
